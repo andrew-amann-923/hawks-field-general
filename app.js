@@ -382,7 +382,7 @@ function viewGame() {
   <div class="gamecard">
     <div class="view-head" style="margin-bottom:4px">
       <h2>${L.home ? "vs" : "@"} ${L.opponent}</h2>
-      <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${status}<button class="print-btn" onclick="printGameCard()">Print card (2 pages)</button></span></div>
+      <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${status}<button class="print-btn" onclick="printGameCard()">Print game card</button></span></div>
     <p class="sub" style="color:#667;font-size:13.5px">Wed Jun 10 · first pitch ${L.time} · arrive ${L.arrive} · ${L.venue} · ${L.notes}</p>
     <p class="sub rsvp" style="color:#667;font-size:12.5px;margin-top:3px">RSVP: <b>${L.rsvp.going} going</b> · ${L.rsvp.not_going} out · ${L.rsvp.no_reply} no reply (last checked ${L.rsvp.last_checked.replace(L.date + " ", "")})</p>
   </div>
@@ -406,8 +406,9 @@ function viewGame() {
   ${oppLineupHTML(L)}`;
 }
 
-/* print the game card for the team: body.print-game scopes the @media print rules
-   to the two sheets (p1 lineup, p2 opponent); portrait overrides the global landscape */
+/* print the game card for the team: body.print-game scopes the @media print rules to
+   one portrait sheet — our lineup with the opponent scout right below; overrides the
+   global landscape @page used by the Field view */
 function printGameCard() {
   document.body.classList.add("print-game");
   const s = document.createElement("style");

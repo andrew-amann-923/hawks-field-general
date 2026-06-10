@@ -185,8 +185,9 @@ td.reason b { color: #00794a; }
   .panel .ba { font-size: 8.5px; line-height: 1.35; margin-top: 2px; }
   svg, .panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
-  /* ---- game-view print card (body.print-game, set by printGameCard): two portrait
-     pages — p1 batting order + field-by-inning + who sits, p2 opponent lineup ---- */
+  /* ---- game-view print card (body.print-game, set by printGameCard): ONE portrait
+     sheet — batting order + field-by-inning + who sits, opponent lineup right below
+     (the opp block only spills to page 2 if a roster outgrows the page) ---- */
   body.print-game #main > :not(.lineup-sheet):not(.opp-sheet) { display: none !important; }
   body.print-game .statusbig, body.print-game .rsvp, body.print-game .scoutlink { display: none !important; }
   body.print-game .gamecard { border: 0; border-radius: 0; padding: 0; margin-bottom: 0; }
@@ -196,8 +197,8 @@ td.reason b { color: #00794a; }
   body.print-game table.tbl { font-size: 12.5px; }
   body.print-game .poschips { gap: 4px; }
   body.print-game .poschip { font-size: 11px; padding: 3px 8px; }
-  body.print-game .opp-sheet { break-before: page; }
-  body.print-game .opp-sheet .month-h { font-size: 15px; margin: 0 0 4px; }
+  body.print-game .opp-sheet { break-inside: avoid; }
+  body.print-game .opp-sheet .month-h { font-size: 13px; margin: 12px 0 4px; }
   body.print-game .opp-sheet .note.oppsrc { display: block !important; font-size: 10.5px; color: #555; margin: 2px 0 6px; }
   body.print-game .opp-sheet table.tbl { font-size: 11px; }
   body.print-game .opp-sheet table.tbl th, body.print-game .opp-sheet table.tbl td { padding: 4px 6px; }
