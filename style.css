@@ -118,6 +118,8 @@ td.reason b { color: #00794a; }
 .poschip { background: #fff; border: 1px solid #dde1e8; border-radius: 6px; padding: 4px 10px; font-size: 12px; }
 .poschip b { color: #1F2A44; }
 .note { font-size: 12px; color: #778; margin-top: 10px; }
+.algo-note { background: #f2f7f3; border: 1px solid #cfe3d4; border-left: 4px solid #00A862; border-radius: 6px; padding: 10px 14px; font-size: 13px; line-height: 1.55; color: #2b3a33; margin: 4px 0 10px; }
+.algo-note b { color: #00794a; }
 
 @media (max-width: 1000px) {
   .grid4 { grid-template-columns: repeat(2, 1fr); }
