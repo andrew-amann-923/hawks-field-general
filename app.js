@@ -363,7 +363,18 @@ function viewGame() {
   <h3 class="month-h">Who sits each inning</h3>
   <div class="poschips">${sits}</div>
   ${L.rules.map(r => `<p class="note" style="margin-top:4px">${r}</p>`).join("")}
+  ${whyHTML(L)}
   ${oppLineupHTML(L)}`;
+}
+
+/* batting-order rationale: "why" strings authored in data/lineup_<date>.json */
+function whyHTML(L) {
+  const rows = L.grid.filter(r => r.why).map(r =>
+    `<tr><td class="num"><b>${r.bat}</b></td><td class="pname">${r.player}</td><td class="reason">${r.why}</td></tr>`).join("");
+  if (!rows) return "";
+  return `
+  <h3 class="month-h">Why the order is what it is <span style="font-weight:400;color:#667;font-size:12px">— 2025 numbers, lightly seasoned with jokes</span></h3>
+  <div class="tblwrap wrapok"><table class="tbl"><thead><tr><th class="num">Bat</th><th>Player</th><th>The manager's reasoning</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
 function oppLineupHTML(L) {

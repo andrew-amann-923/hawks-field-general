@@ -102,6 +102,9 @@ table.tbl th.num { text-align: center; }
 .backlink { color: #1a3da8; font-size: 13px; font-weight: 600; text-decoration: none; }
 td.sit { background: #fdecea !important; color: #b90018; font-weight: 700; }
 td.anchor { font-weight: 700; color: #00794a; }
+td.pname { white-space: nowrap; font-weight: 600; }
+td.reason { line-height: 1.5; }
+td.reason b { color: #00794a; }
 
 .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin: 10px 0 12px; }
 .filters label { display: block; font-size: 11px; color: #667; font-weight: 600; margin-bottom: 3px; }
@@ -126,6 +129,10 @@ td.anchor { font-weight: 700; color: #00794a; }
   .tblwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table.tbl th { position: static; }
   .tblwrap th, .tblwrap td { white-space: nowrap; }
+  /* prose tables (the "why the order" card): wrap text instead of scrolling */
+  .tblwrap.wrapok { overflow-x: visible; }
+  .tblwrap.wrapok th, .tblwrap.wrapok td { white-space: normal; }
+  .tblwrap.wrapok td.pname { white-space: nowrap; }
 }
 
 @media (max-width: 700px) {
