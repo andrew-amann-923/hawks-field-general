@@ -382,7 +382,7 @@ function viewGame() {
   <div class="gamecard">
     <div class="view-head" style="margin-bottom:4px">
       <h2>${L.home ? "vs" : "@"} ${L.opponent}</h2>
-      <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${status}<button class="print-btn" onclick="printLineupCard()">Print lineup</button></span></div>
+      <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${status}<button class="print-btn" onclick="printGameCard()">Print card (2 pages)</button></span></div>
     <p class="sub" style="color:#667;font-size:13.5px">Wed Jun 10 · first pitch ${L.time} · arrive ${L.arrive} · ${L.venue} · ${L.notes}</p>
     <p class="sub rsvp" style="color:#667;font-size:12.5px;margin-top:3px">RSVP: <b>${L.rsvp.going} going</b> · ${L.rsvp.not_going} out · ${L.rsvp.no_reply} no reply (last checked ${L.rsvp.last_checked.replace(L.date + " ", "")})</p>
   </div>
@@ -406,18 +406,16 @@ function viewGame() {
   ${oppLineupHTML(L)}`;
 }
 
-/* print one sheet of the game view: body class scopes the @media print rules to
-   that sheet; @page orientation is injected per card (global default is landscape) */
-function printCard(cls, orient) {
-  document.body.classList.add(cls);
+/* print the game card for the team: body.print-game scopes the @media print rules
+   to the two sheets (p1 lineup, p2 opponent); portrait overrides the global landscape */
+function printGameCard() {
+  document.body.classList.add("print-game");
   const s = document.createElement("style");
-  s.textContent = `@media print { @page { size: letter ${orient}; margin: 10mm; } }`;
+  s.textContent = "@media print { @page { size: letter portrait; margin: 10mm; } }";
   document.head.appendChild(s);
-  window.addEventListener("afterprint", () => { document.body.classList.remove(cls); s.remove(); }, { once: true });
+  window.addEventListener("afterprint", () => { document.body.classList.remove("print-game"); s.remove(); }, { once: true });
   window.print();
 }
-function printLineupCard() { printCard("print-lineup", "portrait"); }
-function printOppCard() { printCard("print-opp", "landscape"); }
 
 /* batting-order rationale: "why" strings authored in data/lineup_<date>.json */
 function whyHTML(L) {
@@ -448,8 +446,7 @@ function oppLineupHTML(L) {
   }).join("");
   return `
   <div class="opp-sheet">
-  <h3 class="month-h">${opp.team} lineup — know them before they swing
-    <button class="print-btn" onclick="printOppCard()">Print opp card</button></h3>
+  <h3 class="month-h">${opp.team} lineup — know them before they swing</h3>
   <p class="note oppsrc" style="margin:2px 0 8px">${opp.source}</p>
   <div class="tblwrap"><table class="tbl"><thead><tr><th class="num">#</th><th>Batter</th><th class="num">Pos</th>
     <th class="num">AB</th><th class="num">H</th><th class="num">AVG</th><th>Hits to (our positions)</th><th>Tendency</th><th>Call</th></tr></thead><tbody>${rows}</tbody></table></div>
