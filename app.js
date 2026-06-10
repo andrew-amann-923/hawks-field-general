@@ -199,7 +199,7 @@ function viewField() {
   opponent batter whose scouting call is that look.</p>`;
 }
 
-/* ---------- scout: aggregate the 664 at-bats per team/batter ---------- */
+/* ---------- scout: aggregate the opponent at-bats per team/batter ---------- */
 const XBH = { "2B": 1, "3B": 1, "HR": 1 };
 const TEAMS = (() => {
   const t = {};
