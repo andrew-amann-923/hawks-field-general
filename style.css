@@ -168,7 +168,7 @@ td.reason b { color: #00794a; }
 @media print {
   @page { size: letter landscape; margin: 7mm; }
   body { background: #fff; }
-  #topbar, .print-btn, .note { display: none !important; }
+  #topbar, .print-btn, .note, .algo-note { display: none !important; }
   #main { max-width: none; padding: 0; }
   .view-head { margin: 0 0 2px; }
   .view-head h2 { font-size: 15px; }
