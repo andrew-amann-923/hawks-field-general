@@ -76,6 +76,7 @@ table.tbl th.num { text-align: center; }
 .pcard .desc { font-size: 11.5px; color: #444; line-height: 1.5; margin-top: 4px; }
 
 .month-h { font-size: 14px; font-weight: 700; color: #1F2A44; margin: 18px 0 6px; border-bottom: 2px solid #1F2A44; padding-bottom: 3px; }
+.month-h button.print-btn { float: right; font-size: 11.5px; padding: 4px 12px; margin: -3px 0 2px 8px; }
 .row.game { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid #dde1e8; border-radius: 8px; padding: 9px 14px; margin-bottom: 6px; font-size: 13.5px; }
 .row.game.next { border: 2px solid #00A862; background: #f1faf5; }
 .gdate { width: 58px; font-weight: 700; color: #1F2A44; }
@@ -177,9 +178,36 @@ td.reason b { color: #00794a; }
   .grid6 { gap: 8px; }
   .grid4 { gap: 6px; grid-template-columns: repeat(4, 1fr); }
   .panel { padding: 4px 8px 6px; break-inside: avoid; }
-  .panel h4 { font-size: 10.5px; }
-  .panel .who { font-size: 7.5px; margin-bottom: 1px; }
-  .panel .sp { font-size: 8px; line-height: 1.35; margin-top: 2px; }
-  .panel .ba { font-size: 8px; line-height: 1.35; margin-top: 2px; }
+  .panel h4 { font-size: 11.5px; }
+  .panel .who { font-size: 8px; margin-bottom: 1px; }
+  .panel .sp { font-size: 8.5px; line-height: 1.35; margin-top: 2px; }
+  .panel .ba { font-size: 8.5px; line-height: 1.35; margin-top: 2px; }
   svg, .panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* ---- game-view print sheets: body class (set by printCard) picks the sheet ---- */
+  /* lineup card (portrait): batting order + field-by-inning grid + who sits */
+  body.print-lineup #main > :not(.lineup-sheet) { display: none !important; }
+  body.print-lineup .statusbig, body.print-lineup .rsvp { display: none !important; }
+  body.print-lineup .gamecard { border: 0; border-radius: 0; padding: 0; margin-bottom: 0; }
+  body.print-lineup .view-head h2 { font-size: 19px; }
+  body.print-lineup .gamecard .sub { font-size: 11.5px !important; }
+  body.print-lineup .month-h { font-size: 13px; margin: 12px 0 6px; }
+  body.print-lineup table.tbl { font-size: 12.5px; }
+  body.print-lineup .poschips { gap: 4px; }
+  body.print-lineup .poschip { font-size: 11px; padding: 3px 8px; }
+  /* opponent card (landscape): their lineup + tendencies + our calls */
+  body.print-opp #main > :not(.opp-sheet) { display: none !important; }
+  body.print-opp .opp-sheet .note.oppsrc { display: block !important; font-size: 10.5px; color: #555; }
+  body.print-opp .scoutlink { display: none !important; }
+  body.print-opp .month-h { font-size: 15px; margin: 0 0 4px; }
+  body.print-opp table.tbl { font-size: 11.5px; }
+  body.print-opp table.tbl th, body.print-opp table.tbl td { padding: 4px 7px; }
+  /* shared sheet plumbing: static headers, keep the navy th / red SIT / zebra ink */
+  body.print-lineup table.tbl th, body.print-opp table.tbl th {
+    position: static; background: #1F2A44 !important; color: #fff !important;
+  }
+  body.print-lineup table.tbl, body.print-opp table.tbl,
+  body.print-lineup .poschip, body.print-opp .call {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
 }

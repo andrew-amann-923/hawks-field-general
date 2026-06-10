@@ -58,12 +58,15 @@ function wedgePts(a0, a1, r0, r1) {
   return pts.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
 }
 
-function heatColor(t) {
-  const lerp = (a, b, u) => Math.round(a + (b - a) * u);
-  let r, g, b;
-  if (t < 0.5) { const u = t / 0.5; r = lerp(67, 245, u); g = lerp(160, 208, u); b = lerp(71, 49, u); }
-  else { const u = (t - 0.5) / 0.5; r = lerp(245, 229, u); g = lerp(208, 57, u); b = lerp(49, 53, u); }
-  return `rgb(${r},${g},${b})`;
+/* single-hue heat: one brick red, opacity scaled by share of balls (clean on print).
+   heatAlpha = zone fill opacity; heatChip = the same tint pre-blended over white,
+   used for the % chips so IF heat still reads on top of the dirt. */
+const HEAT = [185, 0, 24];
+function heatAlpha(t) { return 0.07 + 0.48 * t; }
+function heatChip(t) {
+  const a = heatAlpha(t);
+  const ch = b => Math.round(255 - (255 - b) * a);
+  return `rgb(${ch(HEAT[0])},${ch(HEAT[1])},${ch(HEAT[2])})`;
 }
 
 /* zone heat for one of the 4 looks: pools the balls in play of every batter whose
@@ -77,18 +80,40 @@ function zoneStats(cls) {
   return { z, n };
 }
 
-function zoneLayers(zs) {
+/* chip placement: nudge each % chip to the first offset clear of every r=14 bubble
+   (and of already-placed chips) so nothing hides behind the position bubbles */
+const CHIP_TRY = [[0, 0], [0, 6], [0, -8], [14, 0], [-14, 0], [12, -10], [-12, -10], [12, 10], [-12, 10], [0, 14], [0, -16], [20, 0], [-20, 0]];
+function chipSpot(lx, ly, dots, placed) {
+  for (const [ox, oy] of CHIP_TRY) {
+    const cx = lx + ox, cy = ly + oy;
+    let ok = true;
+    for (const [x, y] of dots) {
+      const nx = Math.max(cx - 14, Math.min(x, cx + 14));
+      const ny = Math.max(cy - 6.75, Math.min(y, cy + 6.75));
+      if (Math.hypot(x - nx, y - ny) < 15) { ok = false; break; }
+    }
+    if (ok) for (const [px, py] of placed) {
+      if (Math.abs(cx - px) < 30 && Math.abs(cy - py) < 15.5) { ok = false; break; }
+    }
+    if (ok) return [cx, cy];
+  }
+  return [lx, ly];
+}
+
+function zoneLayers(zs, dots) {
   if (!zs || !zs.n) return { fills: "", labels: "" };
   const mx = Math.max(...Object.values(zs.z), 1);
   let fills = "", labels = "";
+  const placed = [];
   ["L", "C", "R"].forEach(dir => ["IF", "OF"].forEach(dep => {
-    const v = zs.z[dir + dep];
+    const v = zs.z[dir + dep], t = v / mx;
     const [a0, a1] = BINS[dir], [r0, r1] = RADII[dep];
-    const col = heatColor(v / mx);
-    fills += `<polygon points="${wedgePts(a0, a1, r0, r1)}" fill="${col}" fill-opacity="0.85" stroke="#fff" stroke-width="1"/>`;
-    const [lx, ly] = (dir === "C" && dep === "IF") ? [160, 260.5] : pt((a0 + a1) / 2, LABEL_R[dep]);
-    labels += `<rect x="${(lx - 14).toFixed(1)}" y="${(ly - 6).toFixed(1)}" width="28" height="13.5" rx="6.75" fill="${col}" stroke="rgba(255,255,255,0.9)" stroke-width="0.8"/>` +
-      `<text x="${lx.toFixed(1)}" y="${(ly + 4).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff" stroke="rgba(0,0,0,0.45)" stroke-width="2" paint-order="stroke" font-family="Arial">${Math.round(100 * v / zs.n)}%</text>`;
+    fills += `<polygon points="${wedgePts(a0, a1, r0, r1)}" fill="rgb(${HEAT})" fill-opacity="${heatAlpha(t).toFixed(2)}" stroke="#fff" stroke-width="1"/>`;
+    const [bx, by] = (dir === "C" && dep === "IF") ? [160, 260.5] : pt((a0 + a1) / 2, LABEL_R[dep]);
+    const [lx, ly] = chipSpot(bx, by, dots || [], placed);
+    placed.push([lx, ly]);
+    labels += `<rect x="${(lx - 14).toFixed(1)}" y="${(ly - 6.75).toFixed(1)}" width="28" height="13.5" rx="6.75" fill="${heatChip(t)}" stroke="#aab" stroke-width="0.7"/>` +
+      `<text x="${lx.toFixed(1)}" y="${(ly + 3.6).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="bold" fill="#1F2A44" font-family="Arial">${Math.round(100 * v / zs.n)}%</text>`;
   }));
   return { fills, labels };
 }
@@ -130,14 +155,15 @@ const LOOKS = [
 
 function alignSVG(key, zones) {
   const L = LAY[key];
-  const zl = zoneLayers(zones);
+  const zl = zoneLayers(zones, FIXED.concat(L.f).map(d => [d[1], d[2]]));
   let s = '<svg viewBox="0 34 320 272" xmlns="http://www.w3.org/2000/svg" role="img">' +
     fieldGrass() + zl.fills + fieldDirt() + fieldLines(true) + zl.labels;
   L.st.forEach(p => { s += `<line x1="${p[0]}" y1="${p[1]}" x2="${p[2]}" y2="${p[3]}" stroke="${SFC}" stroke-width="1.2" stroke-dasharray="2 2"/>`; });
+  // big white bubbles with a role-colored ring: max legibility on print, minimal ink
   FIXED.concat(L.f).forEach(d => {
     const col = d[3] || PCC;
-    s += `<circle cx="${d[1]}" cy="${d[2]}" r="10.5" fill="${col}" stroke="#fff" stroke-width="1.3"/>` +
-         `<text x="${d[1]}" y="${d[2]+2.7}" text-anchor="middle" font-size="8" font-weight="bold" fill="#fff" font-family="Arial">${d[0]}</text>`;
+    s += `<circle cx="${d[1]}" cy="${d[2]}" r="14" fill="#fff" stroke="${col}" stroke-width="2.6"/>` +
+         `<text x="${d[1]}" y="${d[2]+3.4}" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#1F2A44" font-family="Arial">${d[0]}</text>`;
   });
   return s + "</svg>";
 }
@@ -156,11 +182,11 @@ function viewField() {
   <div class="view-head"><h2>The 4 looks</h2>
     <span class="sub">named for where the ball goes — batter hand doesn't matter &times; 2 base states</span>
     <button class="print-btn" onclick="window.print()">Print card (1 page)</button></div>
-  <p class="legend"><span class="dot if"></span>Infield (max 4)
+  <p class="legend">Bubble ring color = role: <span class="dot if"></span>Infield (max 4)
     <span class="dot sf"></span>Short fielder (the freed 1B)
     <span class="dot of"></span>Deep OF
-    <span class="dot pc"></span>P &amp; C (fixed) — all 10 players shown &nbsp;·&nbsp; Dashed arcs = in-front line &amp; deep line &nbsp;·&nbsp;
-    Zones colored by where balls land vs the hitters that look is for: <b style="color:#c62828">red = most</b>, <b style="color:#b8860b">yellow = mid</b>, <b style="color:#2e7d32">green = least</b> (% of balls in play per zone)</p>
+    <span class="dot pc"></span>P &amp; C (fixed) — all 10 players on every diagram &nbsp;·&nbsp; Dashed arcs = in-front line &amp; deep line &nbsp;·&nbsp;
+    One color shows where balls land vs the hitters that look is for: <b style="color:#B90018">darker red = more balls</b> (% of balls in play per zone, scaled per card)</p>
   <section class="hand-section"><h3>ONE CARD<small>top row = bases empty (1B holds the bag) · bottom row = runner on 1B (force at 2B, 1B becomes the short fielder)</small></h3>
   <div class="grid4">${row("1")}${row("2")}</div></section>
   <p class="note">Prints as one landscape page. The Scout view's <b>Call</b> column picks one of these four looks per batter.
@@ -352,20 +378,36 @@ function viewGame() {
   }).join("");
   return `
   <p><a href="#schedule" class="backlink">&larr; Back to schedule</a></p>
+  <div class="lineup-sheet">
   <div class="gamecard">
     <div class="view-head" style="margin-bottom:4px">
-      <h2>${L.home ? "vs" : "@"} ${L.opponent}</h2>${status}</div>
+      <h2>${L.home ? "vs" : "@"} ${L.opponent}</h2>
+      <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${status}<button class="print-btn" onclick="printLineupCard()">Print lineup</button></span></div>
     <p class="sub" style="color:#667;font-size:13.5px">Wed Jun 10 · first pitch ${L.time} · arrive ${L.arrive} · ${L.venue} · ${L.notes}</p>
-    <p class="sub" style="color:#667;font-size:12.5px;margin-top:3px">RSVP: <b>${L.rsvp.going} going</b> · ${L.rsvp.not_going} out · ${L.rsvp.no_reply} no reply (last checked ${L.rsvp.last_checked.replace(L.date + " ", "")})</p>
+    <p class="sub rsvp" style="color:#667;font-size:12.5px;margin-top:3px">RSVP: <b>${L.rsvp.going} going</b> · ${L.rsvp.not_going} out · ${L.rsvp.no_reply} no reply (last checked ${L.rsvp.last_checked.replace(L.date + " ", "")})</p>
   </div>
   <h3 class="month-h">Batting order &amp; field by inning <span style="font-weight:400;color:#667;font-size:12px">— everyone bats all game; SIT = fielding rest only</span></h3>
   <div class="tblwrap"><table class="tbl"><thead><tr><th class="num">Bat</th><th>Player</th>${innHead}</tr></thead><tbody>${rows}</tbody></table></div>
   <h3 class="month-h">Who sits each inning</h3>
   <div class="poschips">${sits}</div>
+  </div>
   ${L.rules.map(r => `<p class="note" style="margin-top:4px">${r}</p>`).join("")}
   ${whyHTML(L)}
   ${oppLineupHTML(L)}`;
 }
+
+/* print one sheet of the game view: body class scopes the @media print rules to
+   that sheet; @page orientation is injected per card (global default is landscape) */
+function printCard(cls, orient) {
+  document.body.classList.add(cls);
+  const s = document.createElement("style");
+  s.textContent = `@media print { @page { size: letter ${orient}; margin: 10mm; } }`;
+  document.head.appendChild(s);
+  window.addEventListener("afterprint", () => { document.body.classList.remove(cls); s.remove(); }, { once: true });
+  window.print();
+}
+function printLineupCard() { printCard("print-lineup", "portrait"); }
+function printOppCard() { printCard("print-opp", "landscape"); }
 
 /* batting-order rationale: "why" strings authored in data/lineup_<date>.json */
 function whyHTML(L) {
@@ -395,11 +437,14 @@ function oppLineupHTML(L) {
       <td>${c ? `<span class="call ${c.cls}">${c.label}</span>` : ""}</td></tr>`;
   }).join("");
   return `
-  <h3 class="month-h">${opp.team} lineup — know them before they swing</h3>
-  <p class="note" style="margin:2px 0 8px">${opp.source}</p>
+  <div class="opp-sheet">
+  <h3 class="month-h">${opp.team} lineup — know them before they swing
+    <button class="print-btn" onclick="printOppCard()">Print opp card</button></h3>
+  <p class="note oppsrc" style="margin:2px 0 8px">${opp.source}</p>
   <div class="tblwrap"><table class="tbl"><thead><tr><th class="num">#</th><th>Batter</th><th class="num">Pos</th>
     <th class="num">AB</th><th class="num">H</th><th class="num">AVG</th><th>Hits to (our positions)</th><th>Tendency</th><th>Call</th></tr></thead><tbody>${rows}</tbody></table></div>
-  <p style="margin-top:8px"><button class="scoutlink" data-team="${opp.team}">Full ${opp.team} scout report</button></p>`;
+  <p style="margin-top:8px"><button class="scoutlink" data-team="${opp.team}">Full ${opp.team} scout report</button></p>
+  </div>`;
 }
 
 /* ---------- data: at-bat explorer ---------- */
