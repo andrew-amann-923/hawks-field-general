@@ -393,13 +393,13 @@ function viewGame() {
   and every chance in the field is data — play your way up the card.</p>
   <h3 class="month-h">Batting order &amp; field by inning <span style="font-weight:400;color:#667;font-size:12px">— everyone bats all game; SIT = fielding rest only</span></h3>
   <div class="tblwrap"><table class="tbl"><thead><tr><th class="num">Bat</th><th>Player</th>${innHead}</tr></thead><tbody>${rows}</tbody></table></div>
-  <h3 class="month-h">Who sits each inning</h3>
+  <h3 class="month-h whosits">Who sits each inning</h3>
   <p class="algo-note">Seven innings means seven fielding rests, and the algorithm hands them out — it isn't personal,
   it's a sort. The column it reads first is <b>2025 errors</b>: when two players are up for the same rest, the higher
   error total sits and the cleaner glove stays on the field. Then the guardrails kick in: everyone bats all game, nobody
   sits twice, players who are the only ones who can cover their position never sit, and every inning still has to field
   a legal ten. Fewer errors this season = fewer rests next week. The receipts are in the fine print below.</p>
-  <div class="poschips">${sits}</div>
+  <div class="poschips whosits">${sits}</div>
   </div>
   ${L.rules.map(r => `<p class="note" style="margin-top:4px">${r}</p>`).join("")}
   ${whyHTML(L)}

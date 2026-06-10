@@ -186,24 +186,24 @@ td.reason b { color: #00794a; }
   svg, .panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
   /* ---- game-view print card (body.print-game, set by printGameCard): ONE portrait
-     sheet — batting order + field-by-inning + who sits, opponent lineup right below
-     (the opp block only spills to page 2 if a roster outgrows the page) ---- */
+     sheet — batting order + field-by-inning with the opponent scout right below.
+     Who-sits chips are screen-only (the SIT cells already say it). ---- */
   body.print-game #main > :not(.lineup-sheet):not(.opp-sheet) { display: none !important; }
-  body.print-game .statusbig, body.print-game .rsvp, body.print-game .scoutlink { display: none !important; }
+  body.print-game .statusbig, body.print-game .rsvp, body.print-game .scoutlink,
+  body.print-game .whosits { display: none !important; }
   body.print-game .gamecard { border: 0; border-radius: 0; padding: 0; margin-bottom: 0; }
-  body.print-game .view-head h2 { font-size: 19px; }
-  body.print-game .gamecard .sub { font-size: 11.5px !important; }
-  body.print-game .month-h { font-size: 13px; margin: 12px 0 6px; }
-  body.print-game table.tbl { font-size: 12.5px; }
-  body.print-game .poschips { gap: 4px; }
-  body.print-game .poschip { font-size: 11px; padding: 3px 8px; }
-  body.print-game .opp-sheet { break-inside: avoid; }
-  body.print-game .opp-sheet .month-h { font-size: 13px; margin: 12px 0 4px; }
-  body.print-game .opp-sheet .note.oppsrc { display: block !important; font-size: 10.5px; color: #555; margin: 2px 0 6px; }
-  body.print-game .opp-sheet table.tbl { font-size: 11px; }
-  body.print-game .opp-sheet table.tbl th, body.print-game .opp-sheet table.tbl td { padding: 4px 6px; }
+  body.print-game .view-head h2 { font-size: 17px; }
+  body.print-game .gamecard .sub { font-size: 11px !important; }
+  body.print-game .month-h { font-size: 12.5px; margin: 9px 0 4px; }
+  body.print-game table.tbl { font-size: 11.5px; }
+  body.print-game table.tbl th, body.print-game table.tbl td { padding: 4px 6px; }
+  body.print-game .opp-sheet .note.oppsrc { display: block !important; font-size: 10px; color: #555; margin: 1px 0 4px; }
+  body.print-game .opp-sheet table.tbl { font-size: 10.5px; }
+  body.print-game .opp-sheet table.tbl th, body.print-game .opp-sheet table.tbl td { padding: 3px 5px; }
+  body.print-game .opp-sheet .call { font-size: 9.5px; padding: 2px 6px; }
+  body.print-game table.tbl tr { break-inside: avoid; }
   body.print-game table.tbl th { position: static; background: #1F2A44 !important; color: #fff !important; }
-  body.print-game table.tbl, body.print-game .poschip, body.print-game .call {
+  body.print-game table.tbl, body.print-game .call {
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
 }
