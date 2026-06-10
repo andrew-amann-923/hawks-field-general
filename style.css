@@ -144,6 +144,8 @@ td.reason b { color: #00794a; }
 
 @media (max-width: 600px) {
   .grid6, .grid4 { grid-template-columns: 1fr; }
+  /* phones: let player names wrap too so the reasoning column keeps its width */
+  .tblwrap.wrapok td.pname { white-space: normal; }
   #main { padding: 12px 10px 40px; }
   .view-head h2 { font-size: 18px; }
   /* filters: two per row, full-width controls; 16px stops iOS focus zoom */
