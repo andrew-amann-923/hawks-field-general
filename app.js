@@ -362,7 +362,33 @@ function viewGame() {
   <div class="tblwrap"><table class="tbl"><thead><tr><th class="num">Bat</th><th>Player</th>${innHead}</tr></thead><tbody>${rows}</tbody></table></div>
   <h3 class="month-h">Who sits each inning</h3>
   <div class="poschips">${sits}</div>
-  ${L.rules.map(r => `<p class="note" style="margin-top:4px">${r}</p>`).join("")}`;
+  ${L.rules.map(r => `<p class="note" style="margin-top:4px">${r}</p>`).join("")}
+  ${oppLineupHTML(L)}`;
+}
+
+function oppLineupHTML(L) {
+  const opp = L.opponent_lineup;
+  if (!opp) return "";
+  const T = TEAMS.find(t => t.name === opp.team);
+  const rows = opp.order.map((o, i) => {
+    const b = T && T.batters[o.name];
+    const hitTo = {};
+    D.at_bats.forEach(r => { if (r.game === opp.team && r.batter === o.name && r.hit_to) hitTo[r.hit_to] = (hitTo[r.hit_to] || 0) + 1; });
+    const hits = Object.entries(hitTo).sort((a, b2) => b2[1] - a[1]).map(([k, n]) => `${k}&times;${n}`).join(" · ") || "—";
+    const c = b ? callFor(b) : null;
+    return `<tr><td class="num"><b>${i + 1}</b></td>
+      <td>${o.name}${o.jersey && o.name !== "#" + o.jersey ? ' <span style="color:#99a">#' + o.jersey + "</span>" : ""}</td>
+      <td class="num">${o.pos || "—"}</td>
+      <td class="num">${b ? b.ab : "—"}</td><td class="num">${b ? b.h : "—"}</td><td class="num">${b ? avgStr(b.h, b.ab) : "—"}</td>
+      <td>${hits}</td><td>${b ? tendency(b) : "no data"}</td>
+      <td>${c ? `<span class="call ${c.cls}">${c.label}</span>` : ""}</td></tr>`;
+  }).join("");
+  return `
+  <h3 class="month-h">${opp.team} lineup — know them before they swing</h3>
+  <p class="note" style="margin:2px 0 8px">${opp.source}</p>
+  <div class="tblwrap"><table class="tbl"><thead><tr><th class="num">#</th><th>Batter</th><th class="num">Pos</th>
+    <th class="num">AB</th><th class="num">H</th><th class="num">AVG</th><th>Hits to (our positions)</th><th>Tendency</th><th>Call</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <p style="margin-top:8px"><button class="scoutlink" data-team="${opp.team}">Full ${opp.team} scout report</button></p>`;
 }
 
 /* ---------- data: at-bat explorer ---------- */
@@ -450,4 +476,10 @@ function renderDataTableOnly() {
 }
 
 window.addEventListener("hashchange", render);
+
+/* game day: opening the app with no hash lands straight on today's game card */
+if (!location.hash) {
+  const today = new Date().toISOString().slice(0, 10);
+  if (D.lineups && D.lineups[today]) { state.gameDate = today; location.hash = "#game"; }
+}
 render();
