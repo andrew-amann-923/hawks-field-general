@@ -345,7 +345,7 @@ function viewSchedule() {
       <span class="gopp">${g.opponent}</span>
       ${lchip}
       <span class="gvenue">${g.venue}</span>
-      <span class="gtime">${g.time}</span>
+      ${g.result ? `<span class="gtime" style="font-weight:700;color:${g.result.startsWith("W") ? "#137333" : "#b3261e"}">${g.result}</span>` : `<span class="gtime">${g.time}</span>`}
       ${scout}${g.date === next ? '<span class="nextchip">NEXT GAME</span>' : ""}
     </div>`;
   });
@@ -373,8 +373,8 @@ function viewGame() {
     return `<tr><td class="num"><b>${r.bat}</b></td><td>${r.player}</td>${cells}</tr>`;
   }).join("");
   const sits = [1, 2, 3, 4, 5, 6, 7].map(i => {
-    const s = L.grid.find(r => r.inn[i - 1] === "SIT");
-    return `<span class="poschip"><b>Inn ${i}</b> ${s ? s.player.replace(/ #\d+$/, "") + " sits" : "—"}</span>`;
+    const s = L.grid.filter(r => r.inn[i - 1] === "SIT").map(r => r.player.replace(/ #\d+$/, "")).join(", ");
+    return `<span class="poschip"><b>Inn ${i}</b> ${s ? s + " sit" : "—"}</span>`;
   }).join("");
   return `
   <p><a href="#schedule" class="backlink">&larr; Back to schedule</a></p>
@@ -383,22 +383,21 @@ function viewGame() {
     <div class="view-head" style="margin-bottom:4px">
       <h2>${L.home ? "vs" : "@"} ${L.opponent}</h2>
       <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${status}<button class="print-btn" onclick="printGameCard()">Print game card</button></span></div>
-    <p class="sub" style="color:#667;font-size:13.5px">Wed Jun 10 · first pitch ${L.time} · arrive ${L.arrive} · ${L.venue} · ${L.notes}</p>
+    <p class="sub" style="color:#667;font-size:13.5px">${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(L.date+"T12:00:00").getDay()]} ${MONTHS[+L.date.slice(5,7)-1].slice(0,3)} ${+L.date.slice(8,10)} · first pitch ${L.time} · arrive ${L.arrive} · ${L.venue} · ${L.notes}</p>
     <p class="sub rsvp" style="color:#667;font-size:12.5px;margin-top:3px">RSVP: <b>${L.rsvp.going} going</b> · ${L.rsvp.not_going} out · ${L.rsvp.no_reply} no reply (last checked ${L.rsvp.last_checked.replace(L.date + " ", "")})</p>
   </div>
   <p class="algo-note"><b>How this card gets made:</b> no favorites, no politics — a program builds this lineup from last
   season's numbers. The batting order is ranked on 2025 production (on-base, slugging, strikeouts, walks) and fielding
-  rest is ranked on 2025 errors, then the whole thing re-runs before every game with the newest stats folded in. Nothing
+  spots are set by the numbers, then the whole thing re-runs before every game with the newest stats folded in. Nothing
   here is permanent: hit this week and you climb the order next week; play clean defense and you sit less. Every at-bat
   and every chance in the field is data — play your way up the card.</p>
   <h3 class="month-h">Batting order &amp; field by inning <span style="font-weight:400;color:#667;font-size:12px">— everyone bats all game; SIT = fielding rest only</span></h3>
   <div class="tblwrap"><table class="tbl"><thead><tr><th class="num">Bat</th><th>Player</th>${innHead}</tr></thead><tbody>${rows}</tbody></table></div>
   <h3 class="month-h whosits">Who sits each inning</h3>
-  <p class="algo-note">Seven innings means seven fielding rests, and the algorithm hands them out — it isn't personal,
-  it's a sort. The column it reads first is <b>2025 errors</b>: when two players are up for the same rest, the higher
-  error total sits and the cleaner glove stays on the field. Then the guardrails kick in: everyone bats all game, nobody
-  sits twice, players who are the only ones who can cover their position never sit, and every inning still has to field
-  a legal ten. Fewer errors this season = fewer rests next week. The receipts are in the fine print below.</p>
+  <p class="algo-note">With a full bench, a few players rest each inning and the algorithm hands the rests out by the
+  numbers, not by politics. The guardrails: everyone bats all game, rests are spread as evenly as the positions allow
+  (our anchors sit least), players who are the only one who can cover their spot never sit, and every inning still fields a
+  legal ten. Play clean defense and you sit less; the receipts are in the fine print below.</p>
   <div class="poschips whosits">${sits}</div>
   </div>
   ${L.rules.map(r => `<p class="note" style="margin-top:4px">${r}</p>`).join("")}
