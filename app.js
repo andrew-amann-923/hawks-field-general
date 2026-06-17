@@ -499,8 +499,116 @@ function viewData() {
   <div class="poschips">${posTable}</div>`;
 }
 
+/* ---------- season stats: GameChanger replica + yellow-box column leaders ----------
+   Mirrors the GameChanger Stats page: Batting / Pitching / Fielding groups, each with the
+   same Standard / Advanced (and Catching / Innings) sub-tabs. The leader of every column
+   (the MOST) gets a yellow box; the box race tallies who leads the most columns. */
+const SEASON = D.season;
+state.season = { group: SEASON.groups[0].key, tab: SEASON.groups[0].tabs[0].key };
+
+/* a cell value is numeric only if it's a plain number — "-", "N/A", "0-0" are not */
+function seasonNum(s) { return /^-?\d*\.?\d+$/.test(s) ? parseFloat(s) : NaN; }
+
+/* leaders of one table: Set of "row:col" cells holding the column max — but only when the
+   column has a positive max AND real differentiation (≥2 numbers, not all equal). That kills
+   the meaningless cases: all-zero columns, everyone-tied columns, and single-player tables. */
+function tableLeaders(tab) {
+  const leads = new Set();
+  tab.cols.forEach((col, c) => {
+    const nums = [];
+    tab.rows.forEach((row, r) => { const n = seasonNum(row.v[c]); if (!isNaN(n)) nums.push([r, n]); });
+    if (nums.length < 2) return;
+    const vals = nums.map(x => x[1]), mx = Math.max(...vals), mn = Math.min(...vals);
+    if (mx <= 0 || mx === mn) return;
+    nums.forEach(([r, n]) => { if (n === mx) leads.add(r + ":" + c); });
+  });
+  return leads;
+}
+
+/* season-wide box race: yellow boxes per player, only across tabs flagged count:true
+   (Batting + Fielding Standard — where the whole roster competes; pitching is one arm). */
+function boxRace() {
+  const tally = {};
+  SEASON.groups.forEach(g => g.tabs.forEach(tab => {
+    if (!tab.count) return;
+    tableLeaders(tab).forEach(k => {
+      const name = tab.rows[+k.split(":")[0]].p;
+      tally[name] = (tally[name] || 0) + 1;
+    });
+  }));
+  return Object.entries(tally).map(([name, n]) => ({ name, n })).sort((a, b) => b.n - a.n || a.name.localeCompare(b.name));
+}
+
+function seasonTableHTML(tab) {
+  const leads = tableLeaders(tab);
+  const head = '<th class="pcol">Player</th>' + tab.cols.map(c => `<th class="num" title="${c.d}">${c.k}</th>`).join("");
+  const body = tab.rows.map((row, r) => {
+    const cells = row.v.map((val, c) =>
+      `<td class="num${leads.has(r + ":" + c) ? " lead" : ""}">${val}</td>`).join("");
+    const jno = row.j ? ` <span class="jno">#${row.j}</span>` : "";
+    return `<tr><td class="pcol">${row.p}${jno}</td>${cells}</tr>`;
+  }).join("");
+  const teamRow = `<tr class="teamrow"><td class="pcol">Team</td>${tab.team.map(v => `<td class="num">${v}</td>`).join("")}</tr>`;
+  return `<div class="tblwrap season-tbl"><table class="tbl"><thead><tr>${head}</tr></thead><tbody>${body}${teamRow}</tbody></table></div>`;
+}
+
+function viewSeason() {
+  const S = state.season;
+  const g = SEASON.groups.find(x => x.key === S.group) || SEASON.groups[0];
+  let tab = g.tabs.find(x => x.key === S.tab);
+  if (!tab) { tab = g.tabs[0]; S.tab = tab.key; }
+
+  const race = boxRace();
+  const top = race.length ? race[0].n : 0;
+  const winners = race.filter(x => x.n === top && top > 0).map(x => x.name);
+  const raceChips = race.map((x, i) =>
+    `<span class="boxchip${x.n === top ? " win" : ""}">${i === 0 && x.n === top ? "🏆 " : ""}${x.name} <b>${x.n}</b></span>`).join("");
+  const summary = winners.length
+    ? `<b>${winners.join(" &amp; ")}</b> ${winners.length > 1 ? "share" : "leads"} the yellow-box race with <b>${top}</b> column${top === 1 ? "" : "s"} led.`
+    : "No column leaders yet — play some games.";
+
+  const synced = SEASON.sync_status === "ok";
+  const statusPill = `<span class="syncpill ${synced ? "ok" : "stale"}">${synced ? "✓ Synced from GameChanger" : "⚠ Sync stale"}</span>`;
+
+  return `
+  <div class="view-head"><h2>Season stats</h2>
+    <span class="sub">${SEASON.team} · ${SEASON.season} · record ${SEASON.record} — replicated from GameChanger</span></div>
+  <div class="syncbar">${statusPill}
+    <span class="syncmeta">Last updated <b>${SEASON.last_updated}</b></span>
+    <a class="syncsrc" href="${SEASON.source}" target="_blank" rel="noopener">View on GameChanger ↗</a></div>
+
+  <div class="storycard"><h3>📣 The story so far <span class="comedy">comedy: 80%</span></h3>
+    <p>${SEASON.story}</p></div>
+
+  <div class="racecard">
+    <h3>🟨 Yellow-box leaderboard <small>most column leads wins</small></h3>
+    <p class="racesummary">${summary}</p>
+    <div class="boxchips">${raceChips}</div>
+    <p class="note" style="margin-top:6px">A yellow box marks the column leader (the highest value). The race counts
+    <b>Batting</b> and <b>Fielding (Standard)</b> — where all 14 players compete. Columns where everyone's tied (or all zero)
+    and the one-man pitching staff award no boxes. Leading a column isn't always a compliment (yes, that includes errors).</p>
+  </div>
+
+  <div class="seasongroup">${SEASON.groups.map(x =>
+    `<button data-sg="${x.key}" class="${x.key === g.key ? "active" : ""}">${x.label}</button>`).join("")}</div>
+  <div class="seasontab">${g.tabs.map(x =>
+    `<button data-st="${x.key}" class="${x.key === tab.key ? "active" : ""}">${x.label}</button>`).join("")}</div>
+
+  ${seasonTableHTML(tab)}
+  <p class="note">Scroll the table sideways for every column — the Player column stays pinned, exactly like GameChanger.
+  Hover a header for the full stat name. The bottom <b>Team</b> row is GameChanger's season total and is excluded from the box race.</p>`;
+}
+
+/* season controls: group pills + sub-tabs */
+MAIN.addEventListener("click", e => {
+  const sg = e.target.closest(".seasongroup button");
+  if (sg) { const g = SEASON.groups.find(x => x.key === sg.dataset.sg); state.season.group = g.key; state.season.tab = g.tabs[0].key; render(); return; }
+  const st = e.target.closest(".seasontab button");
+  if (st) { state.season.tab = st.dataset.st; render(); return; }
+});
+
 /* ---------- router ---------- */
-const VIEWS = { schedule: viewSchedule, game: viewGame, field: viewField, scout: viewScout, hawks: viewHawks, data: viewData };
+const VIEWS = { schedule: viewSchedule, game: viewGame, field: viewField, scout: viewScout, hawks: viewHawks, season: viewSeason, data: viewData };
 
 function render() {
   let v = (location.hash || "#schedule").slice(1);
