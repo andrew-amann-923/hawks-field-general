@@ -1,0 +1,51 @@
+{
+  "date": "2026-06-23",
+  "opponent": "Bears",
+  "home": true,
+  "venue": "Harry Lee Cole School",
+  "time": "6:30 PM",
+  "arrive": "5:30 PM",
+  "lock_at": "2026-06-23T17:30:00",
+  "notes": "Bears makeup game — note the new field",
+  "rsvp": {"going": 13, "not_going": 4, "no_reply": 0, "last_checked": "2026-06-23 game day"},
+  "opponent_lineup": {
+    "team": "Bears",
+    "source": "First 2026 meeting with the Bears, so no 2026 order is crawled yet. The 2025 book is thin but useful — one game, a Hawks <b>9-4 win</b> on Jul 1 — and it points one way: they're <b>pull-heavy to the left side</b> (8 of 18 balls in play went left, only 5 right). Shade the left-center gap and make them prove they can go oppo. Full at-bat-by-at-bat breakdown and the per-hitter alignment call are on the Bears scout page.",
+    "order": []
+  },
+  "rules": [
+    "This Bears game got moved up to tonight — and to a NEW field: <b>Harry Lee Cole School, 26 Middleton Rd</b>, not Boy Scout Park. Punch the address in before you leave.",
+    "Available tonight: <b>13</b>. OUT: Joe McLean (#4), Jon Sorenson, Luke McArdle, and Sang Lee. The order is ranked off the 2025 body of work and lightly seasoned with the hot 2026 starts — proven bats lead, recent heat only nudges.",
+    "INNINGS 1 & 7 — STRONGEST GLOVES: we open and close with the best defense at every spot — <b>1B Flinn · 2B Fitzpatrick · 3B Watson · SS Marks · P Klatt · C Bruno · LF DiLibero · LCF Amann · RCF Knight · RF Konen</b>.",
+    "Three men never leave the field tonight: <b>Klatt</b> is our only arm so he throws all 7, <b>Marks</b> is our only true shortstop, and with Sorenson out <b>Watson</b> is our only third baseman — all three play every inning. Amann anchors left-center whenever he's out there.",
+    "Everyone bats all game; SIT means a fielding rest only. Thirteen here and ten spots means three rest each inning — and because three anchors are bolted in place, a couple of bats take an extra breather on the bench so the sharpest glove is always where the ball goes. The grid shows exactly where you are each inning."
+  ],
+  "grid": [
+    {"bat": 1, "player": "Ryan Coulombe #0", "inn": ["SIT", "SIT", "2B", "RCF", "RF", "2B", "SIT"],
+     "why": "Leadoff because the man got on base at a <b>.565 clip</b> and struck out <b>exactly once all of 2025</b> — once. The pitcher is more likely to pull a hamstring than to sneak strike three past him. Job one: be standing on a base when the monsters behind him start swinging."},
+    {"bat": 2, "player": "John Flinn #19", "inn": ["1B", "SIT", "LF", "LF", "SIT", "LF", "1B"],
+     "why": "A <b>.644 average</b> with a <b>.631 on-base</b> isn't hitting, it's vandalism. Bats second so he's already standing on first by the time the cleanup crew clocks in. He missed a couple games and the lineup still saved his seat — that's how loud the résumé is."},
+    {"bat": 3, "player": "Andrew Amann #21", "inn": ["LCF", "LCF", "LCF", "SIT", "LCF", "LCF", "LCF"],
+     "why": "The best bat we own — <b>.689, a 2.391 OPS, 7 bombs</b> in 2025 — and he opened 2026 with <b>6 RBI in two games</b>, right where he left off. Bats third, anchors left-center, and yes, also writes this lineup. The numbers keep nominating him; he keeps graciously accepting."},
+    {"bat": 4, "player": "Perry DiLibero #31", "inn": ["LF", "RCF", "RF", "LCF", "SIT", "SIT", "LF"],
+     "why": "<b>14 homers and 53 RBI</b> in 2025, both team highs, which makes cleanup less a decision than a coronation. He clears the bases and, by all accounts, the buffet. Wherever Perry goes, things get cleaned up."},
+    {"bat": 5, "player": "Arthur Bruno", "inn": ["C", "C", "SIT", "C", "C", "SIT", "C"],
+     "why": "Hit <b>.524 with zero walks and zero strikeouts</b> in 63 trips — he has never met a pitch he didn't want to personally introduce to the outfield. The 5-hole keeps the conga line moving, and he's behind the plate most of the night too."},
+    {"bat": 6, "player": "Eric Klatt #44", "inn": ["P", "P", "P", "P", "P", "P", "P"],
+     "why": "<b>.476 with seven doubles</b> of genuine gap juice, batting sixth and pitching all seven because he is, technically, the entire pitching staff. We feed him, we praise him, and we do not let him get tired."},
+    {"bat": 7, "player": "Ed Fitzpatrick", "inn": ["2B", "2B", "SIT", "2B", "SIT", "1B", "2B"],
+     "why": "<b>.473 with four triples</b> — and at this level a triple is two miracles in one swing: hit it a mile AND agree to run the whole way. Slots seventh and mans the keystone. The wheels still turn; the witnesses are still stunned."},
+    {"bat": 8, "player": "Matt Watson", "inn": ["3B", "3B", "3B", "3B", "3B", "3B", "3B"],
+     "why": "Quietly hit <b>.469</b> last year and is <b>4-for-6 (.667)</b> to open 2026 — the quiet ones are always the problem. He's also the only third baseman in the building tonight, so he isn't so much batting eighth as he is permanently stationed at the hot corner with a bat within reach."},
+    {"bat": 9, "player": "Dennis Marks #12", "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"],
+     "why": "Ignore the <b>.394</b> — the <b>.652 slugging</b> (8 doubles, 3 homers) is the headline. Boom-or-bust pop batting ninth to flip the order over with a bang, playing all seven at short because nobody else can. Iron man, but the fun kind."},
+    {"bat": 10, "player": "Corey Cheever", "inn": ["SIT", "RF", "C", "SIT", "2B", "C", "SIT"],
+     "why": "Hit <b>.313</b> — the best stick in the back third — so he gets to lead the bottom-of-the-order uprising. Turn it over, Corey, and hand the monsters at the top another snack."},
+    {"bat": 11, "player": "Ian Konen #14", "inn": ["RF", "SIT", "RCF", "SIT", "RCF", "RCF", "RF"],
+     "why": "The <b>.208 / .286 OBP</b> 2025 line keeps him in the back third, but he's <b>1.571-OPS hot</b> in 2026 with a homer and a triple already, and he led the 2025 team in <b>walks (6)</b> — taking a pitch in this league counts as civil disobedience. Eleventh, with real upside."},
+    {"bat": 12, "player": "Thacher Knight #20", "inn": ["RCF", "LF", "SIT", "1B", "LF", "SIT", "RCF"],
+     "why": "<b>Zero 2025 data</b>, so the algorithm just shrugged — then he went <b>4-for-6 (.667)</b> in 2026 and the algorithm started taking notes. Keep this up and twelfth becomes a distant, slightly embarrassing memory."},
+    {"bat": 13, "player": "Kyle Doherty", "inn": ["SIT", "1B", "1B", "RF", "1B", "RF", "SIT"],
+     "why": "Three games and <b>8 plate trips</b> on file at <b>.250</b> — basically a rumor with a bat. The 13-hole is the audition booth: square one up tonight and the spreadsheet finally bothers to learn how to spell Doherty."}
+  ]
+}

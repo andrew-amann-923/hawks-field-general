@@ -1,0 +1,57 @@
+{
+  "date": "2026-06-10",
+  "opponent": "Boxford Jets",
+  "home": true,
+  "venue": "Johnson Field",
+  "time": "6:30 PM",
+  "arrive": "5:30 PM",
+  "lock_at": "2026-06-10T17:30:00",
+  "notes": "Perry Tailgate",
+  "rsvp": {"going": 11, "not_going": 5, "no_reply": 1, "last_checked": "2026-06-10 5:08 PM"},
+  "opponent_lineup": {
+    "team": "Jets",
+    "source": "Their batting order from our last meeting — Jul 10, 2025 (L 8-10 at Boy Scout Park). GameChanger only logs the opponent pitcher's fielding position; 'Hits to' shows which of our positions their balls actually went to.",
+    "order": [
+      {"name": "Shaw",   "jersey": "0",  "pos": ""},
+      {"name": "#9",     "jersey": "9",  "pos": ""},
+      {"name": "Blum",   "jersey": "52", "pos": ""},
+      {"name": "Magner", "jersey": "15", "pos": ""},
+      {"name": "BPur",   "jersey": "29", "pos": ""},
+      {"name": "Serino", "jersey": "3",  "pos": ""},
+      {"name": "Chief",  "jersey": "6",  "pos": ""},
+      {"name": "Geiger", "jersey": "5",  "pos": ""},
+      {"name": "Moose",  "jersey": "",   "pos": ""},
+      {"name": "#63",    "jersey": "63", "pos": ""},
+      {"name": "Cox",    "jersey": "7",  "pos": "P"}
+    ]
+  },
+  "rules": [
+    "Players with the most 2025 errors sit more (rule set Jun 2026): Coulombe (7 E) sits inning 5 over Amann (1 E); Cheever (10 E) sits inning 2 over DiLibero (4 E); nobody sits twice; everyone bats all game.",
+    "Marks is the only SS with McArdle out, so he plays short all 7. Klatt is the only pitcher.",
+    "Coulombe (C/2B utility) rovers into each rested spot; Cheever backfills short field, catches inning 1, sits inning 2."
+  ],
+  "grid": [
+    {"bat": 1,  "player": "Ryan Coulombe #0",   "inn": ["SF", "SF", "3B", "2B", "SIT", "RF", "1B"],
+     "why": "A <b>.565 OBP</b> and exactly <b>one strikeout</b> all season. The leadoff job is \"don't make the first out,\" and Ryan treats outs as a personal insult."},
+    {"bat": 2,  "player": "Andrew Amann #21",   "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"],
+     "why": "Team-best <b>2.391 OPS</b> (.689, 7 HR) bats second so the biggest bat comes up with Ryan already standing on base. Yes, he also writes the lineup. The math just happens to agree with him."},
+    {"bat": 3,  "player": "Arthur Bruno",       "inn": ["SIT", "C", "C", "C", "C", "C", "C"],
+     "why": "Hit <b>.524</b> with <b>zero walks and zero strikeouts</b> in 63 trips — physically incapable of not putting the ball in play. The 3-hole keeps the line moving."},
+    {"bat": 4,  "player": "Perry DiLibero #31", "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "LF"],
+     "why": "<b>14 HR and 53 RBI</b>, team highs in both. He bats cleanup and hosts the tailgate — the man simply cleans up wherever he goes."},
+    {"bat": 5,  "player": "Ed Fitzpatrick",     "inn": ["2B", "2B", "2B", "SIT", "2B", "2B", "2B"],
+     "why": "Hit <b>.473 with 4 triples</b> — still hits it deep and, more impressively, still agrees to run all the way to third."},
+    {"bat": 6,  "player": "Eric Klatt #44",     "inn": ["P", "P", "P", "P", "P", "P", "P"],
+     "why": "<b>.476</b> with gap power (7 doubles) keeps the middle of the order moving. Also our only pitcher, and you keep your only pitcher happy."},
+    {"bat": 7,  "player": "Matt Watson",        "inn": ["3B", "3B", "SIT", "3B", "3B", "3B", "3B"],
+     "why": "Quietly hit <b>.469</b> in part-time duty and fielded a perfect <b>1.000</b>. The 7-hole is the \"we see you, Matt\" slot — keep this up and he's coming for the top six."},
+    {"bat": 8,  "player": "Dennis Marks #12",   "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"],
+     "why": "Ignore the <b>.394</b> average — the <b>.652 SLG</b> (8 doubles, 3 HR) is the real story. Boom-or-bust pop to restart a rally, batting where a man playing all 7 innings at short can pace his legs."},
+    {"bat": 9,  "player": "Ian Konen #14",      "inn": ["RF", "RF", "RF", "RF", "RF", "SIT", "RF"],
+     "why": "Team-high <b>6 walks</b> in a league where taking a pitch is considered rude. The 9-spot is the second leadoff — patience starts the bottom-third rally."},
+    {"bat": 10, "player": "Thacher Knight",     "inn": ["1B", "1B", "1B", "1B", "1B", "1B", "SIT"],
+     "why": "New guy, <b>zero 2025 data</b> — the algorithm just shrugged. Tonight is the audition: hit, and the spreadsheet learns your name fast."},
+    {"bat": 11, "player": "Corey Cheever",      "inn": ["C", "SIT", "SF", "SF", "SF", "SF", "SF"],
+     "why": "Hit <b>.313</b> and bats last with one job: turn the lineup over. Anything Corey starts, the top of the order finishes."}
+  ]
+}

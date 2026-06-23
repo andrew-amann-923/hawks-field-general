@@ -1,0 +1,51 @@
+{
+  "date": "2026-06-15",
+  "opponent": "Saints",
+  "home": false,
+  "venue": "Johnson Field",
+  "time": "6:30 PM",
+  "arrive": "5:30 PM",
+  "lock_at": "2026-06-15T17:30:00",
+  "notes": "Ian Tailgate",
+  "rsvp": {"going": 13, "not_going": 3, "no_reply": 1, "last_checked": "2026-06-15 game day"},
+  "opponent_lineup": {
+    "team": "Saints",
+    "source": "No 2026 batting order crawled yet — this is the first 2026 meeting. The 2025 series swung wildly: L 7-26 (Jul 28) then W 24-8 (Aug 18). Lefty bats on file (they pull to the RIGHT side, so cheat the right-field gap when they hit): C Guarino, J Endicott, M Burns. Full breakdown on the Saints Scout page.",
+    "order": []
+  },
+  "rules": [
+    "Built on the 2025 BODY OF WORK first, with last Wednesday's game as a LIGHT nudge — not the headline. Proven bats lead: Flinn (.644), Amann (.689), DiLibero (.618, 14 HR). But the nudge is real: Konen's 3-for-4 (and team-high 6 walks) earns a bump to 11 — off the bottom, nowhere near the 2-hole his hot game alone would've bought — and Klatt/Watson hold where their season backs the hot night.",
+    "Available tonight: 13 players. OUT: Ed Fitzpatrick, Joe McLean (#4), Kyle Doherty. BACK IN: John Flinn (#19), Sang Lee, and brand-new Jon Sorenson — Flinn and Lee bat on their 2025 résumés; Sorenson, with no data, auditions from the bottom.",
+    "INNINGS 1 & 7 — STRONGEST DEFENSE: we open and close with the best glove at every spot — 1B Flinn · 2B Lee · 3B Watson · SS Marks · P Klatt · C Sorenson · LF DiLibero · LCF Amann · RCF Knight · RF Konen.",
+    "Everyone bats all game, and fielders rotate through the lineup each inning to keep everyone fresh — the inning-by-inning chart below shows where each player is.",
+    "Klatt is our only available arm, so he pitches all 7; Marks holds shortstop all 7; Amann anchors left-center. Through the middle innings everyone else rotates to set spots so the right glove is in the right place."
+  ],
+  "grid": [
+    {"bat": 1, "player": "Ryan Coulombe #0", "inn": ["SIT", "2B", "2B", "2B", "2B", "2B", "SIT"],
+     "why": "Leadoff stays leadoff: a <b>.565 OBP with exactly one strikeout all of 2025</b> is the entire job description. Reach base, make the pitcher work, and let the big bats behind him do the driving. Mans second base."},
+    {"bat": 2, "player": "John Flinn #19", "inn": ["1B", "SIT", "SIT", "LF", "1B", "LF", "1B"],
+     "why": "The correction. A <b>.644 hitter with a .631 OBP</b> in 2025 — our best pure contact bat — belongs in the 2-hole getting on in front of the sluggers. The body of work says he's elite, and that outranks whoever happened to be hot last Wednesday."},
+    {"bat": 3, "player": "Andrew Amann #21", "inn": ["LCF", "SIT", "LCF", "LCF", "LCF", "LCF", "LCF"],
+     "why": "The best hitter on the team — <b>.689, a 2.391 OPS, 7 HR</b> in 2025 — bats third, the classic home for your top bat. He also writes the lineup, and this time the math and the author agree without anyone being promoted on a hunch. Anchors left-center."},
+    {"bat": 4, "player": "Perry DiLibero #31", "inn": ["LF", "LCF", "SIT", "SIT", "LF", "RF", "LF"],
+     "why": "<b>14 HR and 53 RBI</b> in 2025, team highs in both — cleanup is non-negotiable. He clears the bases and hosts the tailgate; the man simply cleans up wherever he goes."},
+    {"bat": 5, "player": "Arthur Bruno", "inn": ["SIT", "C", "C", "C", "RF", "C", "SIT"],
+     "why": "Hit <b>.524 with zero walks and zero strikeouts</b> in 63 trips last year — physically incapable of not putting the ball in play. The 5-hole keeps the line moving right behind the power. Our catcher."},
+    {"bat": 6, "player": "Sang Lee", "inn": ["2B", "1B", "1B", "1B", "SIT", "SIT", "2B"],
+     "why": "A <b>.514</b> bat in 2025 making his season debut. We're weighting the résumé now, so he bats sixth on merit with no last-game tax — slots right behind Bruno's contact. A steady infielder who slides over to second in our best look."},
+    {"bat": 7, "player": "Eric Klatt #44", "inn": ["P", "P", "P", "P", "P", "P", "P"],
+     "why": "<b>.476 with gap power (7 doubles)</b> in 2025, and he backed it up <b>3-for-4</b> Wednesday — so the small recency nudge keeps him right here. Also our only available arm: throws all 7, bats where the pitcher's happy."},
+    {"bat": 8, "player": "Matt Watson", "inn": ["3B", "SIT", "SIT", "3B", "3B", "3B", "3B"],
+     "why": "Hit <b>.469</b> in part-time duty last year and went <b>3-for-3 with a walk</b> Wednesday — the season says solid, the recent game says hot, and a light nudge lands him eighth. Our steadiest glove at the hot corner."},
+    {"bat": 9, "player": "Dennis Marks #12", "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"],
+     "why": "The <b>.394</b> average is light, but the <b>.652 SLG (8 doubles, 3 HR)</b> is the real story — boom-or-bust pop batting ninth to restart the order with a bang. Plays all 7 at short."},
+    {"bat": 10, "player": "Corey Cheever", "inn": ["SIT", "RF", "RF", "RF", "RCF", "RCF", "SIT"],
+     "why": "Hit <b>.313</b> in 2025 — the best of the back third — so he leads it off. Patrols the outfield tonight. Turn it over, Corey, and let the top of the order eat again."},
+    {"bat": 11, "player": "Ian Konen #14", "inn": ["RF", "RCF", "RCF", "RCF", "SIT", "SIT", "RF"],
+     "why": "Calibrated — he doesn't drop to the cellar after a night like that. The <b>.208 / .536 OPS</b> 2025 keeps him in the back third (season still leads), but the <b>3-for-4 with a double and 3 RBI</b> Wednesday, plus a team-high <b>6 walks</b> last year, earns a real bump past the no-track-record rookie. Think bottom-third table-setter: the reward for a good game, just not a ticket back to the top."},
+    {"bat": 12, "player": "Thacher Knight #20", "inn": ["RCF", "LF", "LF", "SIT", "SIT", "1B", "RCF"],
+     "why": "<b>Zero 2025 data</b>, so the only book on him is a strong <b>3-for-4 debut</b> Wednesday — that keeps him out of the cellar, sitting just behind Konen, who has the longer track record (and the walks) to edge him. Keep hitting and the spreadsheet promotes you fast."},
+    {"bat": 13, "player": "Jon Sorenson", "inn": ["C", "3B", "3B", "SIT", "C", "SIT", "C"],
+     "why": "Newest Hawk, <b>zero data anywhere</b> and didn't play Wednesday — a complete unknown. The 13-hole is the audition slot: show us something tonight and the order opens up. Spots in at catcher and third base."}
+  ]
+}

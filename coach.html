@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hawks Coach — Lineup Builder</title>
+<!--
+  HIDDEN, COACH-ONLY lineup builder. NOT linked from the team app (index.html).
+  SECURITY NOTE (by design): the page password below is OBSCURITY, not security — anyone who
+  opens this file can read it in View Source. The REAL lock is the GitHub token: without it
+  nobody can publish, even if they find this page. Private position rules (eligibility) live in
+  this browser's localStorage only and are NEVER committed to the public repo.
+  To change the page password, edit PAGE_PW one line below.
+-->
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;margin:0;background:#f4f6f8;color:#1f2a44;-webkit-text-size-adjust:100%}
+  .wrap{max-width:780px;margin:0 auto;padding:14px}
+  h1{font-size:20px;margin:6px 0} h2{font-size:15px;margin:18px 0 6px;color:#334}
+  .card{background:#fff;border:1px solid #dde;border-radius:10px;padding:12px;margin:10px 0}
+  label{display:block;font-size:12px;color:#667;margin:8px 0 2px}
+  input,select,textarea,button{font-size:16px;padding:8px;border:1px solid #ccd;border-radius:8px;box-sizing:border-box;font-family:inherit}
+  input,select,textarea{width:100%;background:#fff;color:#1f2a44}
+  textarea{min-height:90px}
+  .row2{display:flex;gap:8px} .row2>div{flex:1}
+  button{background:#1f4fd6;color:#fff;border:none;font-weight:600;cursor:pointer}
+  button.sec{background:#eef0ff;color:#1f4fd6;border:1px solid #ccd}
+  button.lg{width:100%;padding:13px;font-size:17px;margin-top:6px}
+  details summary{cursor:pointer;font-weight:600;color:#445;font-size:14px}
+  .avail{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+  .avail label{display:flex;align-items:center;gap:6px;background:#eef0ff;border:1px solid #dde;border-radius:20px;padding:6px 11px;margin:0;font-size:14px;color:#1f2a44}
+  .avail label.off{background:#f0f1f4;color:#aab;text-decoration:line-through}
+  .avail input{width:auto;margin:0}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin-top:6px}
+  th,td{border:1px solid #e3e6ee;padding:3px;text-align:center}
+  th{background:#f7f8fb;font-size:11px} td.pl{text-align:left;white-space:nowrap;font-weight:600}
+  td select{width:auto;font-size:13px;padding:2px;border:1px solid #e3e6ee;border-radius:5px}
+  th.bad{background:#fdebeb;color:#b3261e} th.good{color:#137333}
+  .ordrow{display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid #eef}
+  .ordrow .bn{width:22px;font-weight:700;color:#889;text-align:right}
+  .ordrow .nm{flex:1}
+  .ordrow button{padding:4px 9px;font-size:15px;background:#eef0ff;color:#1f4fd6;border:1px solid #ccd}
+  .status{padding:10px;border-radius:8px;margin-top:10px;font-size:14px;line-height:1.4}
+  .status.ok{background:#e7f5ec;color:#137333} .status.err{background:#fdebeb;color:#b3261e}
+  .status.info{background:#eef0ff;color:#1f4fd6}
+  .status a{color:inherit}
+  .muted{color:#889;font-size:12px;line-height:1.4}
+  .gate{max-width:340px;margin:14vh auto;text-align:center}
+  .warn{background:#fff8e6;border:1px solid #f0e0a8;border-radius:8px;padding:9px;font-size:12.5px;color:#7a6410}
+  .hide{display:none}
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate">
+  <h1>🦅 Hawks Coach</h1>
+  <p class="muted">Lineup builder — coaches only.</p>
+  <input id="pw" type="password" placeholder="Password" autocomplete="off">
+  <button class="lg" onclick="tryUnlock()">Unlock</button>
+  <p id="gateMsg" class="muted"></p>
+</div>
+
+<div id="app" class="wrap hide">
+  <h1>🦅 Lineup Builder</h1>
+  <p class="muted">Generate from 2025 numbers → tweak → publish to the team app. Built for your phone.</p>
+
+  <details class="card">
+    <summary>⚙️ Settings (one-time)</summary>
+    <label>GitHub token (saved on this device only — the real key to publishing)</label>
+    <input id="tok" type="password" placeholder="github_pat_…" autocomplete="off">
+    <div class="row2" style="margin-top:6px">
+      <div><button class="sec" onclick="saveTok()">Save token</button></div>
+      <div><button class="sec" onclick="clearTok()">Clear</button></div>
+    </div>
+    <p id="tokMsg" class="muted"></p>
+    <label style="margin-top:12px">Position rules (private — stays on this device, never published)</label>
+    <p class="muted">Who can play where. Players left out default to anywhere but P/SS/C. Edit to encode private rules.</p>
+    <textarea id="elig" spellcheck="false"></textarea>
+    <div class="row2" style="margin-top:6px">
+      <div><button class="sec" onclick="saveElig()">Save rules</button></div>
+      <div><button class="sec" onclick="resetElig()">Reset to default</button></div>
+    </div>
+    <p id="eligMsg" class="muted"></p>
+  </details>
+
+  <div class="card">
+    <h2>1 · Game</h2>
+    <label>Pick the game</label>
+    <select id="game" onchange="onGamePick()"></select>
+    <div class="row2"><div>
+      <label>Opponent</label><input id="opp">
+    </div><div>
+      <label>Home / Away</label>
+      <select id="home"><option value="true">vs (home)</option><option value="false">@ (away)</option></select>
+    </div></div>
+    <div class="row2"><div>
+      <label>Venue</label><input id="venue">
+    </div><div>
+      <label>Notes (e.g. "Perry Tailgate")</label><input id="notes">
+    </div></div>
+    <div class="row2"><div>
+      <label>First pitch</label><input id="time">
+    </div><div>
+      <label>Arrive</label><input id="arrive">
+    </div></div>
+    <div class="row2"><div>
+      <label>Going</label><input id="rGo" type="number" value="0">
+    </div><div>
+      <label>Out</label><input id="rOut" type="number" value="0">
+    </div><div>
+      <label>No reply</label><input id="rNo" type="number" value="0">
+    </div></div>
+  </div>
+
+  <div class="card">
+    <h2>2 · Who's available tonight</h2>
+    <p class="muted">Tap to toggle. Uncheck anyone who's out. Need at least 10.</p>
+    <div id="avail" class="avail"></div>
+    <label style="margin-top:10px">Add a player not listed</label>
+    <div class="row2"><div><input id="addName" placeholder="Name (e.g. Sam Jones #8)"></div>
+      <div style="flex:0 0 90px"><button class="sec" onclick="addPlayer()">Add</button></div></div>
+  </div>
+
+  <div class="card">
+    <button class="lg" onclick="generate()">⚡ Generate lineup</button>
+    <div id="genMsg"></div>
+  </div>
+
+  <div id="review" class="hide">
+    <div class="card">
+      <h2>3 · Batting order <span class="muted">— ↑↓ to reorder</span></h2>
+      <div id="order"></div>
+    </div>
+    <div class="card">
+      <h2>4 · Field by inning <span class="muted">— tap a cell to change</span></h2>
+      <div style="overflow-x:auto"><div id="grid"></div></div>
+      <p class="muted" id="gridValid"></p>
+    </div>
+    <div class="card">
+      <button class="lg" onclick="publish()">🚀 Publish to team app</button>
+      <div id="pubMsg"></div>
+      <p class="muted">Commits <code>lineup_&lt;date&gt;.json</code> to the live site. Shows up on everyone's phone within ~1 minute.</p>
+    </div>
+  </div>
+
+  <p class="warn" style="margin:18px 0">This page is hidden, not secret — the password just keeps it from being stumbled on.
+  Don't share the URL. The GitHub token is what actually controls publishing; keep it to yourself.</p>
+</div>
+
+<script src="app_data.js?v=9feb0eac"></script>
+<script>
+/* ===================== config ===================== */
+const PAGE_PW = "hawks2026";                 // <-- change this to your password
+const OWNER = "andrew-amann-923";
+const REPO  = "hawks-field-general";
+const API   = "https://api.github.com/repos/" + OWNER + "/" + REPO;
+const POS   = ["P","C","1B","2B","SS","3B","LF","LCF","RCF","RF"];
+
+/* Default position eligibility (seeded from scripts/solve_lineup.py). Editable + saved in
+   localStorage; never published. Players not here get FALLBACK_ELIG. */
+const DEFAULT_ELIG = {
+  "Eric Klatt #44":    ["P"],
+  "Dennis Marks #12":  ["SS"],
+  "Matt Watson":       ["3B"],
+  "Andrew Amann #21":  ["LCF"],
+  "Perry DiLibero #31":["LCF","LF","RCF","RF"],
+  "John Flinn #19":    ["1B","LF"],
+  "Thacher Knight #20":["1B","LF"],
+  "Sang Lee":          ["1B","2B"],
+  "Arthur Bruno":      ["C","RCF","RF"],
+  "Jon Sorenson":      ["C","3B"],
+  "Ryan Coulombe #0":  ["2B","RCF","RF","C"],
+  "Corey Cheever":     ["RCF","RF","C"],
+  "Ian Konen #14":     ["RCF","RF"]
+};
+const FALLBACK_ELIG = ["1B","2B","3B","LF","LCF","RCF","RF"];  // unknown players: field anywhere but P/SS/C
+
+/* ===================== gate ===================== */
+function tryUnlock(){
+  if(document.getElementById("pw").value === PAGE_PW){
+    sessionStorage.setItem("hawks_unlocked","1"); showApp();
+  } else { document.getElementById("gateMsg").textContent = "Nope."; }
+}
+function showApp(){
+  document.getElementById("gate").classList.add("hide");
+  document.getElementById("app").classList.remove("hide");
+  init();
+}
+if(sessionStorage.getItem("hawks_unlocked")==="1") showApp();
+document.getElementById("pw").addEventListener("keyup",e=>{ if(e.key==="Enter") tryUnlock(); });
+
+/* ===================== data helpers ===================== */
+const D = window.APP_DATA;
+const bi = {}, fi = {};
+function init(){
+  (D.batting_columns||[]).forEach((c,i)=>bi[c]=i);
+  (D.fielding_columns||[]).forEach((c,i)=>fi[c]=i);
+  loadTok(); loadEligUI(); fillGames(); fillAvail(rosterSeed());
+}
+function bstat(n){ return (D.batting||[]).find(r=>r[0]===n); }
+function fstat(n){ return (D.fielding||[]).find(r=>r[0]===n); }
+function num(v){ const n=parseFloat(v); return isNaN(n)?0:n; }
+function ops(n){ const b=bstat(n); return b?num(b[bi.OPS]):-1; }
+function obp(n){ const b=bstat(n); return b?num(b[bi.OBP]):-1; }
+function hr(n){ const b=bstat(n); return b?num(b[bi.HR]):0; }
+function rbi(n){ const b=bstat(n); return b?num(b[bi.RBI]):0; }
+function errs(n){ const f=fstat(n); return f?num(f[fi.E]):0; }
+function stripJ(s){ return String(s).replace(/^0(?=[.])/,""); }   // 0.723 -> .723
+
+function latestLineup(){
+  const ds = Object.keys(D.lineups||{}).sort();
+  return ds.length ? D.lineups[ds[ds.length-1]] : null;
+}
+function rosterSeed(){
+  const L = latestLineup();
+  if(L) return L.grid.map(r=>r.player);
+  return (D.batting||[]).filter(r=>r[0]!=="TEAM").map(r=>r[0]);
+}
+
+/* ===================== settings: token + eligibility ===================== */
+function loadTok(){ const t=localStorage.getItem("hawks_gh_token")||""; document.getElementById("tok").value=t;
+  document.getElementById("tokMsg").textContent = t? "Token saved on this device." : "No token yet — needed to publish."; }
+function saveTok(){ localStorage.setItem("hawks_gh_token", document.getElementById("tok").value.trim()); window._branch=null; loadTok(); }
+function clearTok(){ localStorage.removeItem("hawks_gh_token"); document.getElementById("tok").value=""; loadTok(); }
+function getTok(){ return (localStorage.getItem("hawks_gh_token")||"").trim(); }
+
+function currentElig(){
+  try{ const o=JSON.parse(localStorage.getItem("hawks_elig")||"null"); if(o&&typeof o==="object") return o; }catch(e){}
+  return DEFAULT_ELIG;
+}
+function elig(n){ const E=currentElig(); return E[n] || FALLBACK_ELIG; }
+function loadEligUI(){ document.getElementById("elig").value = JSON.stringify(currentElig(), null, 2); }
+function saveElig(){
+  try{ const o=JSON.parse(document.getElementById("elig").value); localStorage.setItem("hawks_elig",JSON.stringify(o));
+    document.getElementById("eligMsg").textContent="Saved."; }
+  catch(e){ document.getElementById("eligMsg").textContent="Invalid JSON — not saved."; }
+}
+function resetElig(){ localStorage.removeItem("hawks_elig"); loadEligUI(); document.getElementById("eligMsg").textContent="Reset to default."; }
+
+/* ===================== game picker ===================== */
+function fillGames(){
+  const today = new Date().toISOString().slice(0,10);
+  const up = (D.schedule_2026.games||[]).filter(g=>g.date>=today);
+  const sel = document.getElementById("game");
+  sel.innerHTML = up.map(g=>`<option value="${g.date}">${g.dow} ${g.date} — ${g.home?"vs":"@"} ${g.opponent}</option>`).join("")
+    || `<option value="">(no upcoming games)</option>`;
+  onGamePick();
+}
+function parseTime(t){ const m=/(\d+):(\d+)\s*(AM|PM)/i.exec(t||""); if(!m) return null;
+  let h=(+m[1])%12; if(/pm/i.test(m[3])) h+=12; return {h, m:+m[2]}; }
+function fmtTime(h,m){ const ap=h>=12?"PM":"AM"; const h12=((h+11)%12)+1; return `${h12}:${String(m).padStart(2,"0")} ${ap}`; }
+function minus60(t){ const p=parseTime(t); if(!p) return ""; let tot=p.h*60+p.m-60; if(tot<0)tot+=1440; return fmtTime(Math.floor(tot/60),tot%60); }
+function lockAt(date,arrive){ const p=parseTime(arrive); return p? `${date}T${String(p.h).padStart(2,"0")}:${String(p.m).padStart(2,"0")}:00` : `${date}T17:30:00`; }
+function onGamePick(){
+  const date = document.getElementById("game").value;
+  const g = (D.schedule_2026.games||[]).find(x=>x.date===date);
+  if(!g) return;
+  document.getElementById("opp").value   = g.opponent || "";
+  document.getElementById("home").value  = String(!!g.home);
+  document.getElementById("venue").value = g.venue || "";
+  document.getElementById("time").value  = g.time || "6:30 PM";
+  document.getElementById("arrive").value= minus60(g.time||"6:30 PM");
+}
+
+/* ===================== availability ===================== */
+let ROSTER = [];
+function fillAvail(list){
+  ROSTER = list.slice();
+  const el = document.getElementById("avail");
+  el.innerHTML = ROSTER.map((n,i)=>
+    `<label id="av${i}"><input type="checkbox" checked onchange="this.parentNode.classList.toggle('off',!this.checked)">${n}</label>`).join("");
+}
+function addPlayer(){
+  const v = document.getElementById("addName").value.trim();
+  if(!v) return;
+  ROSTER.push(v);
+  const el=document.getElementById("avail"); const i=ROSTER.length-1;
+  el.insertAdjacentHTML("beforeend",
+    `<label id="av${i}"><input type="checkbox" checked onchange="this.parentNode.classList.toggle('off',!this.checked)">${v}</label>`);
+  document.getElementById("addName").value="";
+}
+function availablePlayers(){
+  return ROSTER.filter((n,i)=>{
+    const box = document.querySelector(`#av${i} input`); return box && box.checked;
+  });
+}
+
+/* ===================== engine: batting order ===================== */
+function buildOrder(avail){
+  const withData = avail.filter(bstat).sort((a,b)=>ops(b)-ops(a));
+  const rookies  = avail.filter(n=>!bstat(n));
+  const pool = withData.slice();
+  const pull = metric => { let bi2=0,bv=-Infinity; pool.forEach((n,i)=>{const v=metric(n); if(v>bv){bv=v;bi2=i;}}); return pool.splice(bi2,1)[0]; };
+  const order=[];
+  if(pool.length) order.push(pull(obp));                 // leadoff = best on-base
+  let cleanup=null;
+  if(pool.length) cleanup = pull(n=>hr(n)*1000+rbi(n));  // cleanup = most power
+  while(order.length<3 && pool.length) order.push(pull(ops));
+  if(cleanup) order.push(cleanup);                       // slot 4
+  while(pool.length) order.push(pull(ops));              // 5+ by OPS
+  rookies.forEach(n=>order.push(n));                     // rookies audition from the bottom
+  return order;
+}
+function whyFor(name, slot){
+  const b=bstat(name);
+  if(!b) return "New this year — no 2025 numbers on file, so the bat auditions from the bottom. Hit and the order learns your name fast.";
+  const A=c=>b[bi[c]];
+  const tag = slot===1 ? "Leadoff: best on-base of the group — job one is don't make the first out."
+    : slot===4 ? "Cleanup: most power on the card — clears the bases."
+    : `Slotted ${slot} on 2025 production.`;
+  return `${tag} 2025: ${stripJ(A("AVG"))} AVG · ${stripJ(A("OBP"))} OBP · ${A("OPS")} OPS · ${A("HR")} HR · ${A("RBI")} RBI.`;
+}
+
+/* ===================== engine: fielding grid ===================== */
+function* combos(arr,k){ if(k===0){yield [];return;} for(let i=0;i<=arr.length-k;i++){ for(const rest of combos(arr.slice(i+1),k-1)) yield [arr[i],...rest]; } }
+function perfectMatch(players){       // bipartite match players -> 10 positions (Hungarian-ish DFS)
+  if(players.length!==10) return null;
+  const at={};
+  const tryA=(pl,seen)=>{ for(const p of elig(pl)){ if(seen.has(p))continue; seen.add(p); if(!(p in at)||tryA(at[p],seen)){ at[p]=pl; return true; } } return false; };
+  for(const pl of players){ if(!tryA(pl,new Set())) return null; }
+  return Object.keys(at).length===10 ? at : null;
+}
+function invert(at){ const o={}; for(const p in at) o[at[p]]=p; return o; }
+function locks(avail){ const s=new Set(); POS.forEach(p=>{ const c=avail.filter(n=>elig(n).includes(p)); if(c.length===1) s.add(c[0]); }); return s; }
+function bestDefense(avail, capMap){   // innings 1 & 7: sit the weakest gloves (most 2025 E), field a legal 10
+  const need = avail.length-10;
+  const benchable=[...avail.filter(n=>capMap[n]>0)].sort((a,b)=>errs(b)-errs(a) || ops(a)-ops(b));
+  for(const sitArr of combos(benchable,need)){
+    const sit=new Set(sitArr); const field=avail.filter(n=>!sit.has(n));
+    const at=perfectMatch(field); if(at) return {pos:invert(at), sit:sitArr};
+  }
+  return null;
+}
+function buildGrid(avail, maxSit){
+  const need = avail.length-10;
+  if(need<0) return {error:`Only ${avail.length} available — you need at least 10 to field a team.`};
+  const lock = locks(avail);
+  const capMap={}; avail.forEach(n=> capMap[n] = lock.has(n) ? 0 : maxSit);
+  const best = bestDefense(avail, capMap);
+  if(!best) return {error:"Couldn't field a legal defense in innings 1 & 7. Check Settings → Position rules, or who's available."};
+  const grid={}; avail.forEach(n=> grid[n]=Array(7).fill("?"));
+  const budget={...capMap};
+  [0,6].forEach(inn=>{ for(const pl in best.pos) grid[pl][inn]=best.pos[pl]; best.sit.forEach(pl=>{ grid[pl][inn]="SIT"; budget[pl]--; }); });
+  const NONPIN=[1,2,3,4,5];
+  const backtrack = k => {
+    if(k===NONPIN.length) return true;
+    const inn=NONPIN[k];
+    const cands=[...avail.filter(n=>budget[n]>0)].sort((a,b)=>errs(b)-errs(a) || ops(a)-ops(b));
+    for(const sitArr of combos(cands,need)){
+      const sit=new Set(sitArr); const field=avail.filter(n=>!sit.has(n));
+      if(field.length!==10) continue;
+      const at=perfectMatch(field);
+      if(!at) continue;
+      sitArr.forEach(p=>budget[p]--);
+      const inv=invert(at); for(const pl in inv) grid[pl][inn]=inv[pl]; sit.forEach(pl=>grid[pl][inn]="SIT");
+      if(backtrack(k+1)) return true;
+      sitArr.forEach(p=>budget[p]++); avail.forEach(pl=>grid[pl][inn]="?");
+    }
+    return false;
+  };
+  if(!backtrack(0)) return {error:"retry"};
+  return {grid};
+}
+
+/* ===================== generate ===================== */
+const state = { order:[], grid:{} };
+function generate(){
+  const avail = availablePlayers();
+  const gm = document.getElementById("genMsg"); gm.className=""; gm.innerHTML="";
+  if(avail.length<10){ gm.className="status err"; gm.textContent=`Only ${avail.length} available — need at least 10.`; return; }
+  let res = buildGrid(avail,2);
+  if(res.error==="retry") res = buildGrid(avail,3);   // loosen sit cap if 2 can't cover the bench
+  if(res.error){ gm.className="status err"; gm.textContent=res.error; return; }
+  state.order = buildOrder(avail);
+  state.grid  = res.grid;
+  document.getElementById("review").classList.remove("hide");
+  renderOrder(); renderGrid();
+  gm.className="status ok"; gm.textContent="Generated. Review and tweak below, then publish.";
+  document.getElementById("review").scrollIntoView({behavior:"smooth"});
+}
+
+/* ===================== review UI ===================== */
+function renderOrder(){
+  document.getElementById("order").innerHTML = state.order.map((n,i)=>
+    `<div class="ordrow"><span class="bn">${i+1}</span><span class="nm">${n}</span>
+      <button onclick="move(${i},-1)">↑</button><button onclick="move(${i},1)">↓</button></div>`).join("");
+}
+function move(i,d){ const j=i+d; if(j<0||j>=state.order.length) return; const a=state.order; [a[i],a[j]]=[a[j],a[i]]; renderOrder(); }
+function renderGrid(){
+  const head = `<tr><th class="pl">Player</th>${[1,2,3,4,5,6,7].map(i=>`<th id="ih${i}">Inn ${i}</th>`).join("")}</tr>`;
+  const opts = ["SIT",...POS];
+  const body = state.order.map(n=>{
+    const cells = state.grid[n].map((v,inn)=>
+      `<td><select onchange="setCell('${n.replace(/'/g,"\\'")}',${inn},this.value)">${
+        opts.map(o=>`<option ${o===v?"selected":""}>${o}</option>`).join("")}</select></td>`).join("");
+    return `<tr><td class="pl">${n}</td>${cells}</tr>`;
+  }).join("");
+  document.getElementById("grid").innerHTML = `<table>${head}${body}</table>`;
+  validate();
+}
+function setCell(n,inn,v){ state.grid[n][inn]=v; validate(); }
+function validate(){
+  let allOk=true, msgs=[];
+  for(let inn=0; inn<7; inn++){
+    const onField = state.order.filter(n=>state.grid[n][inn]!=="SIT").map(n=>state.grid[n][inn]);
+    const set=new Set(onField);
+    const ok = onField.length===10 && set.size===10 && POS.every(p=>set.has(p));
+    const th=document.getElementById("ih"+(inn+1));
+    if(th){ th.className = ok?"good":"bad"; th.textContent = `Inn ${inn+1} ${ok?"✓":"✗"}`; }
+    if(!ok){ allOk=false; msgs.push(`Inn ${inn+1}: ${onField.length} on field`); }
+  }
+  const v=document.getElementById("gridValid");
+  v.textContent = allOk ? "✓ Every inning fields a legal, distinct 10." : "⚠ "+msgs.join(" · ")+" (each inning needs all 10 positions filled once).";
+  v.style.color = allOk ? "#137333" : "#b3261e";
+  return allOk;
+}
+
+/* ===================== assemble + publish ===================== */
+function assemble(){
+  const date = document.getElementById("game").value;
+  const arrive = document.getElementById("arrive").value;
+  return {
+    date,
+    opponent: document.getElementById("opp").value,
+    home: document.getElementById("home").value==="true",
+    venue: document.getElementById("venue").value,
+    time: document.getElementById("time").value,
+    arrive,
+    lock_at: lockAt(date, arrive),
+    notes: document.getElementById("notes").value,
+    rsvp: { going:+document.getElementById("rGo").value, not_going:+document.getElementById("rOut").value,
+            no_reply:+document.getElementById("rNo").value, last_checked: date+" set by coach" },
+    rules: [
+      "Built from 2025 production: order ranked on OPS (leadoff = best on-base, cleanup = most power); new players audition from the bottom.",
+      `Available: ${state.order.length}. Sit priority by 2025 errors — most errors sits more; everyone bats all game.`,
+      "Innings 1 & 7 field the strongest available defense; only-option spots (P / SS) play all 7.",
+      "Fielders rotate through innings 2–6 to stay fresh; every inning fields a legal ten."
+    ],
+    grid: state.order.map((n,i)=>({ bat:i+1, player:n, inn:state.grid[n].slice(), why:whyFor(n,i+1) }))
+  };
+}
+
+/* GitHub Contents API (UTF-8 safe base64) */
+function ghHeaders(t){ return {Authorization:"Bearer "+t, Accept:"application/vnd.github+json"}; }
+function b64enc(s){ return btoa(unescape(encodeURIComponent(s))); }
+function b64dec(s){ return decodeURIComponent(escape(atob(s.replace(/\n/g,"")))); }
+async function branch(t){
+  if(window._branch) return window._branch;
+  const r=await fetch(API,{headers:ghHeaders(t)});
+  if(r.status===401||r.status===403) throw new Error("Token rejected ("+r.status+"). Check Settings → token.");
+  if(!r.ok) throw new Error("Repo read failed ("+r.status+").");
+  window._branch=(await r.json()).default_branch||"main"; return window._branch;
+}
+async function getFile(t,path){
+  const r=await fetch(API+"/contents/"+path+"?ref="+(window._branch||"main"),{headers:ghHeaders(t)});
+  if(r.status===404) return null;
+  if(!r.ok) throw new Error("Read "+path+" failed ("+r.status+").");
+  const j=await r.json(); return {sha:j.sha, text:b64dec(j.content)};
+}
+async function putFile(t,br,path,text,message,sha){
+  const body={message, content:b64enc(text), branch:br}; if(sha) body.sha=sha;
+  const r=await fetch(API+"/contents/"+path,{method:"PUT",headers:{...ghHeaders(t),"Content-Type":"application/json"},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error("Publish "+path+" failed ("+r.status+"): "+(await r.text()).slice(0,140));
+}
+async function publish(){
+  const pm=document.getElementById("pubMsg");
+  const t=getTok();
+  if(!t){ pm.className="status err"; pm.textContent="Add your GitHub token in Settings first."; return; }
+  if(!validate() && !confirm("The fielding grid isn't a legal 10 in every inning. Publish anyway?")) return;
+  const L=assemble();
+  if(!L.date){ pm.className="status err"; pm.textContent="Pick a game first."; return; }
+  pm.className="status info"; pm.textContent="Publishing…";
+  try{
+    const br=await branch(t);
+    const path="lineup_"+L.date+".json";
+    const ex=await getFile(t,path);   // existing? need its sha to update
+    await putFile(t,br,path,JSON.stringify(L,null,2),(ex?"Update":"Set")+" lineup "+L.date+" (coach.html)",ex&&ex.sha);
+    pm.className="status ok";
+    pm.innerHTML=`Published ✓ Live in ~1 min: <a href="https://${OWNER}.github.io/${REPO}/#game" target="_blank">open the team app</a>.`;
+  }catch(e){ pm.className="status err"; pm.textContent=e.message; }
+}
+</script>
+</body>
+</html>

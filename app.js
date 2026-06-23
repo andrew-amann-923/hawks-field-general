@@ -649,8 +649,32 @@ function renderDataTableOnly() {
 window.addEventListener("hashchange", render);
 
 /* game day: opening the app with no hash lands straight on today's game card */
-if (!location.hash) {
+function bootRedirect() {
+  if (location.hash) return;
   const today = new Date().toISOString().slice(0, 10);
   if (D.lineups && D.lineups[today]) { state.gameDate = today; location.hash = "#game"; }
 }
+
+/* Live lineups: a lineup published from a phone (coach.html) is committed straight to the
+   Pages repo as lineup_<date>.json, so it appears WITHOUT rebuilding app_data.js. We probe
+   lineup_<date>.json for each SCHEDULED game date (cache-busted, beating the 10-min Pages
+   cache) and merge over the bundled copies — no central index file to get clobbered by a
+   laptop redeploy. On file:// (laptop double-click) fetch is blocked → we keep the bundle. */
+async function loadLiveLineups() {
+  try {
+    const games = (D.schedule_2026 && D.schedule_2026.games) || [];
+    if (!games.length) return false;
+    D.lineups = D.lineups || {};
+    let any = false;
+    await Promise.all(games.map(g =>
+      fetch("lineup_" + g.date + ".json?cb=" + Date.now())
+        .then(r => r.ok ? r.json() : null)
+        .then(L => { if (L && L.date) { D.lineups[L.date] = L; any = true; } })
+        .catch(() => {})));
+    return any;
+  } catch (e) { return false; }
+}
+
+bootRedirect();
 render();
+loadLiveLineups().then(ok => { if (ok) { bootRedirect(); render(); } });
