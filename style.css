@@ -253,4 +253,20 @@ td.reason b { color: #00794a; }
   body.print-game table.tbl, body.print-game .call {
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
+
+  /* ---- scout-view print sheet (body.print-scout, set by printScout): ONE portrait
+     sheet — team summary + batter tendency table. Teambar and nav hidden. ---- */
+  body.print-scout #main > :not(.scout-sheet) { display: none !important; }
+  body.print-scout .teambar, body.print-scout .view-head { display: none !important; }
+  body.print-scout .scout-sheet { display: block !important; }
+  body.print-scout .teamsum { font-size: 12px; margin-bottom: 6px; }
+  body.print-scout table.tbl { font-size: 11px; }
+  body.print-scout table.tbl th, body.print-scout table.tbl td { padding: 3px 6px; }
+  body.print-scout .note { display: block !important; font-size: 9.5px; color: #555; margin-top: 6px; }
+  body.print-scout .call { font-size: 9.5px; padding: 2px 6px; }
+  body.print-scout table.tbl tr { break-inside: avoid; }
+  body.print-scout table.tbl th { position: static; background: #1F2A44 !important; color: #fff !important; }
+  body.print-scout table.tbl, body.print-scout .call {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
 }

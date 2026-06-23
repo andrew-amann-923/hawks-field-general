@@ -263,6 +263,15 @@ const state = { scoutTeam: TEAMS[0].name, f: { team: "", hand: "", direction: ""
 
 function avgStr(h, ab) { return ab ? (h / ab).toFixed(3).replace(/^0/, "") : "—"; }
 
+function printScout() {
+  document.body.classList.add("print-scout");
+  const s = document.createElement("style");
+  s.textContent = "@media print { @page { size: letter portrait; margin: 10mm; } }";
+  document.head.appendChild(s);
+  window.addEventListener("afterprint", () => { document.body.classList.remove("print-scout"); s.remove(); }, { once: true });
+  window.print();
+}
+
 function viewScout() {
   const T = TEAMS.find(t => t.name === state.scoutTeam) || TEAMS[0];
   const bip = T.L + T.C + T.R || 1;
@@ -276,9 +285,11 @@ function viewScout() {
   }).join("");
   return `
   <div class="view-head"><h2>Opponent scouting</h2>
-    <span class="sub">${D.at_bats.length} at-bats reconstructed from GameChanger play-by-play</span></div>
+    <span class="sub">${D.at_bats.length} at-bats reconstructed from GameChanger play-by-play</span>
+    <button class="print-btn" onclick="printScout()">Print scout sheet</button></div>
   <div class="teambar">${TEAMS.map(t =>
     `<button data-team="${t.name}" class="${t.name === state.scoutTeam ? "active" : ""}">${t.name} <small>(${t.h} H)</small></button>`).join("")}</div>
+  <div class="scout-sheet">
   <div class="teamsum"><b>${T.name}</b> — ${Object.keys(T.batters).length} batters · ${T.pa} PA · ${T.h} hits ·
     field side <b>${Math.round(100 * T.L / bip)}% L</b> / ${Math.round(100 * T.C / bip)}% C / <b>${Math.round(100 * T.R / bip)}% R</b> ·
     ${Math.round(100 * T.OF / (T.IF + T.OF || 1))}% to the outfield</div>
@@ -287,7 +298,8 @@ function viewScout() {
     <th class="num">IF</th><th class="num">OF</th><th>Tendency</th><th>Call</th></tr></thead><tbody>${rows}</tbody></table></div>
   <p class="note">B = bats (R/L/B, U = unknown — only 6 of 14 teams have handedness entered). L/C/R = field side the ball went to
   (catcher's view), not pull/oppo. Call = which of the 4 looks on the Field card to use (pick the bases-empty or runner-on-1B row
-  by the situation). House rule: a known righty hitting right or a known lefty hitting left is never stacked — they get Straight up.</p>`;
+  by the situation). House rule: a known righty hitting right or a known lefty hitting left is never stacked — they get Straight up.</p>
+  </div>`;
 }
 
 /* ---------- hawks: our 15 hitters ---------- */
