@@ -371,7 +371,15 @@ function viewSchedule() {
 
 /* ---------- game detail: batting order + 7-inning fielding rotation ---------- */
 function viewGame() {
-  const L = (D.lineups && (D.lineups[state.gameDate] || Object.values(D.lineups)[0]));
+  let L = D.lineups && D.lineups[state.gameDate];
+  // bare #game (or an unknown date) → resolve to today's game, else the most recent
+  // game with a lineup, and rewrite the URL to its dated form (never the first/Jets game)
+  if (!L && D.lineups) {
+    const today = new Date().toISOString().slice(0, 10);
+    const dates = Object.keys(D.lineups).sort();
+    const pick = D.lineups[today] ? today : (dates.filter(d => d <= today).pop() || dates[dates.length - 1]);
+    if (pick) { state.gameDate = pick; location.hash = "#game/" + pick; return ""; }
+  }
   if (!L) { location.hash = "#schedule"; return ""; }
   const locked = lineupLocked(L);
   const status = locked
@@ -443,7 +451,15 @@ function oppLineupHTML(L) {
   const opp = L.opponent_lineup;
   if (!opp) return "";
   const T = TEAMS.find(t => t.name === opp.team);
-  const rows = opp.order.map((o, i) => {
+  // No 2026 batting order crawled yet? Fall back to the team's 2025 hitters,
+  // same set + ordering as the Scout page (by hits), so the table still fills.
+  // Names come straight from T.batters, so the lookup below always matches.
+  let order = opp.order;
+  if ((!order || !order.length) && T) {
+    order = Object.values(T.batters).sort((a, b) => b.h - a.h)
+      .map(b => ({ name: b.name, jersey: "", pos: "" }));
+  }
+  const rows = (order || []).map((o, i) => {
     const b = T && T.batters[o.name];
     const hitTo = {};
     D.at_bats.forEach(r => { if (r.game === opp.team && r.batter === o.name && r.hit_to) hitTo[r.hit_to] = (hitTo[r.hit_to] || 0) + 1; });
@@ -623,8 +639,12 @@ MAIN.addEventListener("click", e => {
 const VIEWS = { schedule: viewSchedule, game: viewGame, field: viewField, scout: viewScout, hawks: viewHawks, season: viewSeason, data: viewData };
 
 function render() {
-  let v = (location.hash || "#schedule").slice(1);
+  const raw = (location.hash || "#schedule").slice(1);
+  const slash = raw.indexOf("/");
+  let v = slash >= 0 ? raw.slice(0, slash) : raw;
   if (!VIEWS[v]) v = "schedule";
+  // game URLs carry the date: #game/2026-06-25 → each game has its own shareable link
+  if (v === "game" && slash >= 0) state.gameDate = decodeURIComponent(raw.slice(slash + 1));
   document.querySelectorAll("#menu a").forEach(a => a.classList.toggle("active", a.dataset.v === v || (v === "game" && a.dataset.v === "schedule")));
   MAIN.innerHTML = VIEWS[v]();
   window.scrollTo(0, 0);
@@ -636,12 +656,12 @@ MAIN.addEventListener("click", e => {
   const sl = e.target.closest(".scoutlink");
   if (sl) { state.scoutTeam = sl.dataset.team; location.hash = "#scout"; return; }
   const gr = e.target.closest(".row.game.haslineup");
-  if (gr) { state.gameDate = gr.dataset.date; location.hash = "#game"; }
+  if (gr) { location.hash = "#game/" + gr.dataset.date; }
 });
 
 /* status chips flip from SET to LOCKED on their own at 5:30 */
 setInterval(() => {
-  const v = (location.hash || "#schedule").slice(1);
+  const v = (location.hash || "#schedule").slice(1).split("/")[0];
   if (v === "schedule" || v === "game") render();
 }, 30000);
 MAIN.addEventListener("change", e => {
@@ -664,7 +684,7 @@ window.addEventListener("hashchange", render);
 function bootRedirect() {
   if (location.hash) return;
   const today = new Date().toISOString().slice(0, 10);
-  if (D.lineups && D.lineups[today]) { state.gameDate = today; location.hash = "#game"; }
+  if (D.lineups && D.lineups[today]) { location.hash = "#game/" + today; }
 }
 
 /* Live lineups: a lineup published from a phone (coach.html) is committed straight to the
