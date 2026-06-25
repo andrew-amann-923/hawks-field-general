@@ -1,0 +1,46 @@
+{
+  "date": "2026-06-25",
+  "opponent": "Brewers",
+  "home": false,
+  "venue": "Boy Scout Park",
+  "time": "6:30 PM",
+  "arrive": "5:30 PM",
+  "lock_at": "2026-06-25T17:30:00",
+  "notes": "Flinny Tailgate",
+  "rsvp": {"going": 11, "not_going": 5, "no_reply": 1, "last_checked": "2026-06-25 game day (pulled live from GameChanger)"},
+  "opponent_lineup": {
+    "team": "Brewers",
+    "source": "No 2026 batting order crawled yet, but the 2025 book on the Brewers is thick: three meetings, and we took the series 2-1 — an opening <b>2-14 loss</b>, then a <b>9-8</b> nailbiter and a <b>17-11</b> win. They bat <b>right-handed top to bottom</b> (14 of 15 hitters on file are righties), so expect a <b>pull-heavy, left-side</b> attack — shade the left-center gap and dare them to go oppo. The lone lefty, <b>Jed Donahue (#12)</b>, is the exception who pulls to the RIGHT, so slide the defense over when he steps in. Full at-bat-by-at-bat breakdown and the per-hitter alignment calls are on the Brewers Scout page.",
+    "order": []
+  },
+  "rules": [
+    "ROAD GAME at <b>Boy Scout Park, 12 Cahoon Rd, Boxford</b> — first pitch 6:30, be there by 5:30. It's the Brewers, who we beat twice in three tries in 2025 after dropping the opener. <b>Flinny Tailgate</b> is on.",
+    "Eleven hands on deck. OUT: <b>Andrew Amann (#21), Thacher Knight (#20), Corey Cheever, Jon Sorenson, and Luke McArdle.</b> With Amann out the defense reshuffles: <b>Perry DiLibero to shortstop, Dennis Marks to left field, John Flinn to left-center,</b> and the catching splits three ways — <b>Bruno four innings, Ryan two, Konen one</b> — which frees Bruno for two innings in right. The order is ranked off the 2025 body of work.",
+    "TWO-ARM NIGHT: <b>Klatt opens on the mound (innings 1–4), then takes over at third base (5–7); Joe McLean closes on the mound (5–7)</b> and plays right field early — back in the fold for the first time this year. <b>Ed Fitzpatrick, our second-best third baseman, holds the hot corner 1–4, then slides to second.</b> (If Watson turns up, he takes third.)",
+    "Ten spots, eleven players — so one fielder rests each inning, and tonight <b>everyone sits exactly once.</b> Only DiLibero (short), Flinn (center), Marks (left) and Sang (first) go wire to wire — their spots have no backup with so many bats out. Everyone hits all game; SIT means a defensive breather only. The grid shows where you are each inning."
+  ],
+  "grid": [
+    {"bat": 1, "player": "Ryan Coulombe #0", "inn": ["RCF", "RF", "C", "RF", "SIT", "C", "RCF"],
+     "why": "A <b>.565 on-base with exactly one strikeout in all of 2025</b> — the man reaches base like it's a legal obligation and refuses to ever hand the at-bat back. Leadoff is just the paperwork catching up to the talent. Roams right field most of the night and takes a two-inning turn behind the plate."},
+    {"bat": 2, "player": "John Flinn #19", "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"],
+     "why": "A <b>.644 average with a .631 on-base</b> isn't a stat line, it's a parking violation nobody made him pay. He missed time and the lineup still saved his 2-hole seat. With Amann out he's the <b>best outfielder we've got</b>, so he patrols left-center all seven."},
+    {"bat": 3, "player": "Arthur Bruno", "inn": ["C", "C", "SIT", "C", "C", "RF", "RF"],
+     "why": "Hit <b>.524 with zero walks and zero strikeouts</b> in 63 trips — he has never once considered taking a pitch, and the box score keeps agreeing with him. Bats third to set the table; he handles four innings behind the plate and, with Konen spelling him, gets two out in right field where his glove plays best."},
+    {"bat": 4, "player": "Perry DiLibero #31", "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"],
+     "why": "With Amann off tonight, the franchise bat is yours, Perry: <b>14 homers and 53 RBI</b> in 2025, both team highs. Cleanup isn't so much a lineup decision as a weather forecast. Mans shortstop all seven — the bat AND the glove carry a load."},
+    {"bat": 5, "player": "Sang Lee", "inn": ["1B", "1B", "1B", "1B", "1B", "1B", "1B"],
+     "why": "<b>.514 at the plate and zero errors in the field</b> in 2025 — the rare man who's calm in the box and calmer at first base. Bats fifth to keep the line moving and mans first all seven, where very little gets by him."},
+    {"bat": 6, "player": "Eric Klatt #44", "inn": ["P", "P", "P", "P", "3B", "SIT", "3B"],
+     "why": "<b>.476 with seven doubles</b> of pure gap larceny, batting sixth — and tonight he's a two-position man: <b>opens on the mound for four, then takes over at third base,</b> with a single inning's rest mixed in. We feed him, we thank him, and we keep him moving."},
+    {"bat": 7, "player": "Ed Fitzpatrick", "inn": ["3B", "3B", "3B", "3B", "2B", "3B", "SIT"],
+     "why": "<b>.473 with four triples</b> — at this level a triple is two miracles in one swing: crush it AND agree to run the whole way. Our <b>second-best third baseman</b>, he holds the hot corner most of the night and slides to second when Klatt takes third, with one breather to close."},
+    {"bat": 8, "player": "Dennis Marks #12", "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "LF"],
+     "why": "Never mind the <b>.394</b> — the <b>.652 slugging</b> with three bombs and eight doubles is the real headline. Boom-or-bust pop batting eighth to flip the order over with a bang. Tonight he trades the dirt for grass and patrols left field all seven."},
+    {"bat": 9, "player": "Joe McLean #4", "inn": ["RF", "2B", "RF", "SIT", "P", "P", "P"],
+     "why": "Back in the fold for the first time this year and immediately put to work: <b>.368 with a sneaky .429 on-base</b>, batting ninth. Plays the field early, grabs a breather, then closes the game on the mound, innings five through seven. A full evening's labor."},
+    {"bat": 10, "player": "Kyle Doherty", "inn": ["2B", "SIT", "2B", "2B", "RF", "2B", "2B"],
+     "why": "Eight plate trips and a <b>.250</b> on file — basically a rumor with batting gloves. The 10-hole is the audition booth: he mans second base most of the night with a shift to right when Ed comes over. Square one up and the spreadsheet finally learns to spell Doherty."},
+    {"bat": 11, "player": "Ian Konen #14", "inn": ["SIT", "RCF", "RCF", "RCF", "RCF", "RCF", "C"],
+     "why": "The <b>.208</b> keeps him in the cellar, but a <b>team-high six walks</b> says he treats a free base as a personal mission — and in this league, taking ball four is basically civil disobedience. Bats eleventh, patrols right-center, and straps on the gear for an inning behind the plate to close."}
+  ]
+}
