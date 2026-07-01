@@ -1,0 +1,48 @@
+{
+  "date": "2026-07-01",
+  "opponent": "Patriots",
+  "home": false,
+  "venue": "Harry Lee Cole School",
+  "time": "6:30 PM",
+  "arrive": "5:30 PM",
+  "lock_at": "2026-07-01T17:30:00",
+  "notes": "Eric Tailgate",
+  "rsvp": {"going": 12, "not_going": 4, "no_reply": 1, "last_checked": "2026-07-01 game day (GameChanger RSVP)"},
+  "opponent_lineup": {
+    "team": "Patriots",
+    "source": "We split the 2025 season series with the Patriots 1-1 — a <b>14-9 win</b> on Aug 7 and a <b>7-14 loss</b> in the Aug 22 rematch, so this one owes us nothing and settles nothing. They're a <b>right-handed lineup</b> with handedness on file, which means a <b>pull-heavy, left-side</b> attack — shade the left-center gap and make them prove they can go the other way. The one exception is lefty <b>S. Mazzie</b>, who flips the script and pulls to the RIGHT; slide the whole defense over when he digs in. Full at-bat-by-at-bat breakdown and per-hitter alignment calls are on the Patriots Scout page.",
+    "order": []
+  },
+  "rules": [
+    "ROAD GAME at <b>Harry Lee Cole School, 26 Middleton Rd, Boxford</b> — first pitch 6:30, be there by 5:30. It's the Patriots, who we split with 1-1 in 2025 (won 14-9, dropped the rematch 7-14). <b>Eric Tailgate</b> is on.",
+    "Twelve hands confirmed. OUT tonight: <b>Andrew Amann (#21), Ian Konen (#14), Kyle Doherty, and Luke McArdle.</b> <b>John Flinn (#19) hasn't RSVP'd</b> — if he rolls in, he takes <b>first base</b> and slots near the top of the order (bump everyone down a peg). With Amann out, <b>Perry DiLibero slides to left-center</b> and owns it all seven; <b>Thacher Knight</b> patrols left field wire to wire. The order is ranked off the 2025 body of work.",
+    "PITCHING: <b>Eric Klatt opens on the mound, innings 1–5</b>, then hands the ball to <b>Joe McLean to close it out over the last two.</b> Our only two arms, and both showed up.",
+    "Twelve players, ten spots — so <b>two fielders rest each inning.</b> Five go wire to wire: <b>Marks (short), DiLibero (left-center), Knight (left), Sang (first), and Sorenson (catcher)</b> — their spots have no backup with this crew. The other seven each take <b>exactly two defensive breathers</b>; nobody sits three times. Everyone hits all game; SIT means a defensive rest only. The grid shows where you are each inning."
+  ],
+  "grid": [
+    {"bat": 1, "player": "Ryan Coulombe #0", "inn": ["RF", "SIT", "SIT", "RF", "RF", "RF", "RF"],
+     "why": "A <b>.565 on-base with exactly one strikeout in all of 2025</b> — the man reaches base like it's a court order and hands the at-bat back to no one. Leadoff is just the paperwork catching up to the talent. Takes his two breathers early, then locks down right field the rest of the way."},
+    {"bat": 2, "player": "Arthur Bruno", "inn": ["RCF", "RF", "SIT", "SIT", "C", "C", "RCF"],
+     "why": "Hit <b>.524 with zero walks and zero strikeouts</b> in 63 trips — he has never once considered taking a pitch, and the box score keeps agreeing with him. Bats second to keep the line moving. Roams the right-side outfield, then straps on the gear for two innings behind the plate when Sorenson shifts to third."},
+    {"bat": 3, "player": "Ed Fitzpatrick", "inn": ["2B", "2B", "2B", "SIT", "SIT", "2B", "2B"],
+     "why": "<b>.473 with four triples</b> — at this level a triple is two miracles in one swing: crush it AND agree to run the whole way. Bats third and mans <b>second base</b> for five innings, sure hands up the middle after the infield shift."},
+    {"bat": 4, "player": "Perry DiLibero #31", "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"],
+     "why": "The franchise bat, batting cleanup where he belongs: <b>14 homers and 53 RBI</b> in 2025, both team highs. With Amann off tonight, Perry also inherits <b>left-center and plays all seven</b> — the bat AND the glove carry a load."},
+    {"bat": 5, "player": "Dennis Marks #12", "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"],
+     "why": "The <b>.652 slugging</b> with three bombs and eight doubles is the real headline — boom-or-bust pop batting fifth to protect the cleanup spot. Our only true shortstop, so he mans the six-hole in the dirt <b>all seven innings.</b>"},
+    {"bat": 6, "player": "Eric Klatt #44", "inn": ["P", "P", "P", "P", "P", "SIT", "SIT"],
+     "why": "<b>.476 with seven doubles</b> of pure gap larceny, batting sixth. Tonight he's the horse: <b>opens on the mound and goes five strong</b>, then hands it to Joe and takes his rest. We feed him, we thank him."},
+    {"bat": 7, "player": "Sang Lee", "inn": ["1B", "1B", "1B", "1B", "1B", "1B", "1B"],
+     "why": "<b>.514 at the plate and zero errors in the field</b> in 2025 — the rare man who's calm in the box and calmer at first base. Bats seventh and mans first <b>all seven innings</b>, where very little gets by him. (If Flinn shows, they'll share the bag.)"},
+    {"bat": 8, "player": "Matt Watson", "inn": ["3B", "3B", "3B", "3B", "SIT", "SIT", "3B"],
+     "why": "A perfect <b>1.000 fielding percentage at the hot corner</b> and a quiet <b>.469</b> in 2025. Our best third baseman owns the hot corner for five innings; when he takes his two breathers, Sorenson slides over from behind the plate to cover."},
+    {"bat": 9, "player": "Joe McLean #4", "inn": ["SIT", "SIT", "RF", "2B", "2B", "P", "P"],
+     "why": "<b>.368 with a sneaky .429 on-base</b>, batting ninth to flip the order over. Saves his legs early, spells right field and second in the middle innings, then <b>closes the game on the mound across the last two.</b> A full evening's labor."},
+    {"bat": 10, "player": "Corey Cheever", "inn": ["SIT", "RCF", "RCF", "RCF", "RCF", "RCF", "SIT"],
+     "why": "<b>.313</b> and the ultimate utility man — backfills wherever the grid springs a leak. Tonight that's <b>right-center for five innings</b>, bracketed by his two rests. Square one up and climb the order."},
+    {"bat": 11, "player": "Thacher Knight #20", "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "LF"],
+     "why": "No 2025 book on the bat yet, so the 11-hole is the audition booth — but the glove is already trusted. With Amann out and Perry in left-center, <b>Knight patrols left field all seven</b>, no backup behind him. Get on base and rewrite your line."},
+    {"bat": 12, "player": "Jon Sorenson", "inn": ["C", "C", "C", "C", "3B", "3B", "C"],
+     "why": "The other new bat auditioning from the cellar, but a rock behind the plate: <b>catches five innings and slides to third for two</b> when Watson rests — the C/3B flexibility that keeps the whole rotation legal. Bats twelfth tonight; his glove plays higher."}
+  ]
+}
