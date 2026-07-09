@@ -1,0 +1,24 @@
+{
+  "date": "2026-07-09",
+  "opponent": "Titans",
+  "home": true,
+  "venue": "Johnson Field",
+  "time": "6:30 PM",
+  "arrive": "5:30 PM",
+  "lock_at": "2026-07-09T18:15:00",
+  "notes": "11-player roster (Eric Klatt unavailable). Joe McLean pitches all 7. Kyle Doherty gets 5 innings; everyone else 6-7.",
+  "rsvp": {"going": 11, "not_going": 1, "no_reply": 0, "last_checked": "2026-07-09 2:00 PM"},
+  "grid": [
+    {"bat": 1,  "player": "Andrew Amann #21",   "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"]},
+    {"bat": 2,  "player": "Perry DiLibero #31", "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "LF"]},
+    {"bat": 3,  "player": "Matt Watson",        "inn": ["3B", "3B", "3B", "3B", "3B", "3B", "3B"]},
+    {"bat": 4,  "player": "Thacher Knight #20", "inn": ["1B", "1B", "1B", "1B", "1B", "1B", "1B"]},
+    {"bat": 5,  "player": "Joe McLean #4",      "inn": ["P", "P", "P", "P", "P", "P", "P"]},
+    {"bat": 6,  "player": "Dennis Marks #12",   "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"]},
+    {"bat": 7,  "player": "Jon Sorenson",       "inn": ["C", "C", "C", "C", "C", "C", "C"]},
+    {"bat": 8,  "player": "Arthur Bruno",       "inn": ["RCF", "RCF", "RCF", "RCF", "RCF", "RCF", "RCF"]},
+    {"bat": 9,  "player": "Ed Fitzpatrick",     "inn": ["2B", "SIT", "2B", "2B", "SIT", "2B", "2B"]},
+    {"bat": 10, "player": "Corey Cheever",      "inn": ["RF", "RF", "RF", "SIT", "RF", "RF", "RF"]},
+    {"bat": 11, "player": "Kyle Doherty",       "inn": ["SIT", "2B", "RF", "RF", "2B", "SIT", "SIT"]}
+  ]
+}
