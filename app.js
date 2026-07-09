@@ -595,8 +595,19 @@ function viewSeason() {
     ? `<b>${winners.join(" &amp; ")}</b> ${winners.length > 1 ? "share" : "leads"} the yellow-box race with <b>${top}</b> column${top === 1 ? "" : "s"} led.`
     : "No column leaders yet — play some games.";
 
-  const synced = SEASON.sync_status === "ok";
-  const statusPill = `<span class="syncpill ${synced ? "ok" : "stale"}">${synced ? "✓ Synced from GameChanger" : "⚠ Sync stale"}</span>`;
+  // Staleness is computed, not just trusted: if a game has been played since the last refresh,
+  // the pill goes red no matter what sync_status says (a silent stale-out once hid 3 weeks of games).
+  const luDate = (SEASON.last_updated || "").slice(0, 10);
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const pastGameDates = ((D.schedule_2026 && D.schedule_2026.games) || [])
+    .map(g => g.date).filter(d => d && d < todayStr).sort();
+  const lastGame = pastGameDates.length ? pastGameDates[pastGameDates.length - 1] : null;
+  const behind = !!(lastGame && luDate && lastGame > luDate);
+  const synced = SEASON.sync_status === "ok" && !behind;
+  const statusPill = `<span class="syncpill ${synced ? "ok" : "stale"}">${
+    synced ? "✓ Synced from GameChanger"
+    : behind ? `⚠ Behind — ${lastGame} game not pulled yet`
+    : "⚠ Sync stale"}</span>`;
 
   return `
   <div class="view-head"><h2>Season stats</h2>
