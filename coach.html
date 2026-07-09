@@ -155,22 +155,91 @@ const REPO  = "hawks-field-general";
 const API   = "https://api.github.com/repos/" + OWNER + "/" + REPO;
 const POS   = ["P","C","1B","2B","SS","3B","LF","LCF","RCF","RF"];
 
-/* Default position eligibility (seeded from scripts/solve_lineup.py). Editable + saved in
-   localStorage; never published. Players not here get FALLBACK_ELIG. */
+/* Default position eligibility. GENERATED — build_app_data.py injects this block from
+   data/eligibility.json (the public mirror of the private coaching corner) on every build.
+   Do NOT hand-edit; edit data/eligibility.json and rebuild. Still overridable per-device in
+   Settings (saved to localStorage). Players not listed get FALLBACK_ELIG. */
 const DEFAULT_ELIG = {
-  "Eric Klatt #44":    ["P"],
-  "Dennis Marks #12":  ["SS"],
-  "Matt Watson":       ["3B"],
-  "Andrew Amann #21":  ["LCF"],
-  "Perry DiLibero #31":["LCF","LF","RCF","RF"],
-  "John Flinn #19":    ["1B","LF"],
-  "Thacher Knight #20":["1B","LF"],
-  "Sang Lee":          ["1B","2B"],
-  "Arthur Bruno":      ["C","RCF","RF"],
-  "Jon Sorenson":      ["C","3B"],
-  "Ryan Coulombe #0":  ["2B","RCF","RF","C"],
-  "Corey Cheever":     ["RCF","RF","C"],
-  "Ian Konen #14":     ["RCF","RF"]
+  "Eric Klatt #44": [
+    "P",
+    "3B"
+  ],
+  "Joe McLean": [
+    "P",
+    "2B",
+    "1B",
+    "RCF",
+    "RF"
+  ],
+  "Dennis Marks #12": [
+    "SS"
+  ],
+  "Matt Watson": [
+    "3B"
+  ],
+  "Ed Fitzpatrick": [
+    "2B",
+    "3B",
+    "1B"
+  ],
+  "Andrew Amann #21": [
+    "LCF"
+  ],
+  "Perry DiLibero #31": [
+    "LF",
+    "LCF",
+    "RCF",
+    "RF"
+  ],
+  "John Flinn #19": [
+    "1B",
+    "LF",
+    "LCF",
+    "RCF",
+    "RF"
+  ],
+  "Thacher Knight #20": [
+    "LF",
+    "LCF",
+    "RCF",
+    "RF",
+    "1B",
+    "2B"
+  ],
+  "Sang Lee": [
+    "1B"
+  ],
+  "Jon Sorenson": [
+    "C",
+    "3B",
+    "1B"
+  ],
+  "Arthur Bruno": [
+    "C",
+    "RCF",
+    "RF"
+  ],
+  "Ryan Coulombe #0": [
+    "C",
+    "RCF",
+    "RF"
+  ],
+  "Corey Cheever": [
+    "RCF",
+    "RF",
+    "C"
+  ],
+  "Kyle Doherty": [
+    "C",
+    "2B",
+    "RCF",
+    "RF"
+  ],
+  "Ian Konen #14": [
+    "RCF",
+    "RF",
+    "C"
+  ]
 };
 const FALLBACK_ELIG = ["1B","2B","3B","LF","LCF","RCF","RF"];  // unknown players: field anywhere but P/SS/C
 
