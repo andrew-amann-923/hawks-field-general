@@ -6,11 +6,12 @@
 <title>Hawks Coach — Lineup Builder</title>
 <!--
   HIDDEN, COACH-ONLY lineup builder. NOT linked from the team app (index.html).
-  SECURITY NOTE (by design): the page password below is OBSCURITY, not security — anyone who
-  opens this file can read it in View Source. The REAL lock is the GitHub token: without it
-  nobody can publish, even if they find this page. Private position rules (eligibility) live in
-  this browser's localStorage only and are NEVER committed to the public repo.
-  To change the page password, edit PAGE_PW one line below.
+  SECURITY: the coaching-corner rules are shipped ENCRYPTED (window.CORNER_ENC in corner.enc.js?v=e317d916) —
+  AES-256-GCM with a key derived from the coach password via PBKDF2-SHA256. The password is NEVER
+  stored in this page; the gate below unlocks by DECRYPTING. So even on the public repo / in View
+  Source, all anyone sees is ciphertext. Position eligibility (bare arrays) IS public by design.
+  To rotate the password: re-run scripts/encrypt_corner.mjs with the new CORNER_PW, then redeploy
+  (the old ciphertext stops opening; there is no plaintext password to edit here anymore).
 -->
 <style>
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;margin:0;background:#f4f6f8;color:#1f2a44;-webkit-text-size-adjust:100%}
@@ -47,6 +48,16 @@
   .gate{max-width:340px;margin:14vh auto;text-align:center}
   .warn{background:#fff8e6;border:1px solid #f0e0a8;border-radius:8px;padding:9px;font-size:12.5px;color:#7a6410}
   .hide{display:none}
+  .md{font-size:13px;line-height:1.5;color:#243}
+  .md h1,.md h2,.md h3,.md h4{margin:12px 0 4px;color:#223;line-height:1.25}
+  .md h1{font-size:16px} .md h2{font-size:15px} .md h3{font-size:14px} .md h4{font-size:13px}
+  .md p{margin:6px 0} .md ul{margin:6px 0;padding-left:20px} .md li{margin:2px 0}
+  .md code{background:#eef0ff;border-radius:4px;padding:1px 4px;font-size:12px}
+  .md hr{border:none;border-top:1px solid #e3e6ee;margin:12px 0}
+  .md blockquote{margin:8px 0;padding:6px 10px;background:#fff8e6;border-left:3px solid #f0d060;border-radius:4px;font-size:12.5px}
+  .md table{border-collapse:collapse;width:100%;font-size:12px;margin:6px 0}
+  .md th,.md td{border:1px solid #e3e6ee;padding:4px 6px;text-align:left;vertical-align:top}
+  .md th{background:#f7f8fb}
 </style>
 </head>
 <body>
@@ -62,6 +73,12 @@
 <div id="app" class="wrap hide">
   <h1>🦅 Lineup Builder</h1>
   <p class="muted">Generate from 2025 numbers → tweak → publish to the team app. Built for your phone.</p>
+
+  <details class="card" id="cornerCard">
+    <summary>📋 Coaching Corner — full private rules</summary>
+    <p class="muted">Decrypted on this device with your password. Never leaves the page as plaintext.</p>
+    <div id="cornerBody" class="md"></div>
+  </details>
 
   <details class="card">
     <summary>⚙️ Settings (one-time)</summary>
@@ -142,14 +159,15 @@
     </div>
   </div>
 
-  <p class="warn" style="margin:18px 0">This page is hidden, not secret — the password just keeps it from being stumbled on.
-  Don't share the URL. The GitHub token is what actually controls publishing; keep it to yourself.</p>
+  <p class="warn" style="margin:18px 0">The coaching-corner rules are encrypted with your password — nobody sees them without it,
+  even though the page is public. Publishing still needs the GitHub token. Keep both to yourself.</p>
 </div>
 
+<script src="corner.enc.js?v=e317d916"></script>
 <script src="app_data.js?v=42ee7770"></script>
 <script>
 /* ===================== config ===================== */
-const PAGE_PW = "hawks2026";                 // <-- change this to your password
+/* No plaintext password here anymore — the gate unlocks by DECRYPTING window.CORNER_ENC. */
 const OWNER = "andrew-amann-923";
 const REPO  = "hawks-field-general";
 const API   = "https://api.github.com/repos/" + OWNER + "/" + REPO;
@@ -243,19 +261,63 @@ const DEFAULT_ELIG = {
 };
 const FALLBACK_ELIG = ["1B","2B","3B","LF","LCF","RCF","RF"];  // unknown players: field anywhere but P/SS/C
 
-/* ===================== gate ===================== */
-function tryUnlock(){
-  if(document.getElementById("pw").value === PAGE_PW){
-    sessionStorage.setItem("hawks_unlocked","1"); showApp();
-  } else { document.getElementById("gateMsg").textContent = "Nope."; }
+/* ===================== gate (decrypt to unlock) ===================== */
+let CORNER_MD = null;
+function b64bytes(s){ const bin=atob(s); const u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return u; }
+async function deriveKey(pw, salt, iters){
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt, iterations:iters, hash:"SHA-256"},
+    base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+}
+async function tryUnlock(pw){
+  const msg = document.getElementById("gateMsg");
+  if(pw===undefined) pw = document.getElementById("pw").value;
+  const E = window.CORNER_ENC;
+  if(!E){ msg.textContent = "Encrypted rules didn't load — hard-refresh the page."; return; }
+  msg.textContent = "Unlocking…";
+  try{
+    const key = await deriveKey(pw, b64bytes(E.salt), E.iters||210000);
+    const pt  = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64bytes(E.iv)}, key, b64bytes(E.ct));
+    CORNER_MD = new TextDecoder().decode(pt);
+    sessionStorage.setItem("hawks_pw", pw);   // tab-scoped so a refresh re-opens without retyping
+    msg.textContent = "";
+    showApp();
+  }catch(e){ CORNER_MD=null; msg.textContent = "Nope."; }
 }
 function showApp(){
   document.getElementById("gate").classList.add("hide");
   document.getElementById("app").classList.remove("hide");
   init();
+  renderCorner();
 }
-if(sessionStorage.getItem("hawks_unlocked")==="1") showApp();
+(async ()=>{ const pw=sessionStorage.getItem("hawks_pw"); if(pw) await tryUnlock(pw); })();
 document.getElementById("pw").addEventListener("keyup",e=>{ if(e.key==="Enter") tryUnlock(); });
+
+/* ===================== coaching-corner render (decrypted markdown) ===================== */
+function mdEsc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function mdInline(s){ return mdEsc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/`(.+?)`/g,"<code>$1</code>"); }
+function mdToHtml(md){
+  const L = md.split(/\r?\n/); let out=""; let i=0;
+  const isTbl = l => /^\s*\|.*\|\s*$/.test(l);
+  const cells = r => r.trim().replace(/^\|/,"").replace(/\|$/,"").split("|").map(c=>c.trim());
+  while(i<L.length){
+    const l=L[i];
+    if(l.trim()===""){ i++; continue; }
+    let m;
+    if((m=/^(#{1,6})\s+(.*)$/.exec(l))){ const n=Math.min(m[1].length+1,6); out+=`<h${n}>${mdInline(m[2])}</h${n}>`; i++; continue; }
+    if(/^\s*[-*_]{3,}\s*$/.test(l)){ out+="<hr>"; i++; continue; }
+    if(/^\s*>/.test(l)){ const b=[]; while(i<L.length&&/^\s*>/.test(L[i])){ b.push(L[i].replace(/^\s*>\s?/,"")); i++; } out+=`<blockquote>${b.map(mdInline).join("<br>")}</blockquote>`; continue; }
+    if(isTbl(l)){ const rows=[]; while(i<L.length&&isTbl(L[i])){ rows.push(L[i]); i++; }
+      let t="<table><thead><tr>"+cells(rows[0]).map(c=>`<th>${mdInline(c)}</th>`).join("")+"</tr></thead><tbody>";
+      for(let r=2;r<rows.length;r++) t+="<tr>"+cells(rows[r]).map(c=>`<td>${mdInline(c)}</td>`).join("")+"</tr>";
+      out+=`<div style="overflow-x:auto">${t}</tbody></table></div>`; continue; }
+    if(/^\s*[-*]\s+/.test(l)){ const b=[]; while(i<L.length&&/^\s*[-*]\s+/.test(L[i])){ b.push(L[i].replace(/^\s*[-*]\s+/,"")); i++; } out+="<ul>"+b.map(x=>`<li>${mdInline(x)}</li>`).join("")+"</ul>"; continue; }
+    const p=[]; while(i<L.length && L[i].trim()!=="" && !/^#{1,6}\s/.test(L[i]) && !isTbl(L[i]) && !/^\s*>/.test(L[i]) && !/^\s*[-*]\s+/.test(L[i]) && !/^\s*[-*_]{3,}\s*$/.test(L[i])){ p.push(L[i]); i++; }
+    out+=`<p>${p.map(mdInline).join("<br>")}</p>`;
+  }
+  return out;
+}
+function renderCorner(){ const el=document.getElementById("cornerBody"); if(el && CORNER_MD!=null) el.innerHTML = mdToHtml(CORNER_MD); }
 
 /* ===================== data helpers ===================== */
 const D = window.APP_DATA;
