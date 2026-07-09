@@ -6,19 +6,29 @@
   "time": "6:30 PM",
   "arrive": "5:30 PM",
   "lock_at": "2026-07-09T18:15:00",
-  "notes": "11-player roster (Eric Klatt unavailable). Joe McLean pitches all 7. Kyle Doherty gets 5 innings; everyone else 6-7.",
-  "rsvp": {"going": 11, "not_going": 1, "no_reply": 0, "last_checked": "2026-07-09 2:00 PM"},
+  "notes": "11-player roster. Eric Klatt unavailable. Joe McLean pitches all 7 innings.",
+  "rsvp": {"going": 11, "not_going": 1, "no_reply": 0, "last_checked": "2026-07-09 14:00 EDT"},
+  "opponent_lineup": {
+    "team": "Titans",
+    "source": "2025 scouting data. Limited recent matchup history.",
+    "order": []
+  },
+  "rules": [
+    "With 11 players and 10 fielding spots, everyone plays except for 7 distributed rests across the 9 non-pitcher fielders.",
+    "Joe McLean pitches all 7 innings (Eric Klatt unavailable).",
+    "Dennis Marks at SS all 7 (only SS). Andrew Amann locked to LCF when available. Kyle Doherty gets 5 innings; everyone else 6-7."
+  ],
   "grid": [
-    {"bat": 1,  "player": "Andrew Amann #21",   "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"]},
-    {"bat": 2,  "player": "Perry DiLibero #31", "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "LF"]},
-    {"bat": 3,  "player": "Matt Watson",        "inn": ["3B", "3B", "3B", "3B", "3B", "3B", "3B"]},
-    {"bat": 4,  "player": "Thacher Knight #20", "inn": ["1B", "1B", "1B", "1B", "1B", "1B", "1B"]},
-    {"bat": 5,  "player": "Joe McLean #4",      "inn": ["P", "P", "P", "P", "P", "P", "P"]},
-    {"bat": 6,  "player": "Dennis Marks #12",   "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"]},
-    {"bat": 7,  "player": "Jon Sorenson",       "inn": ["C", "C", "C", "C", "C", "C", "C"]},
-    {"bat": 8,  "player": "Arthur Bruno",       "inn": ["RCF", "RCF", "RCF", "RCF", "RCF", "RCF", "RCF"]},
-    {"bat": 9,  "player": "Ed Fitzpatrick",     "inn": ["2B", "SIT", "2B", "2B", "SIT", "2B", "2B"]},
-    {"bat": 10, "player": "Corey Cheever",      "inn": ["RF", "RF", "RF", "SIT", "RF", "RF", "RF"]},
-    {"bat": 11, "player": "Kyle Doherty",       "inn": ["SIT", "2B", "RF", "RF", "2B", "SIT", "SIT"]}
+    {"bat": 1,  "player": "Andrew Amann #21",   "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"], "why": "Locked to LCF. Amann is the center field fixture."},
+    {"bat": 2,  "player": "Perry DiLibero #31", "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "LF"], "why": "Our best left fielder, plays all 7."},
+    {"bat": 3,  "player": "Matt Watson",        "inn": ["3B", "3B", "3B", "3B", "3B", "3B", "3B"], "why": "Best third baseman, plays all 7."},
+    {"bat": 4,  "player": "Thacher Knight #20", "inn": ["1B", "1B", "1B", "1B", "1B", "1B", "1B"], "why": "1B for the game since Flinn unavailable."},
+    {"bat": 5,  "player": "Joe McLean #4",      "inn": ["P", "P", "P", "P", "P", "P", "P"], "why": "Second pitcher. Klatt unavailable so Joe pitches all 7."},
+    {"bat": 6,  "player": "Dennis Marks #12",   "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Only shortstop available, plays all 7."},
+    {"bat": 7,  "player": "Jon Sorenson",       "inn": ["C", "C", "C", "C", "C", "C", "C"], "why": "Primary catcher for the game."},
+    {"bat": 8,  "player": "Arthur Bruno",       "inn": ["RCF", "RCF", "RCF", "RCF", "RCF", "RCF", "RCF"], "why": "Right-center field, plays 6 innings (sits inn 3)."},
+    {"bat": 9,  "player": "Ed Fitzpatrick",     "inn": ["2B", "SIT", "2B", "2B", "SIT", "2B", "2B"], "why": "Best 2B, sits inns 2 & 5 for rest."},
+    {"bat": 10, "player": "Corey Cheever",      "inn": ["RF", "RF", "RF", "SIT", "RF", "RF", "RF"], "why": "Right field, sits inn 4 for rest."},
+    {"bat": 11, "player": "Kyle Doherty",       "inn": ["SIT", "2B", "RF", "RF", "2B", "SIT", "SIT"], "why": "Backup 2B/OF, gets 5 innings of play (inns 2, 3, 4, 5)."}
   ]
 }
