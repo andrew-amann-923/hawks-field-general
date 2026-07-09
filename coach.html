@@ -6,7 +6,7 @@
 <title>Hawks Coach — Lineup Builder</title>
 <!--
   HIDDEN, COACH-ONLY lineup builder. NOT linked from the team app (index.html).
-  SECURITY: the coaching-corner rules are shipped ENCRYPTED (window.CORNER_ENC in corner.enc.js?v=e317d916) —
+  SECURITY: the coaching-corner rules are shipped ENCRYPTED (window.CORNER_ENC in corner.enc.js?v=121e98e0) —
   AES-256-GCM with a key derived from the coach password via PBKDF2-SHA256. The password is NEVER
   stored in this page; the gate below unlocks by DECRYPTING. So even on the public repo / in View
   Source, all anyone sees is ciphertext. Position eligibility (bare arrays) IS public by design.
@@ -163,7 +163,7 @@
   even though the page is public. Publishing still needs the GitHub token. Keep both to yourself.</p>
 </div>
 
-<script src="corner.enc.js?v=e317d916"></script>
+<script src="corner.enc.js?v=121e98e0"></script>
 <script src="app_data.js?v=42ee7770"></script>
 <script>
 /* ===================== config ===================== */
@@ -233,9 +233,9 @@ const DEFAULT_ELIG = {
     "1B"
   ],
   "Arthur Bruno": [
-    "C",
     "RCF",
-    "RF"
+    "RF",
+    "C"
   ],
   "Ryan Coulombe #0": [
     "C",
@@ -248,10 +248,10 @@ const DEFAULT_ELIG = {
     "C"
   ],
   "Kyle Doherty": [
-    "C",
     "2B",
     "RCF",
-    "RF"
+    "RF",
+    "C"
   ],
   "Ian Konen #14": [
     "RCF",
