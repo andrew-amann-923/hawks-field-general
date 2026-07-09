@@ -182,7 +182,7 @@ const DEFAULT_ELIG = {
     "P",
     "3B"
   ],
-  "Joe McLean": [
+  "Joe McLean #4": [
     "P",
     "2B",
     "1B",
@@ -442,53 +442,68 @@ function whyFor(name, slot){
 }
 
 /* ===================== engine: fielding grid ===================== */
+/* Preferences are DERIVED so no skill rankings live in this public file:
+   - each player's eligibility ORDER (data/eligibility.json) is his position preference, best
+     spot first — so index-of-position = how much he wants it (Watson→3B, Ed→2B, Flinn→1B, …);
+   - when two players want the same spot, the better glove wins (fewer 2025 errors);
+   - Amann & Marks rest less (sit cap 1); the only-option player at any spot never sits;
+   - pitching is split evenly across the innings between the available pitchers. */
+const SIT_CAP = { "Andrew Amann #21": 1, "Dennis Marks #12": 1 };
 function* combos(arr,k){ if(k===0){yield [];return;} for(let i=0;i<=arr.length-k;i++){ for(const rest of combos(arr.slice(i+1),k-1)) yield [arr[i],...rest]; } }
-function perfectMatch(players){       // bipartite match players -> 10 positions (Hungarian-ish DFS)
-  if(players.length!==10) return null;
-  const at={};
-  const tryA=(pl,seen)=>{ for(const p of elig(pl)){ if(seen.has(p))continue; seen.add(p); if(!(p in at)||tryA(at[p],seen)){ at[p]=pl; return true; } } return false; };
-  for(const pl of players){ if(!tryA(pl,new Set())) return null; }
-  return Object.keys(at).length===10 ? at : null;
-}
-function invert(at){ const o={}; for(const p in at) o[at[p]]=p; return o; }
 function locks(avail){ const s=new Set(); POS.forEach(p=>{ const c=avail.filter(n=>elig(n).includes(p)); if(c.length===1) s.add(c[0]); }); return s; }
-function bestDefense(avail, capMap){   // innings 1 & 7: sit the weakest gloves (most 2025 E), field a legal 10
-  const need = avail.length-10;
-  const benchable=[...avail.filter(n=>capMap[n]>0)].sort((a,b)=>errs(b)-errs(a) || ops(a)-ops(b));
-  for(const sitArr of combos(benchable,need)){
-    const sit=new Set(sitArr); const field=avail.filter(n=>!sit.has(n));
-    const at=perfectMatch(field); if(at) return {pos:invert(at), sit:sitArr};
-  }
-  return null;
-}
-function buildGrid(avail, maxSit){
-  const need = avail.length-10;
-  if(need<0) return {error:`Only ${avail.length} available — you need at least 10 to field a team.`};
-  const lock = locks(avail);
-  const capMap={}; avail.forEach(n=> capMap[n] = lock.has(n) ? 0 : maxSit);
-  const best = bestDefense(avail, capMap);
-  if(!best) return {error:"Couldn't field a legal defense in innings 1 & 7. Check Settings → Position rules, or who's available."};
-  const grid={}; avail.forEach(n=> grid[n]=Array(7).fill("?"));
-  const budget={...capMap};
-  [0,6].forEach(inn=>{ for(const pl in best.pos) grid[pl][inn]=best.pos[pl]; best.sit.forEach(pl=>{ grid[pl][inn]="SIT"; budget[pl]--; }); });
-  const NONPIN=[1,2,3,4,5];
-  const backtrack = k => {
-    if(k===NONPIN.length) return true;
-    const inn=NONPIN[k];
-    const cands=[...avail.filter(n=>budget[n]>0)].sort((a,b)=>errs(b)-errs(a) || ops(a)-ops(b));
-    for(const sitArr of combos(cands,need)){
-      const sit=new Set(sitArr); const field=avail.filter(n=>!sit.has(n));
-      if(field.length!==10) continue;
-      const at=perfectMatch(field);
-      if(!at) continue;
-      sitArr.forEach(p=>budget[p]--);
-      const inv=invert(at); for(const pl in inv) grid[pl][inn]=inv[pl]; sit.forEach(pl=>grid[pl][inn]="SIT");
-      if(backtrack(k+1)) return true;
-      sitArr.forEach(p=>budget[p]++); avail.forEach(pl=>grid[pl][inn]="?");
+function posRank(n,p){ const i=elig(n).indexOf(p); return i<0 ? 99 : i; }   // lower = wants it more
+function isPitcher(n){ return elig(n).includes("P"); }
+
+const ASSIGN_ORDER = ["SS","P","LCF","3B","C","1B","2B","LF","RCF","RF"];
+function fillGrid(field, fixed){   // field: exactly 10 players; fixed:{pos:player}. -> {pos:player} | null
+  const at={}, used=new Set();
+  for(const p in (fixed||{})){ at[p]=fixed[p]; used.add(fixed[p]); }
+  const todo = ASSIGN_ORDER.filter(p=>!(p in at));
+  const solve = k => {
+    if(k===todo.length) return used.size===10;
+    const p = todo[k];
+    const cands = field.filter(n=>!used.has(n) && elig(n).includes(p))
+      .sort((a,b)=> posRank(a,p)-posRank(b,p) || errs(a)-errs(b) || ops(b)-ops(a));  // wants-it, then glove
+    for(const n of cands){
+      at[p]=n; used.add(n);
+      if(solve(k+1)) return true;
+      used.delete(n); delete at[p];
     }
     return false;
   };
-  if(!backtrack(0)) return {error:"retry"};
+  return solve(0) ? {...at} : null;
+}
+function pitchPlan(avail){   // split 7 innings between available pitchers (primary first): 2→4/3, 1→all 7
+  const pit = avail.filter(isPitcher).sort((a,b)=> posRank(a,"P")-posRank(b,"P") || errs(a)-errs(b));
+  const plan=[]; for(let inn=0; inn<7; inn++) plan[inn] = pit.length ? pit[inn % pit.length] : null;
+  return plan;
+}
+function buildGrid(avail, capDefault){
+  const need = avail.length-10;
+  if(need<0) return {error:`Only ${avail.length} available — you need at least 10 to field a team.`};
+  const lock = locks(avail);
+  const planP = pitchPlan(avail);
+  const cap={}; avail.forEach(n=> cap[n] = lock.has(n) ? 0 : (SIT_CAP[n]!=null ? SIT_CAP[n] : capDefault));
+  const sits={}; avail.forEach(n=> sits[n]=0);
+  const grid={}; avail.forEach(n=> grid[n]=Array(7).fill("?"));
+  const INN_ORDER=[0,6,1,2,3,4,5];   // set the opener & closer (strongest defense) first
+  for(const inn of INN_ORDER){
+    const p = planP[inn];
+    // who may sit: not this inning's pitcher, still under cap. Prefer to sit whoever's sat LEAST
+    // (spreads rests toward sit-once), then the weaker gloves (more 2025 errors).
+    const benchable = avail.filter(n=> n!==p && (cap[n]-sits[n])>0)
+      .sort((a,b)=> sits[a]-sits[b] || errs(b)-errs(a) || ops(a)-ops(b));
+    let placed=null;
+    for(const sitArr of combos(benchable, need)){
+      const sit=new Set(sitArr); const field=avail.filter(n=>!sit.has(n));
+      if(field.length!==10) continue;
+      const at = fillGrid(field, p ? {P:p} : {});
+      if(at){ placed={sitArr, at}; break; }
+    }
+    if(!placed) return {error:"retry"};
+    for(const pos in placed.at) grid[placed.at[pos]][inn]=pos;
+    placed.sitArr.forEach(n=>{ grid[n][inn]="SIT"; sits[n]++; });
+  }
   return {grid};
 }
 
@@ -562,9 +577,9 @@ function assemble(){
             no_reply:+document.getElementById("rNo").value, last_checked: date+" set by coach" },
     rules: [
       "Built from 2025 production: order ranked on OPS (leadoff = best on-base, cleanup = most power); new players audition from the bottom.",
-      `Available: ${state.order.length}. Sit priority by 2025 errors — most errors sits more; everyone bats all game.`,
-      "Innings 1 & 7 field the strongest available defense; only-option spots (P / SS) play all 7.",
-      "Fielders rotate through innings 2–6 to stay fresh; every inning fields a legal ten."
+      `Available: ${state.order.length}. Everyone bats all game; rests are spread so most players sit at most once.`,
+      "Every inning fields a legal ten in each player's best spot; the opener and closer put the strongest gloves out.",
+      "Pitching is split evenly between the available pitchers across the seven innings."
     ],
     grid: state.order.map((n,i)=>({ bat:i+1, player:n, inn:state.grid[n].slice(), why:whyFor(n,i+1) }))
   };
