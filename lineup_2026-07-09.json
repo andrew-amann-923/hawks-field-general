@@ -20,15 +20,15 @@
   ],
   "grid": [
     {"bat": 1,  "player": "Andrew Amann #21",   "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"], "why": "Locked to LCF. Amann is the center field fixture."},
-    {"bat": 2,  "player": "Perry DiLibero #31", "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "LF"], "why": "Our best left fielder, plays all 7."},
+    {"bat": 2,  "player": "Perry DiLibero #31", "inn": ["LF", "SIT", "LF", "LF", "LF", "LF", "LF"], "why": "Our best left fielder, plays 6 innings (sits inn 2)."},
     {"bat": 3,  "player": "Matt Watson",        "inn": ["3B", "3B", "3B", "3B", "3B", "3B", "3B"], "why": "Best third baseman, plays all 7."},
-    {"bat": 4,  "player": "Thacher Knight #20", "inn": ["1B", "1B", "1B", "1B", "1B", "1B", "1B"], "why": "1B for the game since Flinn unavailable."},
+    {"bat": 4,  "player": "Thacher Knight #20", "inn": ["1B", "1B", "SIT", "1B", "1B", "1B", "1B"], "why": "1B for the game since Flinn unavailable, plays 6 innings (sits inn 3)."},
     {"bat": 5,  "player": "Joe McLean #4",      "inn": ["P", "P", "P", "P", "P", "P", "P"], "why": "Second pitcher. Klatt unavailable so Joe pitches all 7."},
     {"bat": 6,  "player": "Dennis Marks #12",   "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Only shortstop available, plays all 7."},
-    {"bat": 7,  "player": "Jon Sorenson",       "inn": ["C", "C", "C", "C", "C", "C", "C"], "why": "Primary catcher for the game."},
-    {"bat": 8,  "player": "Arthur Bruno",       "inn": ["RCF", "RCF", "RCF", "RCF", "RCF", "RCF", "RCF"], "why": "Right-center field, plays 6 innings (sits inn 3)."},
-    {"bat": 9,  "player": "Ed Fitzpatrick",     "inn": ["2B", "SIT", "2B", "2B", "SIT", "2B", "2B"], "why": "Best 2B, sits inns 2 & 5 for rest."},
-    {"bat": 10, "player": "Corey Cheever",      "inn": ["RF", "RF", "RF", "SIT", "RF", "RF", "RF"], "why": "Right field, sits inn 4 for rest."},
-    {"bat": 11, "player": "Kyle Doherty",       "inn": ["SIT", "2B", "RF", "RF", "2B", "SIT", "SIT"], "why": "Backup 2B/OF, gets 5 innings of play (inns 2, 3, 4, 5)."}
+    {"bat": 7,  "player": "Jon Sorenson",       "inn": ["C", "C", "C", "SIT", "C", "C", "C"], "why": "Primary catcher, plays 6 innings (sits inn 4)."},
+    {"bat": 8,  "player": "Arthur Bruno",       "inn": ["RCF", "RCF", "RCF", "RCF", "SIT", "RCF", "RCF"], "why": "Right-center field, plays 6 innings (sits inn 5)."},
+    {"bat": 9,  "player": "Ed Fitzpatrick",     "inn": ["2B", "2B", "2B", "2B", "2B", "SIT", "2B"], "why": "Best 2B, plays 6 innings (sits inn 6)."},
+    {"bat": 10, "player": "Corey Cheever",      "inn": ["RF", "RF", "RF", "RF", "RF", "RF", "SIT"], "why": "Right field, plays 6 innings (sits inn 7)."},
+    {"bat": 11, "player": "Kyle Doherty",       "inn": ["SIT", "2B", "2B", "RF", "2B", "2B", "RF"], "why": "Backup 2B/OF, plays 6 innings (sits inn 1)."}
   ]
 }
