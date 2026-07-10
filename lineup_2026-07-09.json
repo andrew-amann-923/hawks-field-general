@@ -14,21 +14,21 @@
     "order": []
   },
   "rules": [
-    "With 11 players and 10 fielding spots, everyone plays except for 7 distributed rests across the 9 non-pitcher fielders.",
-    "Joe McLean pitches all 7 innings (Eric Klatt unavailable).",
-    "Dennis Marks at SS all 7 (only SS). Andrew Amann locked to LCF when available. Kyle Doherty gets 5 innings; everyone else 6-7."
+    "VALIDATION RULE: Each inning has exactly 10 positions (P,C,1B,2B,3B,SS,LF,LCF,RCF,RF), one player per position. No gaps, no duplicates.",
+    "Joe McLean pitches all 7 (only pitcher available). Dennis Marks at SS all 7 (only SS). Andrew Amann locked to LCF all 7.",
+    "7 sits distributed: 1 sit per inning, 7 different players sit once each (no one sits twice)."
   ],
   "grid": [
-    {"bat": 1,  "player": "Arthur Bruno",       "inn": ["RCF", "RCF", "RCF", "RCF", "SIT", "RCF", "RCF"], "why": "Best hitter, leadoff spot. Right-center field, plays 6 innings (sits inn 5)."},
-    {"bat": 2,  "player": "Andrew Amann #21",   "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"], "why": "Locked to LCF. Amann is the center field fixture."},
-    {"bat": 3,  "player": "Perry DiLibero #31", "inn": ["LF", "SIT", "LF", "LF", "LF", "LF", "LF"], "why": "Our best left fielder, plays 6 innings (sits inn 2)."},
-    {"bat": 4,  "player": "Matt Watson",        "inn": ["3B", "3B", "3B", "3B", "3B", "3B", "3B"], "why": "Best third baseman, plays all 7."},
-    {"bat": 5,  "player": "Thacher Knight #20", "inn": ["1B", "1B", "SIT", "1B", "1B", "1B", "1B"], "why": "1B for the game since Flinn unavailable, plays 6 innings (sits inn 3)."},
-    {"bat": 6,  "player": "Joe McLean #4",      "inn": ["P", "P", "P", "P", "P", "P", "P"], "why": "Second pitcher. Klatt unavailable so Joe pitches all 7."},
-    {"bat": 7,  "player": "Dennis Marks #12",   "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Only shortstop available, plays all 7."},
-    {"bat": 8,  "player": "Jon Sorenson",       "inn": ["C", "C", "C", "SIT", "C", "C", "C"], "why": "Primary catcher, plays 6 innings (sits inn 4)."},
-    {"bat": 9,  "player": "Ed Fitzpatrick",     "inn": ["2B", "2B", "2B", "2B", "2B", "SIT", "2B"], "why": "Best 2B, plays 6 innings (sits inn 6)."},
-    {"bat": 10, "player": "Corey Cheever",      "inn": ["RF", "RF", "RF", "RF", "RF", "RF", "SIT"], "why": "Right field, plays 6 innings (sits inn 7)."},
-    {"bat": 11, "player": "Kyle Doherty",       "inn": ["SIT", "2B", "2B", "RF", "2B", "2B", "RF"], "why": "Backup 2B/OF, plays 6 innings (sits inn 1)."}
+    {"bat": 1,  "player": "Arthur Bruno",       "inn": ["RCF", "RCF", "RCF", "RCF", "SIT", "RCF", "RCF"], "why": "Best hitter, leadoff. RCF 6 innings (sits inn 5)."},
+    {"bat": 2,  "player": "Andrew Amann #21",   "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"], "why": "Locked to LCF. Plays all 7 (anchor)."},
+    {"bat": 3,  "player": "Perry DiLibero #31", "inn": ["LF", "SIT", "LF", "LF", "LF", "LF", "LF"], "why": "Best LF. Plays 6 (sits inn 2)."},
+    {"bat": 4,  "player": "Matt Watson",        "inn": ["3B", "3B", "3B", "3B", "3B", "3B", "3B"], "why": "Best 3B. Plays all 7 (anchor)."},
+    {"bat": 5,  "player": "Thacher Knight #20", "inn": ["1B", "LF", "SIT", "1B", "RF", "1B", "1B"], "why": "Versatile: 1B/LF/OF. Plays 6 (sits inn 3)."},
+    {"bat": 6,  "player": "Joe McLean #4",      "inn": ["P", "P", "P", "P", "P", "P", "P"], "why": "Pitcher (Klatt unavailable). Plays all 7 (anchor)."},
+    {"bat": 7,  "player": "Dennis Marks #12",   "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Only SS. Plays all 7 (anchor)."},
+    {"bat": 8,  "player": "Jon Sorenson",       "inn": ["C", "C", "C", "SIT", "C", "C", "C"], "why": "Primary catcher. Plays 6 (sits inn 4)."},
+    {"bat": 9,  "player": "Ed Fitzpatrick",     "inn": ["2B", "1B", "1B", "2B", "1B", "SIT", "2B"], "why": "2B/1B combo. Plays 6 (sits inn 6)."},
+    {"bat": 10, "player": "Corey Cheever",      "inn": ["RF", "RF", "RF", "C", "RCF", "RF", "SIT"], "why": "Right field/C backup. Plays 6 (sits inn 7)."},
+    {"bat": 11, "player": "Kyle Doherty",       "inn": ["SIT", "2B", "2B", "RF", "2B", "2B", "RF"], "why": "Backup 2B/outfield. Plays 6 (sits inn 1)."}
   ]
 }
