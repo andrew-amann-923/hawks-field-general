@@ -372,11 +372,14 @@ function resetElig(){ localStorage.removeItem("hawks_elig"); loadEligUI(); docum
 
 /* ===================== game picker ===================== */
 function fillGames(){
-  const today = new Date().toISOString().slice(0,10);
-  const up = (D.schedule_2026.games||[]).filter(g=>g.date>=today);
+  const games = (D.schedule_2026.games||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));
   const sel = document.getElementById("game");
-  sel.innerHTML = up.map(g=>`<option value="${g.date}">${g.dow} ${g.date} — ${g.home?"vs":"@"} ${g.opponent}</option>`).join("")
-    || `<option value="">(no upcoming games)</option>`;
+  const today = new Date().toISOString().slice(0,10);
+  const today_idx = games.findIndex(g=>g.date>=today);
+  const up = today_idx>=0 ? games.slice(today_idx) : [];
+  const past = today_idx>0 ? games.slice(0,today_idx).reverse() : [];  // recent past first
+  const opts = [...up,...past].map(g=>`<option value="${g.date}">${g.dow} ${g.date} — ${g.home?"vs":"@"} ${g.opponent}</option>`).join("");
+  sel.innerHTML = opts || `<option value="">(no games)</option>`;
   onGamePick();
 }
 function parseTime(t){ const m=/(\d+):(\d+)\s*(AM|PM)/i.exec(t||""); if(!m) return null;
