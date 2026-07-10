@@ -35,6 +35,8 @@
   th,td{border:1px solid #e3e6ee;padding:3px;text-align:center}
   th{background:#f7f8fb;font-size:11px} td.pl{text-align:left;white-space:nowrap;font-weight:600}
   td select{width:auto;font-size:13px;padding:2px;border:1px solid #e3e6ee;border-radius:5px}
+  td{cursor:pointer;transition:background 0.15s} td.sit{background:#fce8e6;color:#b3261e} td.selected{background:#1f4fd6;color:#fff;font-weight:600}
+  td:hover:not(.sit):not(.selected){background:#eef0ff}
   th.bad{background:#fdebeb;color:#b3261e} th.good{color:#137333}
   .ordrow{display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid #eef}
   .ordrow .bn{width:22px;font-weight:700;color:#889;text-align:right}
@@ -139,6 +141,7 @@
 
   <div class="card">
     <button class="lg" onclick="generate()">⚡ Generate lineup</button>
+    <button class="lg" id="loadBtn" style="display:none;background:#2d9b5f" onclick="loadExisting()">📋 Load validated lineup</button>
     <div id="genMsg"></div>
   </div>
 
@@ -390,6 +393,7 @@ function onGamePick(){
   document.getElementById("venue").value = g.venue || "";
   document.getElementById("time").value  = g.time || "6:30 PM";
   document.getElementById("arrive").value= minus60(g.time||"6:30 PM");
+  showLoadButton();
 }
 
 /* ===================== availability ===================== */
@@ -518,13 +522,33 @@ function generate(){
   if(res.error){ gm.className="status err"; gm.textContent=res.error; return; }
   state.order = buildOrder(avail);
   state.grid  = res.grid;
+  showLoadButton();
   document.getElementById("review").classList.remove("hide");
   renderOrder(); renderGrid();
   gm.className="status ok"; gm.textContent="Generated. Review and tweak below, then publish.";
   document.getElementById("review").scrollIntoView({behavior:"smooth"});
 }
+function loadExisting(){
+  const date = document.getElementById("game").value;
+  const L = D.lineups && D.lineups[date];
+  if(!L){ alert("No validated lineup found for this date."); return; }
+  state.order = L.grid.map(r=>r.player);
+  state.grid = {};
+  L.grid.forEach(r=>{ state.grid[r.player]=r.inn.slice(); });
+  document.getElementById("review").classList.remove("hide");
+  renderOrder(); renderGrid();
+  const gm = document.getElementById("genMsg");
+  gm.className="status ok"; gm.textContent="Loaded validated lineup. Review and publish, or generate a new one.";
+  document.getElementById("review").scrollIntoView({behavior:"smooth"});
+}
+function showLoadButton(){
+  const date = document.getElementById("game").value;
+  const hasExisting = D.lineups && D.lineups[date];
+  document.getElementById("loadBtn").style.display = hasExisting ? "block" : "none";
+}
 
 /* ===================== review UI ===================== */
+let swapState = {inn: null, player: null};  // track which cell is selected for swapping
 function renderOrder(){
   document.getElementById("order").innerHTML = state.order.map((n,i)=>
     `<div class="ordrow"><span class="bn">${i+1}</span><span class="nm">${n}</span>
@@ -533,17 +557,35 @@ function renderOrder(){
 function move(i,d){ const j=i+d; if(j<0||j>=state.order.length) return; const a=state.order; [a[i],a[j]]=[a[j],a[i]]; renderOrder(); }
 function renderGrid(){
   const head = `<tr><th class="pl">Player</th>${[1,2,3,4,5,6,7].map(i=>`<th id="ih${i}">Inn ${i}</th>`).join("")}</tr>`;
-  const opts = ["SIT",...POS];
   const body = state.order.map(n=>{
-    const cells = state.grid[n].map((v,inn)=>
-      `<td><select onchange="setCell('${n.replace(/'/g,"\\'")}',${inn},this.value)">${
-        opts.map(o=>`<option ${o===v?"selected":""}>${o}</option>`).join("")}</select></td>`).join("");
+    const cells = state.grid[n].map((pos,inn)=>{
+      const isSelected = swapState.inn===inn && swapState.player===n;
+      const cellClass = isSelected ? "selected" : pos==="SIT" ? "sit" : "";
+      const displayText = pos==="SIT" ? "SIT" : pos;
+      return `<td class="${cellClass}" onclick="selectSwap(${inn},'${n.replace(/'/g,"\\'")}','${pos.replace(/'/g,"\\'")})">${displayText}</td>`;
+    }).join("");
     return `<tr><td class="pl">${n}</td>${cells}</tr>`;
   }).join("");
   document.getElementById("grid").innerHTML = `<table>${head}${body}</table>`;
   validate();
 }
-function setCell(n,inn,v){ state.grid[n][inn]=v; validate(); }
+function selectSwap(inn,player,pos){
+  // If same cell clicked, deselect
+  if(swapState.inn===inn && swapState.player===player){ swapState={inn:null,player:null}; renderGrid(); return; }
+  // If no cell selected, select this one
+  if(swapState.inn===null){ swapState={inn,player,pos}; renderGrid(); return; }
+  // If same inning, swap the two players' positions
+  if(swapState.inn===inn){
+    const p1=state.grid[swapState.player][inn];
+    const p2=state.grid[player][inn];
+    state.grid[swapState.player][inn]=p2;
+    state.grid[player][inn]=p1;
+    swapState={inn:null,player:null};
+    renderGrid(); return;
+  }
+  // If different inning, deselect and select new cell
+  swapState={inn,player,pos}; renderGrid();
+}
 function validate(){
   let allOk=true, msgs=[];
   for(let inn=0; inn<7; inn++){
