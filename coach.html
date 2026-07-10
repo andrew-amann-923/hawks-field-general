@@ -447,28 +447,59 @@ function availablePlayers(){
 
 /* ===================== engine: batting order ===================== */
 function buildOrder(avail){
-  const withData = avail.filter(bstat).sort((a,b)=>ops(b)-ops(a));
-  const rookies  = avail.filter(n=>!bstat(n));
-  const pool = withData.slice();
-  const pull = metric => { let bi2=0,bv=-Infinity; pool.forEach((n,i)=>{const v=metric(n); if(v>bv){bv=v;bi2=i;}}); return pool.splice(bi2,1)[0]; };
-  const order=[];
-  if(pool.length) order.push(pull(obp));                 // leadoff = best on-base
-  let cleanup=null;
-  if(pool.length) cleanup = pull(n=>hr(n)*1000+rbi(n));  // cleanup = most power
-  while(order.length<3 && pool.length) order.push(pull(ops));
-  if(cleanup) order.push(cleanup);                       // slot 4
-  while(pool.length) order.push(pull(ops));              // 5+ by OPS
-  rookies.forEach(n=>order.push(n));                     // rookies audition from the bottom
+  // Score based on current season hotness (2026 stats)
+  const scored = avail.map(n => {
+    const b = bstat(n);
+    if(!b) return {name: n, score: -1, isRookie: true};
+    const ops26 = num(b[bi.OPS]) || 0;
+    const obp26 = num(b[bi.OBP]) || 0;
+    const hr26 = num(b[bi.HR]) || 0;
+    const rbi26 = num(b[bi.RBI]) || 0;
+    // Weight: current OPS (primary), OBP (on-base), HR+RBI (power/production)
+    const score = ops26 * 100 + obp26 * 50 + (hr26 + rbi26/2) * 10;
+    return {name: n, score, isRookie: false, ops26, obp26, hr26, rbi26};
+  });
+
+  const hot = scored.filter(s => !s.isRookie).sort((a,b) => b.score - a.score);
+  const rookies = scored.filter(s => s.isRookie);
+
+  const order = [];
+  const pool = hot.slice();
+
+  // Leadoff: best OBP of hot hitters (on-base leadership)
+  if(pool.length) {
+    const lo = pool.reduce((a,b) => b.obp26 > a.obp26 ? b : a);
+    order.push(lo.name);
+    pool.splice(pool.indexOf(lo), 1);
+  }
+
+  // Cleanup: most power (HR + RBI combined)
+  let cleanup = null;
+  if(pool.length) {
+    cleanup = pool.reduce((a,b) => (b.hr26 + b.rbi26) > (a.hr26 + a.rbi26) ? b : a);
+    pool.splice(pool.indexOf(cleanup), 1);
+  }
+
+  // Fill slots 2-3 by current OPS score
+  while(order.length < 3 && pool.length) order.push(pool.shift().name);
+  if(cleanup) order.push(cleanup.name);
+
+  // Slots 5+ by current season OPS (hottest bats bat)
+  while(pool.length) order.push(pool.shift().name);
+
+  // Rookies audition from bottom
+  rookies.forEach(r => order.push(r.name));
+
   return order;
 }
 function whyFor(name, slot){
   const b=bstat(name);
-  if(!b) return "New this year — no 2025 numbers on file, so the bat auditions from the bottom. Hit and the order learns your name fast.";
+  if(!b) return "Audition: no prior history on file, so bat from the bottom. Hot bat moves up fast this season.";
   const A=c=>b[bi[c]];
-  const tag = slot===1 ? "Leadoff: best on-base of the group — job one is don't make the first out."
-    : slot===4 ? "Cleanup: most power on the card — clears the bases."
-    : `Slotted ${slot} on 2025 production.`;
-  return `${tag} 2025: ${stripJ(A("AVG"))} AVG · ${stripJ(A("OBP"))} OBP · ${A("OPS")} OPS · ${A("HR")} HR · ${A("RBI")} RBI.`;
+  const tag = slot===1 ? "Leadoff: best OBP this season — job is getting on base."
+    : slot===4 ? "Cleanup: most power this season — clears the bases."
+    : `Hot this 2026 season: batting in the heart.`;
+  return `${tag} 2026 stats: ${stripJ(A("AVG"))} AVG · ${stripJ(A("OBP"))} OBP · ${A("OPS")} OPS · ${A("HR")} HR · ${A("RBI")} RBI.`;
 }
 
 /* ===================== engine: fielding grid ===================== */
