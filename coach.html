@@ -132,7 +132,8 @@
 
   <div class="card">
     <h2>2 · Who's available tonight</h2>
-    <p class="muted">Tap to toggle. Uncheck anyone who's out. Need at least 10.</p>
+    <p class="muted">Synced with GameChanger RSVP. Tap to toggle. Need at least 10.</p>
+    <div id="syncStatus" class="status info" style="display:none"></div>
     <div id="avail" class="avail"></div>
     <label style="margin-top:10px">Add a player not listed</label>
     <div class="row2"><div><input id="addName" placeholder="Name (e.g. Sam Jones #8)"></div>
@@ -396,7 +397,29 @@ function onGamePick(){
   document.getElementById("venue").value = g.venue || "";
   document.getElementById("time").value  = g.time || "6:30 PM";
   document.getElementById("arrive").value= minus60(g.time||"6:30 PM");
+  syncRSVP(date);
   showLoadButton();
+}
+
+function syncRSVP(date){
+  const L = D.lineups && D.lineups[date];
+  const msg = document.getElementById("syncStatus");
+  if(L && L.rsvp){
+    const {going, not_going, no_reply, last_checked} = L.rsvp;
+    const total = going + not_going + no_reply;
+    msg.textContent = `GameChanger sync: ${going} going, ${not_going} out, ${no_reply} no reply (${total} total). Last: ${last_checked || "unknown"}.`;
+    msg.style.display = "block";
+    // Auto-check players in the lineup (going)
+    if(L.grid){
+      const playersInLineup = new Set(L.grid.map(r=>r.player));
+      ROSTER.forEach((name,i)=>{
+        const box = document.querySelector(`#av${i} input`);
+        if(box) box.checked = playersInLineup.has(name);
+      });
+    }
+  } else {
+    msg.style.display = "none";
+  }
 }
 
 /* ===================== availability ===================== */
