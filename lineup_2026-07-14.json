@@ -6,7 +6,7 @@
   "time": "6:30 PM",
   "arrive": "5:30 PM",
   "lock_at": "2026-07-14T18:15:00",
-  "notes": "13 available. OUT: Thacher Knight #20, Jon Sorenson, Kyle Doherty, Luke McArdle. John Flinn is HURT today - limited to 3 innings in the field (sits 4), freeing more time for others. Catcher rotates: Coulombe (inn 1/4/7), Bruno (2/5), Cheever (3/6); those three also take right-side OF when not catching, Konen stays in the outfield. Klatt & Joe McLean split the 7 innings 4/3 (Klatt 1-4, Joe 5-7). Perry DiLibero subs at LCF for Amann inning 4. No player sits two innings in a row (Flinn's 4 is the injury exception).",
+  "notes": "13 available. OUT: Thacher Knight #20, Jon Sorenson, Kyle Doherty, Luke McArdle. John Flinn is HURT today - limited to 3 innings in the field (sits 4), freeing more time for others. Catcher rotates: Coulombe (inn 1/4/7), Bruno (2/5), Cheever (3/6); those three also take right-side OF when not catching, Konen stays in the outfield. Klatt & Joe McLean split the 7 innings 4/3 (Klatt 1-4, Joe 5-7); Joe OPENS in RF for a stronger starting defense before moving to 2B. Ian Konen takes RCF over Bruno (better glove); Bruno slides to RF/C. Perry DiLibero subs at LCF for Amann inning 4. No player sits two innings in a row (Flinn's 4 is the injury exception).",
   "rsvp": {"going": 13, "not_going": 4, "no_reply": 0, "last_checked": "2026-07-14 13:04 EDT"},
   "opponent_lineup": {
     "team": "Falcons",
@@ -28,11 +28,11 @@
     {"bat": 4,  "player": "Perry DiLibero #31",  "inn": ["LF", "SIT", "LF", "LCF", "LF", "LF", "LF"], "why": "Cleanup: team-high 14 RBI and 4 HR. Best LF; takes LCF inning 4. Plays 6 (sits inn 2)."},
     {"bat": 5,  "player": "Dennis Marks #12",    "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Five-hole: 14 RBI, 3 HR. Only shortstop, plays all 7 (anchor)."},
     {"bat": 6,  "player": "John Flinn #19",      "inn": ["SIT", "LF", "SIT", "LF", "SIT", "1B", "SIT"], "why": "HURT today - limited to 3 fielding innings (LF/1B) to rest the injury. Still bats (2.000 OPS)."},
-    {"bat": 7,  "player": "Joe McLean #4",       "inn": ["SIT", "2B", "SIT", "2B", "P", "P", "P"], "why": ".636 AVG, 7 RBI. Pitches innings 5-7; plays 2B otherwise. Sits inn 1, 3."},
+    {"bat": 7,  "player": "Joe McLean #4",       "inn": ["RF", "2B", "SIT", "2B", "P", "P", "P"], "why": ".636 AVG, 7 RBI. Opens in RF (stronger starting defense), then 2B; pitches 5-7. Plays 6 (sits inn 3)."},
     {"bat": 8,  "player": "Matt Watson",         "inn": ["3B", "3B", "3B", "3B", "3B", "SIT", "3B"], "why": ".524 AVG. Best 3B. Plays 6 (sits inn 6 when Klatt takes the corner)."},
-    {"bat": 9,  "player": "Ian Konen #14",       "inn": ["RF", "RF", "RF", "SIT", "RF", "RF", "RF"], "why": "6 RBI. Right-side outfield all game. Plays 6 (sits inn 4); subs in at RF inning 6 for Ryan."},
-    {"bat": 10, "player": "Arthur Bruno",        "inn": ["RCF", "C", "SIT", "RCF", "C", "RCF", "SIT"], "why": "Catches innings 2 & 5; right-side OF otherwise. Plays 5 (sits inn 3, 7)."},
-    {"bat": 11, "player": "Corey Cheever",       "inn": ["SIT", "RCF", "C", "RF", "SIT", "C", "RCF"], "why": "Catches innings 3 & 6; right-side OF otherwise. Plays 5 (sits inn 1, 5)."},
+    {"bat": 9,  "player": "Ian Konen #14",       "inn": ["RCF", "RCF", "RF", "SIT", "RF", "RCF", "SIT"], "why": "6 RBI. Better OF glove than Bruno - takes RCF. Plays 5 (sits inn 4, 7)."},
+    {"bat": 10, "player": "Arthur Bruno",        "inn": ["SIT", "C", "SIT", "RCF", "C", "RF", "RCF"], "why": "Catches innings 2 & 5; RF/RCF otherwise (RF when paired with Konen). Plays 5 (sits inn 1, 3)."},
+    {"bat": 11, "player": "Corey Cheever",       "inn": ["SIT", "RF", "C", "RF", "SIT", "C", "RF"], "why": "Catches innings 3 & 6; RF otherwise. Plays 5 (sits inn 1, 5)."},
     {"bat": 12, "player": "Ryan Coulombe #0",    "inn": ["C", "SIT", "RCF", "C", "RCF", "SIT", "C"], "why": "Catches innings 1/4/7, plays RCF innings 3 & 5 - not behind the plate all game. Plays 5 (sits inn 2, 6)."},
     {"bat": 13, "player": "Ed Fitzpatrick",      "inn": ["2B", "SIT", "2B", "SIT", "2B", "2B", "2B"], "why": "Best 2B; mans the middle every inning Joe pitches. Plays 5 (sits inn 2, 4)."}
   ]
