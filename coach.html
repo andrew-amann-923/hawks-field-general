@@ -446,19 +446,35 @@ function availablePlayers(){
 }
 
 /* ===================== engine: batting order ===================== */
+/* CURRENT-SEASON (2026) batting lookup. D.batting is LAST year (2025); once the season is
+   underway the order must reflect THIS year, so we read D.season (the 2026 Season Stats).
+   Names in D.season.rows have no jersey suffix, so strip "#NN" off the roster name. */
+const S26B = (()=>{
+  const S = window.D && D.season;
+  const bg = S && S.groups && S.groups.find(g=>g.key==="batting");
+  const std = bg && bg.tabs.find(t=>t.key==="standard");
+  if(!std) return null;
+  const idx={}; std.cols.forEach((c,i)=> idx[c.k]=i);
+  return {idx, rows:std.rows};
+})();
+function stat26(name){
+  if(!S26B) return null;
+  const bare = name.replace(/\s*#\d+\s*$/,"").trim();
+  const r = S26B.rows.find(x=>x.p===bare);
+  if(!r) return null;
+  const g=k=> { const v=num(r.v[S26B.idx[k]]); return isNaN(v)?0:v; };
+  return {avg:g("AVG"), obp:g("OBP"), ops:g("OPS"), hr:g("HR"), rbi:g("RBI"), pa:g("PA")};
+}
 function buildOrder(avail){
   // Build order following baseball conventions (DEFAULT rule, set 2026-07-14):
   // top of order = AVG/OBP base-hitters who set the table (1 leadoff, 2 two-hole);
   // run producers cluster in the RBI spots (3 best all-around bat, 4 cleanup = most HR+RBI,
   // 5 next-best run producer); then everyone else by OPS. Do NOT lead off a slugger.
+  // Uses 2026 (current-season) stats; a player with no 2026 line is a rookie → auditions bottom.
   const scored = avail.map(n => {
-    const b = bstat(n);
-    if(!b) return {name: n, isRookie: true};
-    const ops26 = num(b[bi.OPS]) || 0;
-    const obp26 = num(b[bi.OBP]) || 0;
-    const hr26 = num(b[bi.HR]) || 0;
-    const rbi26 = num(b[bi.RBI]) || 0;
-    return {name: n, isRookie: false, ops26, obp26, hr26, rbi26};
+    const s = stat26(n);
+    if(!s || s.pa===0) return {name: n, isRookie: true};
+    return {name: n, isRookie: false, ops26:s.ops, obp26:s.obp, hr26:s.hr, rbi26:s.rbi};
   });
 
   const hitters = scored.filter(s => !s.isRookie);
@@ -514,13 +530,15 @@ function buildOrder(avail){
   return order;
 }
 function whyFor(name, slot){
-  const b=bstat(name);
-  if(!b) return "Audition: no prior history on file, so bat from the bottom. Hot bat moves up fast this season.";
-  const A=c=>b[bi[c]];
-  const tag = slot===1 ? "Leadoff: best OBP this season — job is getting on base."
-    : slot===4 ? "Cleanup: most power this season — clears the bases."
-    : `Hot this 2026 season: batting in the heart.`;
-  return `${tag} 2026 stats: ${stripJ(A("AVG"))} AVG · ${stripJ(A("OBP"))} OBP · ${A("OPS")} OPS · ${A("HR")} HR · ${A("RBI")} RBI.`;
+  const s=stat26(name);
+  if(!s || s.pa===0) return "Audition: no 2026 line yet, so bat from the bottom. Hot bat moves up fast this season.";
+  const f=x=> stripJ((Math.round(x*1000)/1000).toFixed(3));
+  const tag = slot===1 ? "Leadoff: best on-base this season — job is getting on base."
+    : slot===2 ? "Two-hole: high-contact table-setter to move the leadoff man."
+    : slot===4 ? "Cleanup: most power/RBI this season — clears the bases."
+    : (slot>=3 && slot<=5) ? "Heart of the order: run producer."
+    : `Hot this 2026 season.`;
+  return `${tag} 2026: ${f(s.avg)} AVG · ${f(s.obp)} OBP · ${(Math.round(s.ops*1000)/1000).toFixed(3)} OPS · ${s.hr} HR · ${s.rbi} RBI.`;
 }
 
 /* ===================== engine: fielding grid ===================== */
@@ -537,15 +555,20 @@ function posRank(n,p){ const i=elig(n).indexOf(p); return i<0 ? 99 : i; }   // l
 function isPitcher(n){ return elig(n).includes("P"); }
 
 const ASSIGN_ORDER = ["SS","P","LCF","3B","C","1B","2B","LF","RCF","RF"];
-function fillGrid(field, fixed){   // field: exactly 10 players; fixed:{pos:player}. -> {pos:player} | null
+function fillGrid(field, fixed, catchCount){   // field: exactly 10 players; fixed:{pos:player}. -> {pos:player} | null
   const at={}, used=new Set();
   for(const p in (fixed||{})){ at[p]=fixed[p]; used.add(fixed[p]); }
   const todo = ASSIGN_ORDER.filter(p=>!(p in at));
+  const cc = catchCount||{};
   const solve = k => {
     if(k===todo.length) return used.size===10;
     const p = todo[k];
     const cands = field.filter(n=>!used.has(n) && elig(n).includes(p))
-      .sort((a,b)=> posRank(a,p)-posRank(b,p) || errs(a)-errs(b) || ops(b)-ops(a));  // wants-it, then glove
+      // C: rotate — fewest innings caught so far first, so no one catches all game (then wants-it, glove).
+      // Other spots: wants-it (eligibility order), then better glove, then hotter bat.
+      .sort((a,b)=> p==="C"
+        ? ((cc[a]||0)-(cc[b]||0) || posRank(a,p)-posRank(b,p) || errs(a)-errs(b) || ops(b)-ops(a))
+        : (posRank(a,p)-posRank(b,p) || errs(a)-errs(b) || ops(b)-ops(a)));
     for(const n of cands){
       at[p]=n; used.add(n);
       if(solve(k+1)) return true;
@@ -560,31 +583,37 @@ function pitchPlan(avail){   // split 7 innings between available pitchers (prim
   const plan=[]; for(let inn=0; inn<7; inn++) plan[inn] = pit.length ? pit[inn % pit.length] : null;
   return plan;
 }
-function buildGrid(avail, capDefault){
+function buildGrid(avail, capDefault, noConsec){
   const need = avail.length-10;
   if(need<0) return {error:`Only ${avail.length} available — you need at least 10 to field a team.`};
   const lock = locks(avail);
   const planP = pitchPlan(avail);
   const cap={}; avail.forEach(n=> cap[n] = lock.has(n) ? 0 : (SIT_CAP[n]!=null ? SIT_CAP[n] : capDefault));
   const sits={}; avail.forEach(n=> sits[n]=0);
+  const catchCount={}; avail.forEach(n=> catchCount[n]=0);   // spread catching across catchers
   const grid={}; avail.forEach(n=> grid[n]=Array(7).fill("?"));
-  const INN_ORDER=[0,6,1,2,3,4,5];   // set the opener & closer (strongest defense) first
+  // Set the opener & closer (strongest defense) first, then inners. Order matters for the
+  // no-back-to-back rule: by the time inn 5 is chosen, both its neighbors (4 and 6) are decided.
+  const INN_ORDER=[0,6,1,2,3,4,5];
   for(const inn of INN_ORDER){
     const p = planP[inn];
-    // who may sit: not this inning's pitcher, still under cap. Prefer to sit whoever's sat LEAST
-    // (spreads rests toward sit-once), then the weaker gloves (more 2025 errors).
-    const benchable = avail.filter(n=> n!==p && (cap[n]-sits[n])>0)
-      .sort((a,b)=> sits[a]-sits[b] || errs(b)-errs(a) || ops(a)-ops(b));
+    // who may sit: not this inning's pitcher, still under cap. If noConsec, also exclude anyone
+    // already sitting an ADJACENT inning (inn-1/inn+1) that's already been decided — no back-to-back rests.
+    // Prefer to sit whoever's sat LEAST (spreads rests), then weaker gloves (more 2025 errors).
+    let benchable = avail.filter(n=> n!==p && (cap[n]-sits[n])>0);
+    if(noConsec) benchable = benchable.filter(n=> !((inn>0 && grid[n][inn-1]==="SIT") || (inn<6 && grid[n][inn+1]==="SIT")));
+    benchable.sort((a,b)=> sits[a]-sits[b] || errs(b)-errs(a) || ops(a)-ops(b));
     let placed=null;
     for(const sitArr of combos(benchable, need)){
       const sit=new Set(sitArr); const field=avail.filter(n=>!sit.has(n));
       if(field.length!==10) continue;
-      const at = fillGrid(field, p ? {P:p} : {});
+      const at = fillGrid(field, p ? {P:p} : {}, catchCount);
       if(at){ placed={sitArr, at}; break; }
     }
     if(!placed) return {error:"retry"};
     for(const pos in placed.at) grid[placed.at[pos]][inn]=pos;
     placed.sitArr.forEach(n=>{ grid[n][inn]="SIT"; sits[n]++; });
+    if(placed.at["C"]) catchCount[placed.at["C"]]++;
   }
   return {grid};
 }
@@ -595,8 +624,11 @@ function generate(){
   const avail = availablePlayers();
   const gm = document.getElementById("genMsg"); gm.className=""; gm.innerHTML="";
   if(avail.length<10){ gm.className="status err"; gm.textContent=`Only ${avail.length} available — need at least 10.`; return; }
-  let res = buildGrid(avail,2);
-  if(res.error==="retry") res = buildGrid(avail,3);   // loosen sit cap if 2 can't cover the bench
+  // Try hardest first: 2-sit cap + no back-to-back rests. Loosen only if the roster/coverage forces it.
+  let res = buildGrid(avail,2,true);
+  if(res.error==="retry") res = buildGrid(avail,3,true);    // loosen sit cap
+  if(res.error==="retry") res = buildGrid(avail,2,false);   // allow back-to-back if still stuck
+  if(res.error==="retry") res = buildGrid(avail,3,false);
   if(res.error){ gm.className="status err"; gm.textContent=res.error; return; }
   state.order = buildOrder(avail);
   state.grid  = res.grid;
@@ -640,7 +672,7 @@ function renderGrid(){
       const isSelected = swapState.inn===inn && swapState.player===n;
       const cellClass = isSelected ? "selected" : pos==="SIT" ? "sit" : "";
       const displayText = pos==="SIT" ? "SIT" : pos;
-      return `<td class="${cellClass}" onclick="selectSwap(${inn},'${n.replace(/'/g,"\\'")}','${pos.replace(/'/g,"\\'")})">${displayText}</td>`;
+      return `<td class="${cellClass}" onclick="selectSwap(${inn},'${n.replace(/'/g,"\\'")}','${pos.replace(/'/g,"\\'")}')">${displayText}</td>`;
     }).join("");
     return `<tr><td class="pl">${n}</td>${cells}</tr>`;
   }).join("");
@@ -696,10 +728,10 @@ function assemble(){
     rsvp: { going:+document.getElementById("rGo").value, not_going:+document.getElementById("rOut").value,
             no_reply:+document.getElementById("rNo").value, last_checked: date+" set by coach" },
     rules: [
-      "Built from 2025 production: order ranked on OPS (leadoff = best on-base, cleanup = most power); new players audition from the bottom.",
-      `Available: ${state.order.length}. Everyone bats all game; rests are spread so most players sit at most once.`,
+      "Batting order: on-base/AVG bats set the table up top, run producers in the 3-4-5 RBI spots; new players audition from the bottom.",
+      `Available: ${state.order.length}. Everyone bats all game; rests are spread and no one sits two innings in a row.`,
       "Every inning fields a legal ten in each player's best spot; the opener and closer put the strongest gloves out.",
-      "Pitching is split evenly between the available pitchers across the seven innings."
+      "The catcher rotates across the game — nobody catches all seven; pitching is split evenly between the available pitchers."
     ],
     grid: state.order.map((n,i)=>({ bat:i+1, player:n, inn:state.grid[n].slice(), why:whyFor(n,i+1) }))
   };
