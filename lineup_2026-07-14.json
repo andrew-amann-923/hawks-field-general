@@ -30,9 +30,9 @@
     {"bat": 7,  "player": "Joe McLean #4",       "inn": ["2B", "SIT", "2B", "SIT", "P", "P", "P"], "why": ".636 AVG, 7 RBI. Pitches innings 5-7; plays 2B when not on the mound. Sits inn 2, 4."},
     {"bat": 8,  "player": "Matt Watson",         "inn": ["3B", "3B", "3B", "3B", "3B", "SIT", "3B"], "why": ".524 AVG. Best 3B. Plays 6 (sits inn 6 when Klatt takes the corner)."},
     {"bat": 9,  "player": "Ian Konen #14",       "inn": ["RCF", "RCF", "SIT", "RF", "RF", "SIT", "RF"], "why": "6 RBI. Right-side outfield. Plays 5 (sits inn 3, 6)."},
-    {"bat": 10, "player": "Ryan Coulombe #0",    "inn": ["C", "SIT", "C", "C", "SIT", "C", "C"], "why": "Primary catcher tonight (Sorenson out). Plays 5 (sits inn 2, 5)."},
-    {"bat": 11, "player": "Arthur Bruno",        "inn": ["SIT", "C", "RCF", "RCF", "C", "SIT", "RCF"], "why": "Right-side OF, second catcher. Plays 5 (sits inn 1, 6)."},
-    {"bat": 12, "player": "Corey Cheever",       "inn": ["RF", "RF", "RF", "SIT", "RCF", "RF", "SIT"], "why": "Right-side OF / catcher depth. Plays 5 (sits inn 4, 7)."},
+    {"bat": 10, "player": "Arthur Bruno",        "inn": ["SIT", "C", "RCF", "RCF", "C", "SIT", "RCF"], "why": "Right-side OF, second catcher. Plays 5 (sits inn 1, 6)."},
+    {"bat": 11, "player": "Corey Cheever",       "inn": ["RF", "RF", "RF", "SIT", "RCF", "RF", "SIT"], "why": "Right-side OF / catcher depth. Plays 5 (sits inn 4, 7)."},
+    {"bat": 12, "player": "Ryan Coulombe #0",    "inn": ["C", "SIT", "C", "C", "SIT", "C", "C"], "why": "Primary catcher tonight (Sorenson out). Plays 5 (sits inn 2, 5)."},
     {"bat": 13, "player": "Ed Fitzpatrick",      "inn": ["SIT", "2B", "SIT", "2B", "2B", "2B", "2B"], "why": "Best 2B; mans the middle every inning Joe pitches. Plays 5 (sits inn 1, 3)."}
   ]
 }

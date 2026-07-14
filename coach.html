@@ -6,7 +6,7 @@
 <title>Hawks Coach — Lineup Builder</title>
 <!--
   HIDDEN, COACH-ONLY lineup builder. NOT linked from the team app (index.html).
-  SECURITY: the coaching-corner rules are shipped ENCRYPTED (window.CORNER_ENC in corner.enc.js?v=121e98e0) —
+  SECURITY: the coaching-corner rules are shipped ENCRYPTED (window.CORNER_ENC in corner.enc.js?v=98ea7d22) —
   AES-256-GCM with a key derived from the coach password via PBKDF2-SHA256. The password is NEVER
   stored in this page; the gate below unlocks by DECRYPTING. So even on the public repo / in View
   Source, all anyone sees is ciphertext. Position eligibility (bare arrays) IS public by design.
@@ -167,8 +167,8 @@
   even though the page is public. Publishing still needs the GitHub token. Keep both to yourself.</p>
 </div>
 
-<script src="corner.enc.js?v=121e98e0"></script>
-<script src="app_data.js?v=0566e115"></script>
+<script src="corner.enc.js?v=98ea7d22"></script>
+<script src="app_data.js?v=260b6c19"></script>
 <script>
 /* ===================== config ===================== */
 /* No plaintext password here anymore — the gate unlocks by DECRYPTING window.CORNER_ENC. */
@@ -447,7 +447,10 @@ function availablePlayers(){
 
 /* ===================== engine: batting order ===================== */
 function buildOrder(avail){
-  // Build order following baseball conventions: OBP in top, power in cleanup
+  // Build order following baseball conventions (DEFAULT rule, set 2026-07-14):
+  // top of order = AVG/OBP base-hitters who set the table (1 leadoff, 2 two-hole);
+  // run producers cluster in the RBI spots (3 best all-around bat, 4 cleanup = most HR+RBI,
+  // 5 next-best run producer); then everyone else by OPS. Do NOT lead off a slugger.
   const scored = avail.map(n => {
     const b = bstat(n);
     if(!b) return {name: n, isRookie: true};
@@ -494,7 +497,14 @@ function buildOrder(avail){
   // 4. CLEANUP: Power hitter (set up above)
   if(cleanup) order.push(cleanup.name);
 
-  // 5+: Rest by current OPS (hottest remaining bats)
+  // 5. FIFTH: best remaining run producer (RBI + HR) - keep the RBI bats clustered 3-4-5
+  if(hitters.length) {
+    const fifth = hitters.reduce((a,b) => (b.rbi26 + b.hr26) > (a.rbi26 + a.hr26) ? b : a);
+    order.push(fifth.name);
+    hitters.splice(hitters.indexOf(fifth), 1);
+  }
+
+  // 6+: Rest by current OPS (hottest remaining bats)
   hitters.sort((a,b) => b.ops26 - a.ops26);
   hitters.forEach(h => order.push(h.name));
 
