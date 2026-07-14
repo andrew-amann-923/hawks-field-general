@@ -6,7 +6,7 @@
 <title>Hawks Coach — Lineup Builder</title>
 <!--
   HIDDEN, COACH-ONLY lineup builder. NOT linked from the team app (index.html).
-  SECURITY: the coaching-corner rules are shipped ENCRYPTED (window.CORNER_ENC in corner.enc.js?v=98ea7d22) —
+  SECURITY: the coaching-corner rules are shipped ENCRYPTED (window.CORNER_ENC in corner.enc.js?v=98c3424c) —
   AES-256-GCM with a key derived from the coach password via PBKDF2-SHA256. The password is NEVER
   stored in this page; the gate below unlocks by DECRYPTING. So even on the public repo / in View
   Source, all anyone sees is ciphertext. Position eligibility (bare arrays) IS public by design.
@@ -167,7 +167,7 @@
   even though the page is public. Publishing still needs the GitHub token. Keep both to yourself.</p>
 </div>
 
-<script src="corner.enc.js?v=98ea7d22"></script>
+<script src="corner.enc.js?v=98c3424c"></script>
 <script src="app_data.js?v=58db9ff8"></script>
 <script>
 /* ===================== config ===================== */
