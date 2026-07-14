@@ -6,7 +6,7 @@
   "time": "6:30 PM",
   "arrive": "5:30 PM",
   "lock_at": "2026-07-14T18:15:00",
-  "notes": "13 available. OUT: Thacher Knight #20, Jon Sorenson, Kyle Doherty, Luke McArdle. Klatt & Joe McLean split the 7 innings 4/3 (Klatt innings 1-4, Joe innings 5-7). With Sorenson out, Coulombe is the primary catcher (Bruno/Cheever back him up).",
+  "notes": "13 available. OUT: Thacher Knight #20, Jon Sorenson, Kyle Doherty, Luke McArdle. Klatt & Joe McLean split the 7 innings 4/3 (Klatt innings 1-4, Joe innings 5-7). With Sorenson out, Coulombe is the primary catcher (Bruno/Cheever back him up). Perry DiLibero subs in at LCF for Andrew Amann in inning 4. No player sits two innings in a row.",
   "rsvp": {"going": 13, "not_going": 4, "no_reply": 0, "last_checked": "2026-07-14 13:04 EDT"},
   "opponent_lineup": {
     "team": "Falcons",
@@ -16,22 +16,22 @@
   "rules": [
     "VALIDATION RULE: Each inning has exactly 10 positions (P,C,1B,2B,3B,SS,LF,LCF,RCF,RF), one player per position. No gaps, no duplicates.",
     "Pitching split 4/3: Eric Klatt pitches innings 1-4, Joe McLean pitches innings 5-7.",
-    "Dennis Marks at SS all 7 (only shortstop). Andrew Amann locked to LCF all 7.",
-    "3 sits per inning (13 available). No one sits more than twice; Amann & Marks do not sit."
+    "Dennis Marks at SS all 7 (only shortstop). Andrew Amann at LCF (rests inning 4 - Perry DiLibero subs at LCF).",
+    "3 sits per inning (13 available). No one sits more than twice; Amann & Marks sit at most once; NO player sits two innings in a row."
   ],
   "grid": [
-    {"bat": 1,  "player": "Andrew Amann #21",   "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"], "why": "Top OPS (2.286) and OBP. Leadoff, locked to LCF, plays all 7."},
-    {"bat": 2,  "player": "John Flinn #19",      "inn": ["1B", "1B", "SIT", "LF", "LF", "SIT", "RCF"], "why": "2.000 OPS. Best 1B; also covers LF/RCF. Plays 5 (sits inn 3, 6)."},
-    {"bat": 3,  "player": "Sang Lee",            "inn": ["SIT", "SIT", "1B", "1B", "1B", "1B", "1B"], "why": ".727 OBP. Anchors 1B once Flinn rotates out. Plays 5 (sits inn 1, 2)."},
-    {"bat": 4,  "player": "Perry DiLibero #31",  "inn": ["LF", "LF", "LF", "SIT", "SIT", "LF", "LF"], "why": "Most HR (4), cleanup. Our best left fielder. Plays 5 (sits inn 4, 5)."},
-    {"bat": 5,  "player": "Eric Klatt #44",      "inn": ["P", "P", "P", "P", "SIT", "3B", "SIT"], "why": "Pitches innings 1-4; takes 3B inn 6. Plays 5 (rests after his outing)."},
+    {"bat": 1,  "player": "Andrew Amann #21",   "inn": ["LCF", "LCF", "LCF", "SIT", "LCF", "LCF", "LCF"], "why": "Top OPS (2.286) and OBP. Leadoff. Plays 6; Perry subs at LCF inning 4."},
+    {"bat": 2,  "player": "John Flinn #19",      "inn": ["1B", "LF", "1B", "LF", "SIT", "RCF", "SIT"], "why": "2.000 OPS. Best 1B; also covers LF/RCF. Plays 5 (sits inn 5, 7)."},
+    {"bat": 3,  "player": "Sang Lee",            "inn": ["SIT", "1B", "SIT", "1B", "1B", "1B", "1B"], "why": ".727 OBP. Anchors 1B. Plays 5 (sits inn 1, 3)."},
+    {"bat": 4,  "player": "Perry DiLibero #31",  "inn": ["LF", "SIT", "LF", "LCF", "LF", "LF", "LF"], "why": "Most HR (4), cleanup, best LF. Plays 6; takes LCF inning 4 when Amann rests."},
+    {"bat": 5,  "player": "Eric Klatt #44",      "inn": ["P", "P", "P", "P", "SIT", "3B", "SIT"], "why": "Pitches innings 1-4; takes 3B inn 6. Plays 5 (rests inn 5, 7 after his outing)."},
     {"bat": 6,  "player": "Dennis Marks #12",    "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Only shortstop. Plays all 7 (anchor)."},
-    {"bat": 7,  "player": "Joe McLean #4",       "inn": ["SIT", "2B", "SIT", "2B", "P", "P", "P"], "why": "Pitches innings 5-7; plays 2B when not on the mound. Plays 5 (sits inn 1, 3)."},
+    {"bat": 7,  "player": "Joe McLean #4",       "inn": ["2B", "SIT", "2B", "SIT", "P", "P", "P"], "why": "Pitches innings 5-7; plays 2B when not on the mound. Plays 5 (sits inn 2, 4)."},
     {"bat": 8,  "player": "Matt Watson",         "inn": ["3B", "3B", "3B", "3B", "3B", "SIT", "3B"], "why": "Best 3B. Plays 6 (sits inn 6 when Klatt takes the corner)."},
-    {"bat": 9,  "player": "Ian Konen #14",       "inn": ["RCF", "RF", "RCF", "RF", "SIT", "SIT", "RF"], "why": "Right-side outfield. Plays 5 (sits inn 5, 6)."},
-    {"bat": 10, "player": "Arthur Bruno",        "inn": ["RF", "C", "RF", "SIT", "RCF", "RCF", "SIT"], "why": "Right-side OF, second catcher. Plays 5 (sits inn 4, 7)."},
-    {"bat": 11, "player": "Corey Cheever",       "inn": ["SIT", "SIT", "C", "RCF", "RF", "RF", "C"], "why": "Right-side OF / catcher depth. Plays 5 (sits inn 1, 2)."},
-    {"bat": 12, "player": "Ryan Coulombe #0",    "inn": ["C", "RCF", "SIT", "C", "C", "C", "SIT"], "why": "Primary catcher tonight (Sorenson out). Plays 5 (sits inn 3, 7)."},
-    {"bat": 13, "player": "Ed Fitzpatrick",      "inn": ["2B", "SIT", "2B", "SIT", "2B", "2B", "2B"], "why": "Best 2B; mans the middle every inning Joe pitches. Plays 5 (sits inn 2, 4)."}
+    {"bat": 9,  "player": "Ian Konen #14",       "inn": ["RCF", "RCF", "SIT", "RF", "RF", "SIT", "RF"], "why": "Right-side outfield. Plays 5 (sits inn 3, 6)."},
+    {"bat": 10, "player": "Arthur Bruno",        "inn": ["SIT", "C", "RCF", "RCF", "C", "SIT", "RCF"], "why": "Right-side OF, second catcher. Plays 5 (sits inn 1, 6)."},
+    {"bat": 11, "player": "Corey Cheever",       "inn": ["RF", "RF", "RF", "SIT", "RCF", "RF", "SIT"], "why": "Right-side OF / catcher depth. Plays 5 (sits inn 4, 7)."},
+    {"bat": 12, "player": "Ryan Coulombe #0",    "inn": ["C", "SIT", "C", "C", "SIT", "C", "C"], "why": "Primary catcher tonight (Sorenson out). Plays 5 (sits inn 2, 5)."},
+    {"bat": 13, "player": "Ed Fitzpatrick",      "inn": ["SIT", "2B", "SIT", "2B", "2B", "2B", "2B"], "why": "Best 2B; mans the middle every inning Joe pitches. Plays 5 (sits inn 1, 3)."}
   ]
 }
