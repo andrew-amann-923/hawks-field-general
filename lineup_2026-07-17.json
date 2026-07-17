@@ -1,0 +1,39 @@
+{
+  "date": "2026-07-17",
+  "opponent": "Broncos",
+  "home": false,
+  "venue": "Spofford Pond School",
+  "time": "6:30 PM",
+  "arrive": "5:30 PM",
+  "lock_at": "2026-07-17T18:15:00",
+  "notes": "12 available. OUT: Matt Watson, Perry DiLibero #31, Corey Cheever, Kyle Doherty, Luke McArdle. Our best 3B (Watson) and best LF (DiLibero) are both out, so Ed Fitzpatrick anchors the hot corner (Jon Sorenson spells him at 3B innings 2-4 while Klatt pitches; Klatt takes 3B innings 5-7). Thacher Knight is the everyday LF. Klatt & Joe McLean split the 7 innings 4/3 (Klatt 1-4, Joe 5-7). Catcher rotates Sorenson (inn 1/5/6), Coulombe (inn 2/4/7) and Konen (inn 3) - nobody catches all game, and Coulombe also gets RF innings. Everyone bats; nobody sits more than twice, Amann & Marks capped at 1 rest, and no player sits two innings in a row.",
+  "rsvp": {"going": 12, "not_going": 5, "no_reply": 0, "last_checked": "2026-07-17 13:12 EDT"},
+  "opponent_lineup": {
+    "team": "Broncos",
+    "source": "2025 scouting (65 PA on file): a pull/left-heavy, right-handed attack - 24 balls in play to the LEFT side vs 13 to the right, with center mostly to the outfield. Shade the defense left / left-center and make them beat you the other way.",
+    "order": []
+  },
+  "rules": [
+    "VALIDATION RULE: Each inning has exactly 10 positions (P,C,1B,2B,3B,SS,LF,LCF,RCF,RF), one player per position. No gaps, no duplicates.",
+    "Pitching split 4/3: Eric Klatt pitches innings 1-4, Joe McLean pitches innings 5-7.",
+    "Dennis Marks at SS all 7 (only shortstop). Andrew Amann at LCF (rests inning 6 - Flinn subs at LCF, Knight at LF).",
+    "Watson & DiLibero out: Ed Fitzpatrick is the everyday 3B (Sorenson covers 3B while Klatt pitches, Klatt at 3B once he's done); Knight is the everyday LF.",
+    "Catcher rotates among Sorenson, Coulombe and Konen - nobody catches the whole game; Coulombe also plays right-side OF.",
+    "Everyone bats; no one sits more than twice, Amann & Marks at most once, and NO player sits two innings in a row.",
+    "Batting order = on-base/AVG at the top (Sang, Klatt), the run producers clustered 3-4-5 (Amann, Marks, Joe), hottest remaining bats after."
+  ],
+  "grid": [
+    {"bat": 1,  "player": "Sang Lee",            "inn": ["SIT", "1B", "1B", "SIT", "1B", "1B", "1B"], "why": "Leadoff: team-best .714 AVG/OBP, all contact/singles - pure table-setter. 1B (sits inn 1 & 4)."},
+    {"bat": 2,  "player": "Eric Klatt #44",      "inn": ["P", "P", "P", "P", "3B", "3B", "3B"], "why": "Two-hole: .650 AVG, 12 singles, elite contact. Pitches innings 1-4, then mans 3B innings 5-7 (plays all 7)."},
+    {"bat": 3,  "player": "Andrew Amann #21",    "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "SIT", "LCF"], "why": "Three-hole: best all-around bat (2.294 OPS, .706 AVG, 4 HR, 13 RBI). LCF; one rest (inn 6)."},
+    {"bat": 4,  "player": "Dennis Marks #12",    "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Cleanup: team-high 15 RBI and 4 HR. Only shortstop - anchors SS all 7."},
+    {"bat": 5,  "player": "Joe McLean #4",       "inn": ["2B", "RCF", "2B", "SIT", "P", "P", "P"], "why": "Five-hole: 8 RBI. Opens at 2B/RCF, then pitches innings 5-7. Sits inn 4."},
+    {"bat": 6,  "player": "John Flinn #19",      "inn": ["1B", "RF", "RF", "1B", "SIT", "LCF", "LF"], "why": "2.256 OPS - 2nd-best bat on the team. Best 1B; also covers OF (LCF for Amann inn 6). Sits inn 5."},
+    {"bat": 7,  "player": "Ian Konen #14",       "inn": ["RCF", "SIT", "C", "RCF", "SIT", "RCF", "RCF"], "why": "1.286 OPS, 6 RBI. Right-side OF; catches inn 3. Sits inn 2 & 5."},
+    {"bat": 8,  "player": "Thacher Knight #20",  "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "SIT"], "why": "1.085 OPS. Everyday LF with DiLibero out. Sits inn 7."},
+    {"bat": 9,  "player": "Arthur Bruno",        "inn": ["RF", "SIT", "RCF", "RF", "RCF", "SIT", "RF"], "why": ".917 OPS. Right-side OF all night. Sits inn 2 & 6."},
+    {"bat": 10, "player": "Ryan Coulombe #0",    "inn": ["SIT", "C", "SIT", "C", "RF", "RF", "C"], "why": ".905 OPS. Catches inn 2/4/7 and plays RF inn 5/6 - not behind the plate all game. Sits inn 1 & 3."},
+    {"bat": 11, "player": "Jon Sorenson",        "inn": ["C", "3B", "3B", "3B", "C", "C", "SIT"], "why": "Catches inn 1/5/6 and covers 3B innings 2-4 while Klatt pitches. Sits inn 7."},
+    {"bat": 12, "player": "Ed Fitzpatrick",      "inn": ["3B", "2B", "SIT", "2B", "2B", "2B", "2B"], "why": "Best 2B; mans the middle. Takes 3B inn 1 (Watson out). Sits inn 3."}
+  ]
+}
