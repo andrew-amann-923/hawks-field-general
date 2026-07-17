@@ -6,7 +6,7 @@
   "time": "6:30 PM",
   "arrive": "5:30 PM",
   "lock_at": "2026-07-17T18:15:00",
-  "notes": "12 available. OUT: Matt Watson, Perry DiLibero #31, Corey Cheever, Kyle Doherty, Luke McArdle. Our best 3B (Watson) and best LF (DiLibero) are both out, so Ed Fitzpatrick anchors 3B all four innings Klatt pitches (then slides to 2B innings 5-7 when Klatt takes 3B) - Ed plays all 7. Thacher Knight is the everyday LF. Andrew Amann plays all 7 at LCF (coach's call). Jon Sorenson catches innings 1/5/6, spells 1B innings 2/4, and sits twice (inn 3 & 7). Klatt & Joe McLean split the 7 innings 4/3 (Klatt 1-4, Joe 5-7). Catcher rotates Sorenson (1/5/6), Coulombe (2/4/7) and Konen (3) - nobody catches all game, and Coulombe also gets OF innings. Everyone bats; nobody sits more than twice, and no player sits two innings in a row.",
+  "notes": "12 available. OUT: Matt Watson, Perry DiLibero #31, Corey Cheever, Kyle Doherty, Luke McArdle. Our best 3B (Watson) and best LF (DiLibero) are both out, so Ed Fitzpatrick anchors 3B all four innings Klatt pitches (then slides to 2B innings 5-7 when Klatt takes 3B) - Ed plays all 7. Thacher Knight is the everyday LF. Andrew Amann plays all 7 at LCF. Jon Sorenson catches innings 1/5/6, spells 1B innings 2/4, and sits inn 3 & 7. Klatt & Joe McLean split the 7 innings 4/3 (Klatt 1-4, Joe 5-7). Catcher rotates Sorenson (1/5/6), Coulombe (2/4/7) and Konen (3) - nobody catches all game, and Coulombe also gets OF innings.",
   "rsvp": {"going": 12, "not_going": 5, "no_reply": 0, "last_checked": "2026-07-17 13:12 EDT"},
   "opponent_lineup": {
     "team": "Broncos",
@@ -16,16 +16,15 @@
   "rules": [
     "VALIDATION RULE: Each inning has exactly 10 positions (P,C,1B,2B,3B,SS,LF,LCF,RCF,RF), one player per position. No gaps, no duplicates.",
     "Pitching split 4/3: Eric Klatt pitches innings 1-4, Joe McLean pitches innings 5-7.",
-    "Dennis Marks at SS all 7 (only shortstop). Andrew Amann at LCF all 7 (coach's call - do not sit tonight).",
+    "Dennis Marks at SS all 7 (only shortstop). Andrew Amann at LCF all 7.",
     "Watson & DiLibero out: Ed Fitzpatrick is the everyday 3B (3B innings 1-4, then 2B innings 5-7 when Klatt takes the corner) - plays all 7; Knight is the everyday LF.",
     "Catcher rotates among Sorenson, Coulombe and Konen - nobody catches the whole game; Coulombe also plays right-side OF.",
-    "Everyone bats; no one sits more than twice (Jon Sorenson sits twice per coach), Amann/Marks/Ed play all 7, and NO player sits two innings in a row.",
     "Batting order = on-base/AVG at the top (Sang, Klatt), the run producers clustered 3-4-5 (Amann, Marks, Joe), hottest remaining bats after."
   ],
   "grid": [
     {"bat": 1,  "player": "Sang Lee",            "inn": ["1B", "SIT", "1B", "SIT", "1B", "1B", "1B"], "why": "Leadoff: team-best .714 AVG/OBP, all contact/singles - pure table-setter. 1B (sits inn 2 & 4)."},
     {"bat": 2,  "player": "Eric Klatt #44",      "inn": ["P", "P", "P", "P", "3B", "3B", "3B"], "why": "Two-hole: .650 AVG, 12 singles, elite contact. Pitches innings 1-4, then mans 3B innings 5-7 (plays all 7)."},
-    {"bat": 3,  "player": "Andrew Amann #21",    "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"], "why": "Three-hole: best all-around bat (2.294 OPS, .706 AVG, 4 HR, 13 RBI). LCF all 7 - coach's call, no rest tonight."},
+    {"bat": 3,  "player": "Andrew Amann #21",    "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"], "why": "Three-hole: best all-around bat (2.294 OPS, .706 AVG, 4 HR, 13 RBI). LCF all 7."},
     {"bat": 4,  "player": "Dennis Marks #12",    "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Cleanup: team-high 15 RBI and 4 HR. Only shortstop - anchors SS all 7."},
     {"bat": 5,  "player": "Joe McLean #4",       "inn": ["2B", "2B", "2B", "SIT", "P", "P", "P"], "why": "Five-hole: 8 RBI. Mans 2B innings 1-3, then pitches innings 5-7. Sits inn 4."},
     {"bat": 6,  "player": "John Flinn #19",      "inn": ["RF", "SIT", "RF", "LF", "RF", "SIT", "LF"], "why": "2.256 OPS - 2nd-best bat on the team. Best 1B, but works the OF tonight (Sorenson spells 1B). Sits inn 2 & 6."},
@@ -33,7 +32,7 @@
     {"bat": 8,  "player": "Thacher Knight #20",  "inn": ["LF", "LF", "LF", "2B", "LF", "LF", "SIT"], "why": "1.085 OPS. Everyday LF with DiLibero out (covers 2B inn 4). Sits inn 7."},
     {"bat": 9,  "player": "Arthur Bruno",        "inn": ["RCF", "RF", "SIT", "RF", "RCF", "SIT", "RF"], "why": ".917 OPS. Right-side OF all night. Sits inn 3 & 6."},
     {"bat": 10, "player": "Ryan Coulombe #0",    "inn": ["SIT", "C", "RCF", "C", "SIT", "RF", "C"], "why": ".905 OPS. Catches inn 2/4/7 and plays OF inn 3/6 - not behind the plate all game. Sits inn 1 & 5."},
-    {"bat": 11, "player": "Jon Sorenson",        "inn": ["C", "1B", "SIT", "1B", "C", "C", "SIT"], "why": "Catches inn 1/5/6 and spells 1B inn 2/4. Sits twice (inn 3 & 7) per coach."},
+    {"bat": 11, "player": "Jon Sorenson",        "inn": ["C", "1B", "SIT", "1B", "C", "C", "SIT"], "why": "Catches inn 1/5/6 and spells 1B inn 2/4. Sits inn 3 & 7."},
     {"bat": 12, "player": "Ed Fitzpatrick",      "inn": ["3B", "3B", "3B", "3B", "2B", "2B", "2B"], "why": "Everyday 3B with Watson out - mans the hot corner all four innings Klatt pitches, then 2B innings 5-7. Plays all 7."}
   ]
 }
