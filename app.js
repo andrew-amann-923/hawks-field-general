@@ -414,10 +414,10 @@ function viewGame() {
   <h3 class="month-h">Batting order &amp; field by inning <span style="font-weight:400;color:#667;font-size:12px">— everyone bats all game; SIT = fielding rest only</span></h3>
   <div class="tblwrap"><table class="tbl"><thead><tr><th class="num">Bat</th><th>Player</th>${innHead}</tr></thead><tbody>${rows}</tbody></table></div>
   <h3 class="month-h whosits">Who sits each inning</h3>
-  <p class="algo-note">With a full bench, a few players rest each inning and the algorithm hands the rests out by the
+  <p class="algo-note">${L.sits_note || `With a full bench, a few players rest each inning and the algorithm hands the rests out by the
   numbers, not by politics. The guardrails: everyone bats all game, rests are spread as evenly as the positions allow
   (our anchors sit least), players who are the only one who can cover their spot never sit, and every inning still fields a
-  legal ten. Play clean defense and you sit less; the receipts are in the fine print below.</p>
+  legal ten. Play clean defense and you sit less; the receipts are in the fine print below.`}</p>
   <div class="poschips whosits">${sits}</div>
   </div>
   ${L.rules.map(r => `<p class="note" style="margin-top:4px">${r}</p>`).join("")}
