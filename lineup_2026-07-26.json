@@ -1,0 +1,39 @@
+{
+  "date": "2026-07-26",
+  "opponent": "Vikings",
+  "home": true,
+  "venue": "Johnson Field",
+  "time": "5:30 PM",
+  "arrive": "4:30 PM",
+  "lock_at": "2026-07-26T17:15:00",
+  "notes": "11 available. OUT: Andrew Amann #21, Sang Lee, John Flinn #19, Matt Watson, Kyle Doherty, Luke McArdle. That's our top bat/LCF (Amann), our leadoff/1B (Sang), our best 1B (Flinn) and our best 3B (Watson) all gone in one night - the infield is down to the studs. So the middle is forced: Dennis Marks at SS all 7 (only shortstop), Ed Fitzpatrick at 2B all 7 (his best spot), and Jon Sorenson covers 3B innings 1-4 then slides to 1B innings 5-7. Eric Klatt pitches innings 1-4 then takes 3B; Joe McLean plays 1B innings 1-4 then pitches innings 5-7 (Klatt/Joe split the mound 4/3). Perry DiLibero moves up to LCF (Amann's spot) and Thacher Knight is the everyday LF - both go wire-to-wire because they're the only two left-side outfielders available. That leaves the right-side crew - Bruno, Cheever, Coulombe and Konen - to rotate through C/RCF/RF with one resting each inning. Seven iron men play all 7; the rotation handles the rest.",
+  "rsvp": {"going": 11, "not_going": 6, "no_reply": 0, "last_checked": "2026-07-26 08:22 EDT"},
+  "sits_note": "Eleven bodies, ten gloves, so exactly one lucky soul gets a bench cameo each inning - blink and you'll miss your rest. Seven players never touch the pine: <b>Marks</b> (the last shortstop on Earth), <b>Klatt</b> (arm today, hot corner later), <b>Joe McLean</b> (first base, then the mound), <b>Ed Fitzpatrick</b> (2B is his kingdom now), <b>Sorenson</b> (3B, then 1B - the human utility knife), <b>DiLibero</b> (promoted to center-left, no days off) and <b>Knight</b> (the only other outfielder allowed on the left side). With the infield this thin, those seven don't have understudies - they ARE the show. Everyone else pulls right-side duty: <b>Bruno, Cheever and Coulombe</b> each grab two breathers while <b>Konen</b> gets just one, and the catcher's mask rotates through Bruno, Cheever and Coulombe so nobody's knees unionize. Nobody sits back-to-back, everybody bats regardless - SIT just means a one-inning fielding nap. Fewer errors, fewer naps. It's a redemption arc, box-score edition.",
+  "opponent_lineup": {
+    "team": "Vikings",
+    "source": "2025 scouting (42 PA on file): a pull/left-heavy, right-handed attack - 15 balls in play to the LEFT side vs 8 to the right, roughly even IF/OF depth (14/16). Shade the defense left / left-center and make them earn it the other way.",
+    "order": []
+  },
+  "rules": [
+    "VALIDATION RULE (the part where the math swears every inning is legal): all seven innings field exactly ten distinct humans across P, C, 1B, 2B, 3B, SS, LF, LCF, RCF, RF - one glove per spot, no empty grass, nobody cloned into two places. A backtracking check confirmed all 7. The forced calls: with Amann, Sang, Flinn AND Watson all out, the infield has no depth, so Marks (SS), Ed (2B), Sorenson (3B->1B), Joe McLean (1B->P) and Klatt (P->3B) are locked in every inning; DiLibero (LCF) and Knight (LF) are the only left-side outfielders available, so they play all 7 too. That leaves Bruno, Cheever, Coulombe and Konen to rotate C/RCF/RF with one sit each inning.",
+    "Pitching split 4/3: Eric Klatt pitches innings 1-4, Joe McLean pitches innings 5-7.",
+    "Dennis Marks at SS all 7 (only shortstop). Ed Fitzpatrick at 2B all 7.",
+    "Infield thin (Flinn/Sang/Watson out): Jon Sorenson covers 3B innings 1-4 then 1B innings 5-7; Joe McLean at 1B innings 1-4 then pitches; Klatt takes 3B innings 5-7. All play 7.",
+    "DiLibero moves to LCF (Amann out) and Knight is the everyday LF - the only two left-side outfielders available, so both play all 7.",
+    "Catcher rotates among Bruno, Cheever and Coulombe - nobody catches the whole game; Coulombe also plays right-side OF.",
+    "Batting order: on-base/contact bats up top (Klatt, Joe McLean), run producers clustered 3-4-5 (DiLibero, Marks, Konen), hottest remaining bats after."
+  ],
+  "grid": [
+    {"bat": 1,  "player": "Eric Klatt #44",      "inn": ["P", "P", "P", "P", "3B", "3B", "3B"], "why": "Leadoff: team-best .680 OBP / .667 AVG, 16 hits (15 singles) - pure table-setter. Pitches innings 1-4, then mans 3B innings 5-7 (plays all 7)."},
+    {"bat": 2,  "player": "Joe McLean #4",       "inn": ["1B", "1B", "1B", "1B", "P", "P", "P"], "why": "Two-hole: .611 AVG / .550 OBP, elite contact, 10 RBI. Plays 1B innings 1-4, then pitches innings 5-7 (plays all 7)."},
+    {"bat": 3,  "player": "Perry DiLibero #31",  "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"], "why": "Three-hole: team-best 1.663 OPS, 4 HR, 14 RBI. Steps into LCF with Amann out - all 7."},
+    {"bat": 4,  "player": "Dennis Marks #12",    "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Cleanup: team-high 19 RBI and 5 HR. Only shortstop - anchors SS all 7."},
+    {"bat": 5,  "player": "Ian Konen #14",       "inn": ["RF", "RCF", "RF", "SIT", "RCF", "RF", "RF"], "why": "Five-hole: 7 RBI, 1.222 OPS. Right-side OF; the only right-side rotator who sits just once. Sits inn 4."},
+    {"bat": 6,  "player": "Thacher Knight #20",  "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "LF"], "why": "1.024 OPS. Everyday LF - one of only two left-side outfielders available, so all 7."},
+    {"bat": 7,  "player": "Corey Cheever",       "inn": ["SIT", "C", "RCF", "RF", "SIT", "C", "RCF"], "why": ".971 OPS. Catches inn 2/6 and works right-side OF - not behind the plate all game. Sits inn 1 & 5."},
+    {"bat": 8,  "player": "Arthur Bruno",        "inn": ["C", "RF", "SIT", "C", "RF", "RCF", "SIT"], "why": ".889 OPS, 1 HR. Catches inn 1/4 and plays right-side OF. Sits inn 3 & 7."},
+    {"bat": 9,  "player": "Ryan Coulombe #0",    "inn": ["RCF", "SIT", "C", "RCF", "C", "SIT", "C"], "why": ".875 OPS. Catches inn 3/5/7 and plays RCF inn 1/4 - shares the plate, not all game. Sits inn 2 & 6."},
+    {"bat": 10, "player": "Ed Fitzpatrick",      "inn": ["2B", "2B", "2B", "2B", "2B", "2B", "2B"], "why": "2B is his best spot - anchors it all 7 with the infield short-handed."},
+    {"bat": 11, "player": "Jon Sorenson",        "inn": ["3B", "3B", "3B", "3B", "1B", "1B", "1B"], "why": "Human utility knife: covers 3B innings 1-4 (Watson out), then 1B innings 5-7 when Klatt takes the corner. Plays all 7."}
+  ]
+}
