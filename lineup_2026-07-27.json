@@ -1,0 +1,40 @@
+{
+  "date": "2026-07-27",
+  "opponent": "Raiders",
+  "home": true,
+  "venue": "Boy Scout Park",
+  "time": "6:30 PM",
+  "arrive": "5:30 PM",
+  "lock_at": "2026-07-27T18:15:00",
+  "notes": "11 available - a bare-bones bench night. OUT: John Flinn #19, Kyle Doherty, Matt Watson, Sang Lee (and Andrew Amann, Luke McArdle no-show on the RSVP). With Watson, Flinn, Sang and Kyle all gone, our infield and left-side outfield depth evaporated, so the position math writes most of the lineup for us: SEVEN players go wire-to-wire. Marks is the only shortstop (all 7 at SS). Knight and DiLibero are the ONLY two left fielders left on the roster, so they split LF/LCF for all 7 (Knight LF, DiLibero LCF). And the only pitcher-plus-corner-infield pool we have left - Klatt, Joe McLean, Ed Fitzpatrick, Jon Sorenson - exactly fills P + 1B + 2B + 3B every inning, so none of them can sit either. Klatt pitches innings 1-4 then takes 3B (5-7); Joe plays 2B innings 1-4 then pitches (5-7); Ed is the everyday 3B with Watson out (3B 1-4, 2B 5-7); Sorenson anchors 1B all 7. That leaves four right-siders - Coulombe, Konen, Bruno, Cheever - to rotate C/RCF/RF and soak up every rest. The catcher's mask rotates through Bruno, Cheever, Coulombe and Konen (nobody catches more than twice), and Ryan gets outfield innings too.",
+  "rsvp": {"going": 11, "not_going": 4, "no_reply": 2, "last_checked": "2026-07-27 (GameChanger Game Center)"},
+  "sits_note": "Eleven bodies, ten gloves - so exactly one lucky soul gets a bench cameo each inning, seven sits total. Tonight the roster is so thin the position chart does the benching for us: <b>seven iron men never touch the pine</b>. <b>Marks</b> (the only shortstop in existence - if he sits, SS becomes folklore), <b>Knight</b> and <b>DiLibero</b> (the last two left fielders standing - they ARE the left side of the outfield), and the entire infield-and-mound crew <b>Klatt, Joe McLean, Ed Fitzpatrick and Sorenson</b> (four humans for the four spots of P/1B/2B/3B - the arithmetic literally cannot spare one). That funnels all seven rests onto the right-side committee: <b>Coulombe, Bruno and Cheever sit twice</b> apiece and <b>Konen - the best glove of the bunch (fewest 2025 errors) - sits just once</b>. Nobody sits back-to-back, nobody sits three times, and everyone bats all game regardless - SIT means a fielding breather, not a benching. Cheever opens and closes on the bench (strongest available gloves out for innings 1 and 7), and the mask passes politely between Bruno, Cheever, Coulombe and Konen so no one's knees file a grievance. Thin night, clean solution.",
+  "opponent_lineup": {
+    "team": "Raiders",
+    "source": "2025 scouting (~38 PA on file, small sample): a pull/left-heavy, right-handed attack - 47% of balls in play go to the LEFT, 25% center, 28% right, with a roughly even infield/outfield split (53/47). Shade the defense LEFT / left-center (Stack Left) and make them beat you the other way.",
+    "order": []
+  },
+  "rules": [
+    "VALIDATION: every inning fields exactly ten distinct players across P, C, 1B, 2B, 3B, SS, LF, LCF, RCF, RF - one glove per spot, no gaps, nobody cloned. All seven innings check out.",
+    "Thin roster (11 available) forces 7 iron men (0 sits): Marks (only SS), Knight + DiLibero (only two LF/LCF), Klatt + Joe McLean + Ed Fitzpatrick + Sorenson (the only P/1B/2B/3B pool).",
+    "Pitching split 4/3: Eric Klatt pitches innings 1-4, Joe McLean pitches innings 5-7. Klatt shifts to 3B (5-7); Joe plays 2B (1-4).",
+    "Watson out: Ed Fitzpatrick is the everyday 3B (3B innings 1-4, then 2B innings 5-7 when Klatt takes the corner) - plays all 7. Jon Sorenson anchors 1B all 7.",
+    "Knight (LF) and DiLibero (LCF) play all 7 - they are the only two left-side outfielders available with Amann and Flinn out.",
+    "Catcher rotates among Bruno, Cheever, Coulombe and Konen - nobody catches more than twice; Coulombe also plays right-side OF.",
+    "Sits fall on the four right-siders: Coulombe, Bruno, Cheever sit twice; Konen (best glove) sits once. No back-to-back sits.",
+    "Batting order = 2026 stats, role-based: Klatt & Joe McLean set the table (top OBP/contact), the run producers cluster 3-4-5 (DiLibero, Marks, Konen), remaining bats by OPS."
+  ],
+  "grid": [
+    {"bat": 1,  "player": "Eric Klatt #44",      "inn": ["P", "P", "P", "P", "3B", "3B", "3B"], "why": "Leadoff: team-best .680 OBP / .667 AVG, pure contact, no power - textbook table-setter. Pitches innings 1-4, then 3B innings 5-7. Plays all 7."},
+    {"bat": 2,  "player": "Joe McLean #4",        "inn": ["2B", "2B", "2B", "2B", "P", "P", "P"], "why": "Two-hole: .611 AVG / .550 OBP, high-contact bat who moves the leadoff man. Plays 2B innings 1-4, then pitches innings 5-7. Plays all 7."},
+    {"bat": 3,  "player": "Perry DiLibero #31",   "inn": ["LCF", "LCF", "LCF", "LCF", "LCF", "LCF", "LCF"], "why": "Three-hole: team-best 1.663 OPS (4 HR, 14 RBI). Only LCF option with Amann out - plays LCF all 7."},
+    {"bat": 4,  "player": "Dennis Marks #12",     "inn": ["SS", "SS", "SS", "SS", "SS", "SS", "SS"], "why": "Cleanup: team-high 5 HR and 19 RBI (1.541 OPS). Only shortstop - anchors SS all 7."},
+    {"bat": 5,  "player": "Ian Konen #14",        "inn": ["RF", "RF", "RF", "SIT", "RF", "RF", "C"], "why": "Five-hole: next-best run producer (7 RBI, .500 OBP). Everyday RF; catches inn 7. Best glove of the right-side four - sits just once (inn 4)."},
+    {"bat": 6,  "player": "Thacher Knight #20",   "inn": ["LF", "LF", "LF", "LF", "LF", "LF", "LF"], "why": "1.024 OPS. Only LF option left besides DiLibero - everyday LF, plays all 7."},
+    {"bat": 7,  "player": "Corey Cheever",        "inn": ["SIT", "C", "RCF", "RF", "C", "RCF", "SIT"], "why": ".971 OPS. Rotates C / right-side OF. Opens and closes on the bench (sits inn 1 & 7)."},
+    {"bat": 8,  "player": "Arthur Bruno",         "inn": ["C", "RCF", "SIT", "C", "RCF", "SIT", "RF"], "why": ".889 OPS, 1 HR. Catches inn 1 & 4, right-side OF otherwise. Sits inn 3 & 6."},
+    {"bat": 9,  "player": "Ryan Coulombe #0",     "inn": ["RCF", "SIT", "C", "RCF", "SIT", "C", "RCF"], "why": ".875 OPS. Catches inn 3 & 6 and plays RCF the rest - not behind the plate all game. Sits inn 2 & 5."},
+    {"bat": 10, "player": "Ed Fitzpatrick",       "inn": ["3B", "3B", "3B", "3B", "2B", "2B", "2B"], "why": "Everyday 3B with Watson out - mans the hot corner innings 1-4, then 2B innings 5-7. Plays all 7."},
+    {"bat": 11, "player": "Jon Sorenson",         "inn": ["1B", "1B", "1B", "1B", "1B", "1B", "1B"], "why": "Only clean 1B option left - anchors first base all 7 (frees the catcher rotation behind him)."}
+  ]
+}
