@@ -1,0 +1,37 @@
+{
+  "date": "2026-07-28",
+  "opponent": "Cowboys",
+  "home": false,
+  "venue": "Johnson Field",
+  "time": "6:30 PM",
+  "arrive": "5:30 PM",
+  "lock_at": "2026-07-28T18:15:00",
+  "notes": "Exactly 10 available - all ten play all seven innings, nobody sits. OUT: John Flinn #19, Thacher Knight #20, Perry DiLibero #31, Ed Fitzpatrick, Sang Lee (and Luke McArdle; Jon Sorenson no-reply). This roster writes itself because coverage is razor-thin: every natural left fielder (Knight, DiLibero, Flinn) is out, and Joe McLean is the ONLY available first baseman. So Joe anchors 1B all 7, which means Eric Klatt pitches all 7 (no split - the other arm is nailed to first base). Matt Watson is the only third baseman with Klatt on the mound (3B all 7); Kyle Doherty is the only second baseman (2B all 7); Dennis Marks is the only shortstop (SS all 7); Andrew Amann owns LCF all 7. That leaves Coulombe, Konen, Bruno and Cheever to rotate through C / LF / RCF / RF - and with no rostered left fielder available, the right-side crew covers LF too (Coulombe stays off LF per usual - he catches and plays right-side only). The catcher's mask rotates among all four so nobody's stuck behind the plate all night.",
+  "rsvp": {"going": 10, "not_going": 6, "no_reply": 1, "last_checked": "2026-07-28 (GameChanger Game Center)"},
+  "sits_note": "Ten bodies, ten gloves - the rare night the math takes off early. <b>Everyone plays all seven innings; nobody sits.</b> With the roster this thin, six spots are locked by simple elimination: <b>Marks</b> is the only shortstop, <b>Amann</b> the only LCF, <b>Watson</b> the only third baseman (Klatt's pitching), <b>Kyle</b> the only second baseman, <b>Joe</b> the only first baseman, and <b>Klatt</b> the only arm left to pitch (Joe's glued to first). The four-man right-side committee - <b>Coulombe, Konen, Bruno, Cheever</b> - spins through catcher, left, and right-center/right; since every real left fielder RSVP'd no, three of them take turns in LF while <b>Coulombe</b> sticks to catcher and the right side. No sits to argue over tonight - just show up, spread out, and cover the grass that the absent half of the roster left behind.",
+  "opponent_lineup": {
+    "team": "Cowboys",
+    "source": "2025 scouting on file (see the Scout tab). Play straight-up to slightly pull-side and make them earn it; with a patched-together outfield tonight, keep everything in front of you and hit the cutoff.",
+    "order": []
+  },
+  "rules": [
+    "VALIDATION: every inning fields exactly ten distinct players across P, C, 1B, 2B, 3B, SS, LF, LCF, RCF, RF - one glove per spot, no gaps, nobody cloned. All seven innings check out.",
+    "Only 10 available -> everyone plays all 7 innings, zero sits.",
+    "Coverage is forced: Joe McLean is the ONLY 1B (anchors 1B all 7), so Eric Klatt pitches all 7 (no split). Watson is the only 3B (Klatt pitching), Kyle the only 2B, Marks the only SS, Amann the only LCF.",
+    "Every natural left fielder (Knight, DiLibero, Flinn) is OUT, so the right-side OFs (Konen, Bruno, Cheever) rotate through LF. Coulombe stays off LF (catcher / right-side only, per house rule).",
+    "Catcher rotates among Bruno, Cheever, Coulombe and Konen - nobody catches more than twice.",
+    "Batting order = 2026 stats, role-based: Klatt & Joe set the table (top OBP/contact), Amann (best all-around) hits 3rd, Marks cleanup, run producers clustered behind, remaining bats by OPS."
+  ],
+  "grid": [
+    {"bat": 1,  "player": "Eric Klatt #44",   "inn": ["P","P","P","P","P","P","P"], "why": "Leadoff: .586 AVG / .600 OBP, pure contact, no power - the table-setter. Pitches all 7 (Joe is the only 1B, so no split tonight)."},
+    {"bat": 2,  "player": "Joe McLean #4",     "inn": ["1B","1B","1B","1B","1B","1B","1B"], "why": "Two-hole: .565 AVG / .520 OBP, high-contact. The ONLY available first baseman - anchors 1B all 7."},
+    {"bat": 3,  "player": "Andrew Amann #21",  "inn": ["LCF","LCF","LCF","LCF","LCF","LCF","LCF"], "why": "Three-hole: best bat on the team (2.316 OPS, .737 AVG, 4 HR, 13 RBI). LCF all 7."},
+    {"bat": 4,  "player": "Dennis Marks #12",  "inn": ["SS","SS","SS","SS","SS","SS","SS"], "why": "Cleanup: team-high 5 HR / 22 RBI (1.518 OPS). Only shortstop - SS all 7."},
+    {"bat": 5,  "player": "Ian Konen #14",     "inn": ["LF","RCF","RCF","C","RCF","LF","RCF"], "why": "Five-hole: next-best run producer (9 RBI, .440 OBP). Rotates RCF / LF; catches inn 4."},
+    {"bat": 6,  "player": "Matt Watson",       "inn": ["3B","3B","3B","3B","3B","3B","3B"], "why": "1.083 OPS. Only third baseman with Klatt pitching - mans the hot corner all 7."},
+    {"bat": 7,  "player": "Kyle Doherty",      "inn": ["2B","2B","2B","2B","2B","2B","2B"], "why": "1.000 OPS. The only available second baseman - 2B all 7."},
+    {"bat": 8,  "player": "Arthur Bruno",      "inn": ["C","LF","RF","LF","C","RF","RF"], "why": ".920 OPS, 1 HR. Catches inn 1 & 5; covers LF/RF the rest with the LF corps out."},
+    {"bat": 9,  "player": "Ryan Coulombe #0",  "inn": ["RCF","RF","C","RCF","RF","RCF","C"], "why": ".875 OPS. Catches inn 3 & 7 and plays right-side OF - never LF (house rule)."},
+    {"bat": 10, "player": "Corey Cheever",     "inn": ["RF","C","LF","RF","LF","C","LF"], "why": ".798 OPS. Catches inn 2 & 6; fills LF/RF with the left-field corps out."}
+  ]
+}
