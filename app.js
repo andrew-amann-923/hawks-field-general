@@ -472,13 +472,19 @@ function oppLineupHTML(L) {
       <td>${hits}</td><td>${b ? tendency(b) : "no data"}</td>
       <td>${c ? `<span class="call ${c.cls}">${c.label}</span>` : ""}</td></tr>`;
   }).join("");
+  // No opponent data at all (e.g. a first meeting like the Eagles): the table would
+  // render as a bare header row with no batters, which reads as "missing" on the printed
+  // card. Show the scouting note as the section body instead so the bottom looks complete.
+  const body = rows
+    ? `<div class="tblwrap"><table class="tbl"><thead><tr><th class="num">#</th><th>Batter</th><th class="num">Pos</th>
+    <th class="num">AB</th><th class="num">H</th><th class="num">AVG</th><th>Hits to (our positions)</th><th>Tendency</th><th>Call</th></tr></thead><tbody>${rows}</tbody></table></div>
+  ${T ? `<p style="margin-top:8px"><button class="scoutlink" data-team="${opp.team}">Full ${opp.team} scout report</button></p>` : ""}`
+    : `<p class="oppnodata">No scouting on file yet — this is our first look at the ${opp.team}. Play the plan above straight up and adjust once you see them swing.</p>`;
   return `
   <div class="opp-sheet">
   <h3 class="month-h">${opp.team} lineup — know them before they swing</h3>
   <p class="note oppsrc" style="margin:2px 0 8px">${opp.source}</p>
-  <div class="tblwrap"><table class="tbl"><thead><tr><th class="num">#</th><th>Batter</th><th class="num">Pos</th>
-    <th class="num">AB</th><th class="num">H</th><th class="num">AVG</th><th>Hits to (our positions)</th><th>Tendency</th><th>Call</th></tr></thead><tbody>${rows}</tbody></table></div>
-  <p style="margin-top:8px"><button class="scoutlink" data-team="${opp.team}">Full ${opp.team} scout report</button></p>
+  ${body}
   </div>`;
 }
 
