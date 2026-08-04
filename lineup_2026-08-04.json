@@ -1,0 +1,40 @@
+{
+  "date": "2026-08-04",
+  "opponent": "Cowboys",
+  "home": true,
+  "venue": "Harry Lee Cole School",
+  "time": "6:00 PM",
+  "arrive": "5:00 PM",
+  "lock_at": "2026-08-04T17:45:00",
+  "notes": "11 available - exactly one sits each inning. Six play all seven: Joe McLean pitches wire-to-wire, Eric Klatt 3B, Matt Watson SS, Dennis Marks RCF, Perry DiLibero LCF (Amann is out), and Sang Lee holds LF (our only other healthy left-side outfielder). The other five (Ed, Sorenson, Bruno, Konen, Kyle) rotate C / 1B / 2B / RF and absorb the seven rests. Catcher rotates Bruno/Konen/Sorenson (2 innings each) + Kyle (1) - nobody catches all game. OUT: Andrew Amann #21, John Flinn #19, Thacher Knight #20, Ryan Coulombe #0, Corey Cheever, Luke McArdle.",
+  "rsvp": {"going": 11, "not_going": 6, "no_reply": 0, "last_checked": "2026-08-04 (GameChanger Game Center)"},
+  "sits_note": "Eleven bats, one sits per inning, nobody sits back-to-back. Six play all seven (0 sits): Joe on the mound, Klatt 3B, Watson SS, Marks RCF, DiLibero LCF, and Sang the emergency LF - with Amann/Flinn/Knight all out, Sang and DiLibero are the only left-side outfield coverage. The remaining five absorb the seven rests: Sorenson and Konen twice, Ed/Bruno/Kyle once each. Second base runs through Ed and Kyle (the only two who can play it tonight), so when one is at 1B the other takes 2B. Catcher rotates so nobody is behind the plate all game.",
+  "opponent_lineup": {
+    "team": "Cowboys",
+    "source": "2025 scouting on file (see the Scout tab) and we beat them 20-15 a week ago (Jul 28). Righty-heavy, pull/left-leaning. Play straight-up to slightly pull-side, keep everything in front of you, and hit the cutoff. Our left side is thin tonight (Sang emergency LF, DiLibero LCF) - lean on the cutoff to hold extra bases.",
+    "order": []
+  },
+  "rules": [
+    "VALIDATION: every inning fields exactly ten distinct players across P, C, 1B, 2B, 3B, SS, LF, LCF, RCF, RF - one glove per spot, no gaps, nobody cloned, exactly one sits. All seven innings check out.",
+    "Availability: 11 going per GameChanger Game Center (checked 2026-08-04). OUT: Amann #21, Flinn #19, Knight #20, Coulombe #0, Cheever, Luke McArdle.",
+    "All seven innings (0 sits): Joe McLean P, Eric Klatt 3B, Matt Watson SS, Dennis Marks RCF, Perry DiLibero LCF, Sang Lee LF.",
+    "Joe McLean pitches all 7 (Klatt is at 3B tonight). DiLibero at LCF (Amann's spot); Sang Lee at LF as the emergency left fielder - Amann/Flinn/Knight are all out, so those two are the only left-side OF coverage available.",
+    "Catcher rotates - Bruno 2 (inn 1,4), Konen 2 (inn 2,5), Sorenson 2 (inn 6,7), Kyle 1 (inn 3) - nobody catches all game.",
+    "Second base is Ed or Kyle only tonight; 1B is Ed or Sorenson only. When Ed plays 1B, Kyle takes 2B, and vice versa.",
+    "Sits: Sorenson 2 (inn 2 & 5), Konen 2 (inn 3 & 7); Ed, Bruno, Kyle 1 each; the six all-game players 0; no back-to-back sits.",
+    "Batting order = 2026 stats, role-based: Sang leads off (top OBP, pure contact), Klatt two-hole (contact, high OBP, no power), DiLibero 3rd (best available all-around bat), Marks cleanup (team-high 24 RBI/5 HR), Joe 5th (16 RBI) to cluster the run producers, remaining bats by OPS."
+  ],
+  "grid": [
+    {"bat": 1,  "player": "Sang Lee",          "inn": ["LF","LF","LF","LF","LF","LF","LF"], "why": "Leadoff: .722 AVG / .722 OBP, pure contact table-setter. Emergency LF all 7 (only left-side OF healthy)."},
+    {"bat": 2,  "player": "Eric Klatt #44",     "inn": ["3B","3B","3B","3B","3B","3B","3B"], "why": "Two-hole: .579 AVG / .590 OBP, contact, no power. 3B all 7."},
+    {"bat": 3,  "player": "Perry DiLibero #31", "inn": ["LCF","LCF","LCF","LCF","LCF","LCF","LCF"], "why": "Three-hole: best available bat (1.669 OPS, 4 HR, 18 RBI). Takes Amann's LCF all 7."},
+    {"bat": 4,  "player": "Dennis Marks #12",   "inn": ["RCF","RCF","RCF","RCF","RCF","RCF","RCF"], "why": "Cleanup: team-high 24 RBI, 5 HR (1.452 OPS). RCF all 7."},
+    {"bat": 5,  "player": "Joe McLean #4",      "inn": ["P","P","P","P","P","P","P"], "why": "Five-hole: 16 RBI, 1.307 OPS. Pitches the whole game (all 7)."},
+    {"bat": 6,  "player": "Kyle Doherty",       "inn": ["SIT","2B","C","2B","2B","2B","2B"], "why": "1.294 OPS. Anchors 2B, catches inn 3; rests inn 1."},
+    {"bat": 7,  "player": "Arthur Bruno",       "inn": ["C","RF","RF","C","RF","SIT","RF"], "why": ".500 AVG, 1 HR, 10 RBI (1.145 OPS). Catches 2, RF otherwise; rests inn 6."},
+    {"bat": 8,  "player": "Matt Watson",        "inn": ["SS","SS","SS","SS","SS","SS","SS"], "why": "1.036 OPS. SS all 7."},
+    {"bat": 9,  "player": "Ian Konen #14",      "inn": ["RF","C","SIT","RF","C","RF","SIT"], "why": "13 RBI, .931 OPS. RF and two catch innings; rests inn 3 & 7."},
+    {"bat": 10, "player": "Jon Sorenson",       "inn": ["1B","SIT","1B","1B","SIT","C","C"], "why": ".904 OPS. 1B and two catch innings; rests inn 2 & 5."},
+    {"bat": 11, "player": "Ed Fitzpatrick",     "inn": ["2B","1B","2B","SIT","1B","1B","1B"], "why": ".838 OPS, our best 2B. Splits 1B/2B; rests inn 4."}
+  ]
+}
